@@ -91,12 +91,6 @@ a {
   transform: translate(0%, 20%) rotate(-3deg);
 }
 
-@media screen and (min-height: 892px) {
-  .line {
-    transform: translate(0%, 60%);
-  }
-}
-
 @media screen and (max-width: 1452px) {
   #text {
     transform: translate(-15rem, -43rem);
@@ -122,5 +116,12 @@ a {
     flex-direction: column;
     flex-wrap: wrap;
     margin: 0rem;
+  }
+}
+
+@media screen and (min-width: 2000px) {
+  p,
+  a {
+    font-size: 5.73vw;
   }
 }
