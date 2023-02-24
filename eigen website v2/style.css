@@ -92,10 +92,6 @@ a {
 }
 
 @media screen and (max-width: 1452px) {
-  #text {
-    transform: translate(-15rem, -43rem);
-  }
-
   .fancy {
     display: flex;
     flex-direction: column;
