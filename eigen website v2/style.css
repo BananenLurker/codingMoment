@@ -36,7 +36,6 @@ a {
 .line {
   display: flex;
   justify-content: space-between;
-  transform: translate(0%, 60%);
 }
 
 .fancy > .letter {
