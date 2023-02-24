@@ -44,16 +44,22 @@ a {
   transition: transform 350ms ease;
 }
 
+#text .line .word {
+  opacity: 1;
+  transition: all ease-in-out;
+  transition-duration: 0.3s;
+}
+
 .fancy:hover > .letter {
   transition-duration: 800ms;
 }
 
-#text {
-  animation: fadeIn 0.5s forwards;
+.fancy:hover {
+  transform: scale(1.15);
 }
 
 #text:has(.fancy:hover) .word:not(.fancy:hover) {
-  animation: fadeOut 0.5s forwards;
+  opacity: 0.3;
 }
 
 .fancy:hover > .letter:nth-child(1) {
