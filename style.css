@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+div{
+    min-height: 50vh;
+    font-size: 3.6rem;
+}
+div h2{
+    font-size: 100%;
+}
+
+
+@media (min-width: 500px) and (max-width: 1024px){
+    body{
+    background: lightblue;
+    }
+    div{
+        font-size:calc(1.4rem + 2vw);
+    }
+    html{
+        font-size: 50%;
+    }
+}

@@ -1,0 +1,8 @@
+@media (max-width: 500px){
+    body{
+        background:rgb(98, 149, 216);
+    }
+    .mobile{
+        font-size: 2.4rem;
+    }
+}
