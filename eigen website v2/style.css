@@ -4,6 +4,12 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background-color: black;
 }
@@ -83,4 +89,38 @@ a {
 
 .fancy:hover > .letter:nth-child(6) {
   transform: translate(0%, 20%) rotate(-3deg);
+}
+
+@media screen and (min-height: 892px) {
+  .line {
+    transform: translate(0%, 60%);
+  }
+}
+
+@media screen and (max-width: 1452px) {
+  #text {
+    transform: translate(-15rem, -43rem);
+  }
+
+  .fancy {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0rem;
+  }
+
+  #first-line {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0rem;
+    margin-bottom: 13rem;
+  }
+
+  #second-line {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 0rem;
+  }
 }
