@@ -85,21 +85,3 @@ a {
 .fancy:hover > .letter:nth-child(6) {
   transform: translate(0%, 20%) rotate(-3deg);
 }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0.3;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0.3;
-  }
-}
