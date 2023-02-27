@@ -18,6 +18,33 @@ html {
   font-size: 62.5%;
 }
 
+#best-enjoyed-on-pc {
+  display: none;
+}
+
+#nav {
+  position: sticky;
+  width: 100vw;
+  height: 10vh;
+  margin-left: 2rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.nav-button {
+  margin: 1rem;
+  background-color: grey;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 2rem;
+  text-decoration: none;
+}
+
+.nav-button:hover {
+  background-color: white;
+}
+
 #text {
   margin: 15rem;
 }
@@ -25,7 +52,7 @@ html {
 p,
 a {
   color: white;
-  font-size: 7vw;
+  font-size: 6vw;
   font-family: "Rubik", sans-serif;
   margin: 0rem;
   text-transform: uppercase;
@@ -92,6 +119,17 @@ a {
 }
 
 @media screen and (max-width: 1452px) {
+  #text {
+    margin-top: 5rem;
+  }
+
+  #best-enjoyed-on-pc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(0%, -400%);
+  }
+
   .fancy {
     display: flex;
     flex-direction: column;
