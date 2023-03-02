@@ -16,11 +16,11 @@ body {
 .gallery {
   height: 200vh;
   width: 200vw;
-  background: white;
+  background: rgb(255, 255, 255);
 }
 
 .darkmode #gallery {
-  background: black;
+  background: rgb(25, 25, 25);
 }
 
 /* styling for each div element */
