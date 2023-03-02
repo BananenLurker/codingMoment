@@ -190,6 +190,7 @@ body {
 /* button  */
 
 button {
+  transition: 0.3s ease-in-out;
   cursor: pointer;
   background: transparent;
   border: none !important;
@@ -197,14 +198,19 @@ button {
   width: 10%;
 }
 
+button img {
+  transform: rotate(90deg);
+}
+
 .button-darkmode {
   filter: invert(1);
+  transform: rotate(180deg);
 }
 
 .wrapper-button {
   position: absolute;
-  height: 20%;
-  width: 20%;
+  height: 30%;
+  width: 30%;
   left: 58%;
   top: 70%;
 }
