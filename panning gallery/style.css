@@ -8,16 +8,19 @@
 
 html,
 body {
-  background-color: black;
   overflow: hidden;
 }
 
 /* styling for wrapper div */
 
-#gallery {
-  background: black;
+.gallery {
   height: 200vh;
   width: 200vw;
+  background: white;
+}
+
+.darkmode #gallery {
+  background: black;
 }
 
 /* styling for each div element */
@@ -52,10 +55,10 @@ body {
   opacity: 1;
 }
 
-/* general styling for each div */
+/* lightmode styling for each div */
 
 .tile:nth-child(1) {
-  background-color: green;
+  background-color: rgb(100, 241, 100);
   height: 14%;
   width: 20%;
   left: 5%;
@@ -63,7 +66,7 @@ body {
 }
 
 .tile:nth-child(2) {
-  background-color: rgb(89, 89, 255);
+  background-color: rgb(134, 134, 255);
   height: 24%;
   width: 14%;
   left: 42%;
@@ -79,7 +82,7 @@ body {
 }
 
 .tile:nth-child(4) {
-  background-color: orange;
+  background-color: rgb(255, 204, 109);
   height: 14%;
   width: 12%;
   left: 45%;
@@ -87,7 +90,7 @@ body {
 }
 
 .tile:nth-child(5) {
-  background-color: rgb(0, 217, 255);
+  background-color: rgb(140, 235, 252);
   height: 16%;
   width: 32%;
   left: 8%;
@@ -111,9 +114,97 @@ body {
 }
 
 .tile:nth-child(8) {
-  background-color: rgb(179, 140, 202);
+  background-color: rgb(178, 255, 35);
   height: 10%;
   width: 8%;
   left: 84%;
   top: 84%;
+}
+
+/* darkmode styling for each div */
+
+.darkmode .tile:nth-child(1) {
+  background-color: rgb(35, 125, 35);
+  height: 14%;
+  width: 20%;
+  left: 5%;
+  top: 5%;
+}
+
+.darkmode .tile:nth-child(2) {
+  background-color: rgb(52, 52, 160);
+  height: 24%;
+  width: 14%;
+  left: 42%;
+  top: 12%;
+}
+
+.darkmode .tile:nth-child(3) {
+  background-color: rgb(195, 0, 195);
+  height: 18%;
+  width: 16%;
+  left: 12%;
+  top: 34%;
+}
+
+.darkmode .tile:nth-child(4) {
+  background-color: rgb(196, 127, 0);
+  height: 14%;
+  width: 12%;
+  left: 45%;
+  top: 48%;
+}
+
+.darkmode .tile:nth-child(5) {
+  background-color: rgb(0, 181, 213);
+  height: 16%;
+  width: 32%;
+  left: 8%;
+  top: 70%;
+}
+
+.darkmode .tile:nth-child(6) {
+  background-color: rgb(195, 195, 0);
+  height: 24%;
+  width: 24%;
+  left: 68%;
+  top: 8%;
+}
+
+.darkmode .tile:nth-child(7) {
+  background-color: rgb(82, 0, 129);
+  height: 24%;
+  width: 18%;
+  left: 72%;
+  top: 42%;
+}
+
+.darkmode .tile:nth-child(8) {
+  background-color: rgb(82, 125, 0);
+  height: 10%;
+  width: 8%;
+  left: 84%;
+  top: 84%;
+}
+
+/* button  */
+
+button {
+  cursor: pointer;
+  background: transparent;
+  border: none !important;
+  height: 10%;
+  width: 10%;
+}
+
+.button-darkmode {
+  filter: invert(1);
+}
+
+.wrapper-button {
+  position: absolute;
+  height: 20%;
+  width: 20%;
+  left: 58%;
+  top: 70%;
 }
