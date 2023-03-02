@@ -95,10 +95,6 @@ body {
 }
 
 .tile:nth-child(6) {
-  display: none;
-}
-
-.tile:nth-child(7) {
   background-color: rgb(243, 243, 133);
   height: 24%;
   width: 24%;
@@ -106,7 +102,7 @@ body {
   top: 8%;
 }
 
-.tile:nth-child(8) {
+.tile:nth-child(7) {
   background-color: rgb(179, 140, 202);
   height: 24%;
   width: 18%;
@@ -114,7 +110,7 @@ body {
   top: 42%;
 }
 
-.tile:nth-child(9) {
+.tile:nth-child(8) {
   background-color: rgb(179, 140, 202);
   height: 10%;
   width: 8%;
