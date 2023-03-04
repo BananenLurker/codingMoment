@@ -1,0 +1,22 @@
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+main {
+  position: absolute;
+}
+
+.scrollable {
+  height: 500vh;
+  color: black;
+}
