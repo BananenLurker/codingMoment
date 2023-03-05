@@ -20,7 +20,11 @@ body {
 }
 
 .darkmode #gallery {
-  background: rgb(25, 25, 25);
+  animation: backgroundChangeDark 0.3s ease-in forwards;
+}
+
+.lightmode #gallery {
+  animation: backgroundChangeLight 0.3s ease-in forwards;
 }
 
 /* styling for each div element */
@@ -213,4 +217,22 @@ button img {
   width: 30%;
   left: 58%;
   top: 70%;
+}
+
+@keyframes backgroundChangeDark {
+  0% {
+    background: white;
+  }
+  100% {
+    background: rgb(25, 25, 25);
+  }
+}
+
+@keyframes backgroundChangeLight {
+  0% {
+    background: rgb(25, 25, 25);
+  }
+  100% {
+    background: white;
+  }
 }
