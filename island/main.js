@@ -13,7 +13,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.set(15, 12, 15);
 
-var rotSpeed = 0.003;
+var rotSpeed = 0.02;
 
 function checkRotation(){
 
