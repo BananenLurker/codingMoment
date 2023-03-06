@@ -8,6 +8,16 @@ html {
   font-size: 62.5%;
 }
 
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 body {
   overflow-x: hidden;
   font-family: "Poppins", sans-serif;
@@ -93,8 +103,18 @@ nav button:hover {
 
 #wie-ben-ik-header,
 #wat-doe-ik-header {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
   display: flex;
   justify-content: center;
+}
+
+#wie-ben-ik-header {
+  background-image: linear-gradient(to right, #00093c, #170a1e);
+}
+
+#wat-doe-ik-header {
+  background-image: linear-gradient(to right, #170a1e, #2d0b00);
 }
 
 #wie-ben-ik,
@@ -109,6 +129,7 @@ nav button:hover {
 .content-main p {
   color: black;
   font-size: 2rem;
+  padding: 2rem;
 }
 
 .content-main h1 {
@@ -116,16 +137,37 @@ nav button:hover {
   color: rgb(216, 72, 0);
 }
 
-/* #wat-doe-ik-buttons {
+#wat-doe-ik-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+#wat-doe-ik-buttons button {
   background: transparent;
   border: 0.5rem solid;
   color: white;
   border-color: black;
-  background-color: black;
   font-size: 1.8rem;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
-} */
+  background-color: black;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin-top: 2rem;
+  width: 80%;
+}
+
+#wat-doe-ik-buttons button:hover {
+  background: white;
+  color: black;
+}
+
+#vaardigheden-en-prestaties {
+  margin-bottom: 1rem;
+}
 
 footer {
   width: 100%;
@@ -156,7 +198,7 @@ footer {
   margin-bottom: 3rem;
 }
 
-/* @media only screen and (min-width: 768px) {
+@media only screen and (min-width: 768px) {
   #wat-doe-ik .buttons {
     flex-direction: row;
   }
@@ -169,23 +211,12 @@ footer {
     flex: 1;
   }
 
-  #wat-doe-ik .button-wrapper:first-child {
+  #wat-doe-ik .buttons:first-child {
     order: 1;
   }
 
-  #wat-doe-ik .button-wrapper:nth-child(2),
-  #wat-doe-ik .button-wrapper:nth-child(3) {
+  #wat-doe-ik .buttons:nth-child(2),
+  #wat-doe-ik .buttons:nth-child(3) {
     order: 2;
   }
 }
-
-@media screen and (max-width: 768px) {
-  #wie-ben-ik p {
-    max-width: 100%;
-  }
-
-  #wat-doe-ik button {
-    padding: 2rem;
-    min-width: 0rem;
-  }
-} */
