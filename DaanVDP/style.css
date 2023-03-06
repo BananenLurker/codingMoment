@@ -21,6 +21,18 @@ a {
   grid-template-columns: 1fr 2fr;
 }
 
+#nav {
+  padding: 2.5vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: auto;
+}
+
+#nav h1 {
+  font-size: 1vh;
+}
+
 nav button {
   color: white;
   background: none;
@@ -57,18 +69,6 @@ nav button:hover {
   background-color: rgba(0, 0, 0, 0.85);
 }
 
-#nav {
-  padding: 2.5vh;
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  height: auto;
-}
-
-#nav h1 {
-  font-size: 1vh;
-}
-
 #background-main {
   background-image: url("Screenshot_5.png");
   min-height: 100vh;
@@ -82,61 +82,41 @@ nav button:hover {
   align-items: center;
 }
 
-.content-main {
-  /* remove the margin property to make the div grow equally with the viewport */
+#all {
   width: 90%;
   margin: auto;
+  display: flex;
+  min-height: 70vh;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+#wie-ben-ik-header,
+#wat-doe-ik-header {
+  display: flex;
+  justify-content: center;
+}
+
+#wie-ben-ik,
+#wat-doe-ik {
+  text-align: center;
+  flex: 1 1 25rem;
+  min-height: 40vh;
+  margin: 2rem 5rem;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 20px 20px rgba(0, 0, 0, 0.1);
-  background-color: white;
 }
 
 .content-main p {
-  padding: 5rem;
-  padding-top: 1.5rem;
   color: black;
   font-size: 2rem;
 }
 
 .content-main h1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   font-size: 5rem;
   color: rgb(216, 72, 0);
 }
 
-#wie-ben-ik {
-  margin: 4rem;
-  margin-bottom: 0rem;
-  flex: 1 1 auto;
-  width: 90%;
-  min-height: 30vh;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-evenly;
-}
-
-#wie-ben-ik h1 {
-  padding-top: 0rem;
-}
-
-#wie-ben-ik p {
-  max-width: 50%;
-}
-
-#wat-doe-ik {
-  width: 90%;
-}
-
-#wat-doe-ik h1 {
-  margin-left: 4rem;
-  text-align: center;
-  justify-content: center;
-}
-
-#wat-doe-ik-buttons {
+/* #wat-doe-ik-buttons {
   background: transparent;
   border: 0.5rem solid;
   color: white;
@@ -145,12 +125,7 @@ nav button:hover {
   font-size: 1.8rem;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
-}
-
-#wat-doe-ik button:hover {
-  background: white;
-  color: black;
-}
+} */
 
 footer {
   width: 100%;
@@ -161,14 +136,6 @@ footer {
   border-top-left-radius: 12.5rem;
   font-size: 1.3rem;
   line-height: 2rem;
-}
-
-#wie-ben-ik,
-#wat-doe-ik {
-  box-sizing: border-box;
-  flex-basis: 0;
-  flex-shrink: 1;
-  flex-grow: 1;
 }
 
 .row {
@@ -189,7 +156,7 @@ footer {
   margin-bottom: 3rem;
 }
 
-@media only screen and (min-width: 768px) {
+/* @media only screen and (min-width: 768px) {
   #wat-doe-ik .buttons {
     flex-direction: row;
   }
@@ -221,4 +188,4 @@ footer {
     padding: 2rem;
     min-width: 0rem;
   }
-}
+} */
