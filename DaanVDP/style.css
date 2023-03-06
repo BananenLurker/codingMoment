@@ -17,9 +17,8 @@ a {
   color: inherit;
 }
 
-#all {
-  display: flex;
-  flex-wrap: wrap;
+.content-main {
+  grid-template-columns: 1fr 2fr;
 }
 
 nav button {
@@ -88,8 +87,6 @@ nav button:hover {
   width: 90%;
   margin: auto;
   align-items: center;
-  flex: 1 1 25rem;
-  min-height: 70vh;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 20px 20px rgba(0, 0, 0, 0.1);
   background-color: white;
 }
@@ -113,7 +110,7 @@ nav button:hover {
   margin: 4rem;
   margin-bottom: 0rem;
   flex: 1 1 auto;
-  width: 50%;
+  width: 90%;
   min-height: 30vh;
   display: flex;
   flex-wrap: wrap;
@@ -130,12 +127,7 @@ nav button:hover {
 }
 
 #wat-doe-ik {
-  margin: 4rem;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 95vw;
-  min-height: 30vh;
+  width: 90%;
 }
 
 #wat-doe-ik h1 {
@@ -144,12 +136,7 @@ nav button:hover {
   justify-content: center;
 }
 
-#wat-doe-ik button {
-  width: 100vw;
-  max-width: 40rem;
-  min-width: 20rem;
-  margin: 1rem;
-  padding: 2rem 6rem;
+#wat-doe-ik-buttons {
   background: transparent;
   border: 0.5rem solid;
   color: white;
@@ -158,14 +145,6 @@ nav button:hover {
   font-size: 1.8rem;
   cursor: pointer;
   transition: background 0.2s ease-in-out;
-}
-
-#wat-doe-ik .buttons {
-  margin-right: 4rem;
-  display: flex;
-  justify-content: center;
-  align-items: space-between;
-  flex-wrap: wrap;
 }
 
 #wat-doe-ik button:hover {
