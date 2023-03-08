@@ -1,2 +1,1 @@
-# Personal Repo - not meant for distribution.
-# codingMoment
+# Personal Repo 
