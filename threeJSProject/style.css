@@ -175,7 +175,7 @@ input[type="submit"] {
   padding: 16px 24px;
   width: 100%;
   text-decoration: none;
-  transition: 0.3s ease-in-out;
+  transition: 0.2s ease-in-out;
 }
 
 input[type="submit"]:hover {
