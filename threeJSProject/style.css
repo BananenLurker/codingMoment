@@ -32,13 +32,27 @@ main {
   grid-template-columns: repeat(12, 1fr);
 }
 
+a,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
+
 h1,
 h2,
-h3,
 blockquote {
   font-family: "Climate Crisis", sans-serif !important;
   font-weight: 700;
   font-style: normal;
+}
+
+h3 {
+  margin-bottom: 0;
+}
+
+h4 {
+  margin-top: 0.25rem;
 }
 
 canvas {
@@ -81,4 +95,44 @@ blockquote p {
 
 .left {
   grid-column: 6 / 12;
+}
+
+#contact form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  margin-bottom: 1rem;
+}
+
+input[type="text"],
+span {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 1.75rem;
+  border: 2px solid #666;
+  /* box-sizing: border-box; */
+  /* padding: 0.5em 1em; */
+}
+
+input[type="text"] {
+  width: 6em;
+  padding: 0.5em 1em;
+
+  color: #555;
+  border-radius: 2em;
+  outline: 0;
+}
+
+input[type="text"]:focus {
+  border-color: #ff7996;
+}
+
+span {
+  position: absolute;
+  left: -9999px;
+  display: inline-block;
+  min-width: 6em;
 }

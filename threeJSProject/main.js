@@ -66,7 +66,7 @@ scene.background = spaceTexture;
 
 // Avatar
 
-const jeffTexture = new THREE.TextureLoader().load('jeff.png');
+const jeffTexture = new THREE.TextureLoader().load('CVcover2.png');
 
 const jeff = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: jeffTexture }));
 
@@ -129,3 +129,14 @@ function animate() {
 }
 
 animate();
+
+const input = document.querySelectorAll('input');
+const span = document.querySelectorAll('span');
+
+array.forEach(element => {
+  input.addEventListener('input', function (event) {
+    span.innerHTML = this.value.replace(/\s/g, '&nbsp;');
+    this.style.width = span.offsetWidth + 'px';
+  });
+  
+});
