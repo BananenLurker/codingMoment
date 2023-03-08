@@ -130,13 +130,16 @@ function animate() {
 
 animate();
 
-const input = document.querySelectorAll('input');
-const span = document.querySelectorAll('span');
+const input = document.querySelector('input');
+const span = document.querySelector('span');
 
-array.forEach(element => {
-  input.addEventListener('input', function (event) {
+
+const inputs = document.querySelectorAll('input');
+inputs.forEach(function(input) {
+  const span = document.createElement('span');
+  input.parentNode.insertBefore(span, input.nextSibling);
+  input.addEventListener('input', function(event) {
     span.innerHTML = this.value.replace(/\s/g, '&nbsp;');
     this.style.width = span.offsetWidth + 'px';
   });
-  
 });

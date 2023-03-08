@@ -33,8 +33,9 @@
         <p>
           Als ik niet als docent of student bezig ben, werk ik graag aan en met
           computers. Zo bouw ik bijvoorbeeld mijn eigen websites met behulp van
-          HTML, CSS en JavaScript. Ik maak graag projecten waar ik mijn
-          creativiteit en humor in kwijt kan.
+          HTML, CSS en JavaScript. Ik maak het liefst projecten waar ik mijn
+          creativiteit en humor in kwijt kan. Je kan al mijn projecten vinden in
+          <a href="">mijn archief</a>.
         </p>
         <p>
           Kijk gerust rond op mijn site, of
@@ -93,13 +94,22 @@
       <blockquote><p>Joe mama</p></blockquote>
       <section id="contact" class="left">
         <h2>Contact</h2>
-        <form action="">
+        <form action="https://formspree.io/f/xjvdobzp" method="POST">
           <label for="fname">Naam:</label>
-          <input type="text" id="fname" /><span></span><br />
+          <input type="text" id="fname" required name="name" /><span></span
+          ><br />
           <label for="email">Email:</label>
-          <input type="text" id="email" /><span></span><br />
+          <input type="email" id="email" required name="email" /><span></span
+          ><br />
           <label for="message">Bericht:</label>
-          <input type="text" id="message" /><span></span><br /><br />
+          <textarea
+            type="text"
+            id="message"
+            class="form-message"
+            required
+            name="message"
+          ></textarea
+          ><span></span><br /><br />
           <input type="submit" value="Verstuur" />
         </form>
       </section>
