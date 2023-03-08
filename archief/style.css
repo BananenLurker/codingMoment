@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+#nav {
+  padding: 2.5vh;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+#nav h1 {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0rem;
+  font: inherit;
+  outline: inherit;
+  transition: color 0.2s ease-in-out;
+  font-size: 2rem;
+}
+
+nav button {
+  color: white;
+  background: none;
+  border: none;
+  padding: 0rem;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  transition: color 0.2s ease-in-out;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+nav button:hover {
+  color: rgb(216, 72, 0);
+}
+
+.background {
+  background-color: rgba(0, 0, 0, 0.85);
+}
