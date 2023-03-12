@@ -141,7 +141,7 @@ textarea::-webkit-scrollbar {
 }
 
 input[type="text"]:focus,
-input[type="email"],
+input[type="email"]:focus,
 textarea:focus {
   border-color: #ff7996;
 }
