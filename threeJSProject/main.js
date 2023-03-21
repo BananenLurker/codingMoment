@@ -18,32 +18,79 @@ camera.position.setX(-3);
 
 renderer.render(scene, camera);
 
-// Torus
+// Icosahedron
 
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0xff6347 });
-const torus = new THREE.Mesh(geometry, material);
+const icoGeometry = new THREE.IcosahedronGeometry(10, 3, 16, 100);
+const icoMaterial = new THREE.MeshStandardMaterial({ color: 0xff6347, wireframe: true });
+const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
 
-scene.add(torus);
+scene.add(icosahedron);
+
+// Torus Knot
+
+const tkGeometry = new THREE.TorusKnotGeometry(2.5, 1, 100, 4, 45);
+const tkMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: false });
+const torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
+
+scene.add(torusKnot);
+
+torusKnot.position.set(-10, 0, 49)
+
+torusKnot.rotation.set(0, 1.55, 0)
+
+// Heart
+
+// const first = 0
+// const second = 0
+// const heartShape = new THREE.Shape();
+
+// heartShape.moveTo( first + 5, second + 5 );
+// heartShape.bezierCurveTo( first + 5, second + 5, first + 4, second, first, second );
+// heartShape.bezierCurveTo( first - 6, second, first - 6, second + 7,first - 6, second + 7 );
+// heartShape.bezierCurveTo( first - 6, second + 11, first - 3, second + 15.4, first + 5, second + 19 );
+// heartShape.bezierCurveTo( first + 12, second + 15.4, first + 16, second + 11, first + 16, second + 7 );
+// heartShape.bezierCurveTo( first + 16, second + 7, first + 16, second, first + 10, second );
+// heartShape.bezierCurveTo( first + 7, second, first + 5, second + 5, first + 5, second + 5 );
+
+// const heartGeometry = new THREE.ShapeGeometry( heartShape );
+// const heartMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+// const heart = new THREE.Mesh( heartGeometry, heartMaterial ) ;
+// scene.add( heart );
+
+// heart.rotation.set(0, 0, 10)
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(5, 5, 5);
+var lights = [];
+lights[0] = new THREE.DirectionalLight( 0xffffff, 1 );
+lights[0].position.set( -5, 0, 0 );
+lights[1] = new THREE.DirectionalLight( 0x11E8BB, 1 );
+lights[1].position.set( 0.75, 1, 0.5 );
+lights[2] = new THREE.DirectionalLight( 0x8200C9, 1 );
+lights[2].position.set( -0.75, -1, 0.5 );
+scene.add( lights[0] );
+scene.add( lights[1] );
+scene.add( lights[2] );
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
-scene.add(pointLight, ambientLight);
+// const pointLight = new THREE.PointLight(0xffffff);
+// pointLight.position.set(5, 5, 5);
+
+// const ambientLight = new THREE.AmbientLight(0xffffff);
+// scene.add(pointLight, ambientLight);
+
+// Stars
 
 function addStar() {
-  const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffffff });
+  const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
+  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: true });
   const star = new THREE.Mesh(geometry, material);
 
   const [x, y, z] = Array(3)
     .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(100));
+    .map(() => THREE.MathUtils.randFloatSpread(150));
 
   star.position.set(x, y, z);
+  star.rotation.set(x, y, z)
   scene.add(star);
 }
 
@@ -56,14 +103,14 @@ scene.background = spaceTexture;
 
 // Avatar
 
-const jeffTexture = new THREE.TextureLoader().load('/CVcover2.png');
+const daanTexture = new THREE.TextureLoader().load('/CVcover2.png');
 
-const jeff = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: jeffTexture }));
+const daan = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: daanTexture }));
 
-scene.add(jeff);
+scene.add(daan);
 
-jeff.position.z = -5;
-jeff.position.x = 2;
+daan.position.z = -5;
+daan.position.x = 2;
 
 // Moon
 
@@ -81,18 +128,15 @@ const moon = new THREE.Mesh(
 scene.add(moon);
 
 moon.position.z = 30;
-moon.position.setX(-10);
+moon.position.x = -10;
 
 // Scroll Animation
 
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
-  // moon.rotation.x += 0.05;
-  // moon.rotation.y += 0.075;
-  // moon.rotation.z += 0.05;
 
-  jeff.rotation.y += 0.01;
-  jeff.rotation.z += 0.01;
+  daan.rotation.y += 0.01;
+  daan.rotation.z += 0.01;
 
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
@@ -102,21 +146,27 @@ function moveCamera() {
 document.body.onscroll = moveCamera;
 moveCamera();
 
-// Animation Loop torus
+// Animation Loop
 
 function animate() {
   requestAnimationFrame(animate);
 
-  torus.rotation.x += 0.01;
-  torus.rotation.y += 0.005;
-  torus.rotation.z += 0.01;
+  icosahedron.rotation.x += 0.001;
+  icosahedron.rotation.y += 0.0005;
+  icosahedron.rotation.z += 0.001;
 
   moon.rotation.x += 0.005;
 
-  // controls.update();
-
   renderer.render(scene, camera);
 }
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+window.addEventListener('resize', onWindowResize, false);
 
 animate();
 

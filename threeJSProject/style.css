@@ -11,6 +11,8 @@
 
 html {
   overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding: 8rem;
 }
 
 canvas {
@@ -76,6 +78,10 @@ section {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-bottom: var(--spacing);
+}
+
+#boven-button {
+  grid-column: 6 / 8;
 }
 
 blockquote {
