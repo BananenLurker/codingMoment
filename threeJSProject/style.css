@@ -81,7 +81,23 @@ section {
 }
 
 #boven-button {
-  grid-column: 6 / 8;
+  grid-column: 4 / 8;
+  padding-top: 0rem;
+  background-color: transparent;
+  max-height: 5rem;
+  transform: translate(58rem, -21rem);
+}
+
+#boven-button > button {
+  rotate: -90deg;
+  scale: 10%;
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 blockquote {
@@ -101,6 +117,10 @@ blockquote p {
 
 .left {
   grid-column: 6 / 12;
+}
+
+#contact {
+  margin-bottom: 0rem;
 }
 
 #contact form {
@@ -181,7 +201,7 @@ input[type="submit"] {
   padding: 16px 24px;
   width: 100%;
   text-decoration: none;
-  transition: 0.2s ease-in-out;
+  transition: 0.15s ease-in-out;
 }
 
 input[type="submit"]:hover {

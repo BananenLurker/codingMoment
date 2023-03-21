@@ -170,10 +170,6 @@ window.addEventListener('resize', onWindowResize, false);
 
 animate();
 
-const input = document.querySelector('input');
-const span = document.querySelector('span');
-
-
 const inputs = document.querySelectorAll('input');
 inputs.forEach(function(input) {
   const span = document.createElement('span');
@@ -183,3 +179,7 @@ inputs.forEach(function(input) {
     this.style.width = span.offsetWidth + 'px';
   });
 });
+
+document.getElementById("boven-button-button").onclick = function(){
+  window.scrollTo(0, 0);
+}
