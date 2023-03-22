@@ -1,5 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
+import { arraySlice } from 'three/src/animation/animationutils';
 
 // Setup
 
@@ -34,9 +35,9 @@ const torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
 
 scene.add(torusKnot);
 
-torusKnot.position.set(-10, 0, 62)
+torusKnot.position.set(-10, 0, 60.5)
 
-torusKnot.rotation.set(0, 1.6, 0)
+torusKnot.rotation.set(0, 1.7, 0)
 
 // Heart
 
@@ -81,39 +82,41 @@ scene.add( lights[2] );
 // Stars
 
 function addBox() {
-  const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
-  const material = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: true });
-  const star = new THREE.Mesh(geometry, material);
+  const boxGeometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
+  const boxMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: true });
+  const box = new THREE.Mesh(boxGeometry, boxMaterial);
 
   const [x, y, z] = Array(3)
     .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(175));
+    .map(() => THREE.MathUtils.randFloatSpread(225));
 
-  star.position.set(x, y, z);
-  star.rotation.set(x, y, z)
+  box.position.set(x, y, z);
+  box.rotation.set(x, y, z);
+  scene.add(box);
+}
+
+Array(250).fill().forEach(addBox);
+
+function addStar(){
+  const starGeometry = new THREE.SphereGeometry(0.25, 10, 10);
+  const starMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+  const star = new THREE.Mesh(starGeometry, starMaterial);
+
+
+  const [x, y, z] = Array(3)
+  .fill()
+  .map(() => THREE.MathUtils.randFloatSpread(400));
+
+  star.position.set(x -50, y, z -100);
+  star.rotation.set(x, y, z);
   scene.add(star);
 }
 
-Array(200).fill().forEach(addBox);
-
-// function addStar() {
-//   const geometry = new THREE.SphereGeometry(0.25, 2, 2)
-//   const material = new THREE.MeshBasicMaterial({color: 0xffffff});
-//   const star = new THREE.Mesh(geometry, material);
-
-//   const [x, y, z] = Array(3)
-//     .fill()
-//     .map(() => THREE.MathUtils.randFloatSpread(175));
-
-//   star.position.set(x, y, z);
-//   scene.add(star);
-// }
-
-// Array(100).fill().forEach(addStar);
+Array(150).fill().forEach(addStar);
 
 // Background
 
-const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
+// const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
 // scene.background = spaceTexture;
 
 // Avatar
@@ -169,6 +172,8 @@ function animate() {
   icosahedron.rotation.x += 0.001;
   icosahedron.rotation.y += 0.0005;
   icosahedron.rotation.z += 0.001;
+
+  torusKnot.rotation.z += 0.0005;
 
   moon.rotation.x += 0.005;
   moon.rotation.z += 0.0005;
