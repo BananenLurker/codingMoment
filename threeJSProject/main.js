@@ -80,7 +80,7 @@ scene.add( lights[2] );
 
 // Stars
 
-function addStar() {
+function addBox() {
   const geometry = new THREE.BoxGeometry(2, 2, 2, 4, 4, 4);
   const material = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: true });
   const star = new THREE.Mesh(geometry, material);
@@ -94,7 +94,22 @@ function addStar() {
   scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+Array(200).fill().forEach(addBox);
+
+// function addStar() {
+//   const geometry = new THREE.SphereGeometry(0.25, 2, 2)
+//   const material = new THREE.MeshBasicMaterial({color: 0xffffff});
+//   const star = new THREE.Mesh(geometry, material);
+
+//   const [x, y, z] = Array(3)
+//     .fill()
+//     .map(() => THREE.MathUtils.randFloatSpread(175));
+
+//   star.position.set(x, y, z);
+//   scene.add(star);
+// }
+
+// Array(100).fill().forEach(addStar);
 
 // Background
 
