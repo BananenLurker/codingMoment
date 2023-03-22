@@ -34,9 +34,9 @@ const torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
 
 scene.add(torusKnot);
 
-torusKnot.position.set(-10, 0, 49)
+torusKnot.position.set(-10, 0, 62)
 
-torusKnot.rotation.set(0, 1.55, 0)
+torusKnot.rotation.set(0, 1.6, 0)
 
 // Heart
 
@@ -87,7 +87,7 @@ function addStar() {
 
   const [x, y, z] = Array(3)
     .fill()
-    .map(() => THREE.MathUtils.randFloatSpread(150));
+    .map(() => THREE.MathUtils.randFloatSpread(175));
 
   star.position.set(x, y, z);
   star.rotation.set(x, y, z)
@@ -99,7 +99,7 @@ Array(200).fill().forEach(addStar);
 // Background
 
 const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
-scene.background = spaceTexture;
+// scene.background = spaceTexture;
 
 // Avatar
 
@@ -127,7 +127,7 @@ const moon = new THREE.Mesh(
 
 scene.add(moon);
 
-moon.position.z = 30;
+moon.position.z = 32;
 moon.position.x = -10;
 
 // Scroll Animation
@@ -156,6 +156,7 @@ function animate() {
   icosahedron.rotation.z += 0.001;
 
   moon.rotation.x += 0.005;
+  moon.rotation.z += 0.0005;
 
   renderer.render(scene, camera);
 }
