@@ -1,6 +1,6 @@
 import './style.css';
 import * as THREE from 'three';
-import { arraySlice } from 'three/src/animation/animationutils';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 
 // Setup
 
@@ -14,8 +14,6 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
-camera.position.setX(-3);
 
 renderer.render(scene, camera);
 
@@ -38,6 +36,17 @@ scene.add(torusKnot);
 torusKnot.position.set(-10, 0, 60.5)
 
 torusKnot.rotation.set(0, 1.7, 0)
+
+// Naam
+
+const loader = new GLTFLoader();
+loader.load('naam.glb', function(gltf) {
+  const naam = gltf.scene;
+  scene.add(naam);
+
+  naam.rotation.set(1.7, 0, -0.2);
+  naam.position.set(-7, 3, -10);
+})
 
 // Heart
 
@@ -159,6 +168,7 @@ function moveCamera() {
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
   camera.rotation.y = t * -0.0002;
+
 }
 
 document.body.onscroll = moveCamera;
@@ -173,7 +183,7 @@ function animate() {
   icosahedron.rotation.y += 0.0005;
   icosahedron.rotation.z += 0.001;
 
-  torusKnot.rotation.z += 0.0005;
+  torusKnot.rotation.z += 0.00015;
 
   moon.rotation.x += 0.005;
   moon.rotation.z += 0.0005;
