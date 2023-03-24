@@ -12,7 +12,7 @@
 html {
   overflow-x: hidden;
   scroll-behavior: smooth;
-  scroll-padding: 8rem;
+  scroll-padding: 5rem;
 }
 
 canvas {
@@ -86,26 +86,6 @@ section {
   font-size: 1.25rem;
   line-height: 1.5;
   margin-bottom: var(--spacing);
-}
-
-#boven-button {
-  grid-column: 4 / 8;
-  padding-top: 0rem;
-  background-color: transparent;
-  max-height: 5rem;
-  transform: translate(-48rem, -23rem);
-}
-
-#boven-button > button {
-  rotate: -90deg;
-  scale: 10%;
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
 }
 
 blockquote {
@@ -231,10 +211,60 @@ input[type="submit"]:active {
   transform: translateY(0);
 }
 
-.static:hover {
-  opacity: 0;
+#contact-buttons {
+  width: 100%;
+  height: auto;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-evenly;
 }
 
-.active {
-  position: absolute;
+#contact-buttons > a:hover {
+  animation: 0.4s ease-in-out emote forwards;
+}
+
+.contact-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25%;
+  height: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.contact-button-img {
+  width: 50%;
+  height: auto;
+  filter: invert(100%) sepia(0%) saturate(7470%) hue-rotate(104deg)
+    brightness(106%) contrast(99%);
+}
+
+.contact-button-img-arrow {
+  width: 50%;
+  height: auto;
+  transform: rotate(-90deg);
+  scale: 75%;
+}
+
+@keyframes emote {
+  25% {
+    transform: scale(110%);
+  }
+  50% {
+    transform: translateY(3px);
+    transform: rotate(8deg);
+  }
+  75% {
+    transform: translateY(3px);
+    transform: rotate(-8deg);
+  }
+  100% {
+    transform: scale(100%);
+  }
 }
