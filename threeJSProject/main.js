@@ -27,15 +27,14 @@ scene.add(icosahedron);
 
 // Torus Knot
 
-const tkGeometry = new THREE.TorusKnotGeometry(2.5, 1, 100, 4, 45);
-const tkMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: false });
-const torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
+// const tkGeometry = new THREE.TorusKnotGeometry(2.5, 1, 100, 4, 45);
+// const tkMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, wireframe: false });
+// const torusKnot = new THREE.Mesh(tkGeometry, tkMaterial);
 
-scene.add(torusKnot);
+// scene.add(torusKnot);
 
-torusKnot.position.set(-10, 0, 60.5)
-
-torusKnot.rotation.set(0, 1.7, 0)
+// torusKnot.position.set(-10, 0, 60.5)
+// torusKnot.rotation.set(0, 1.7, 0)
 
 // Naam
 
@@ -114,14 +113,14 @@ function addStar(){
 
   const [x, y, z] = Array(3)
   .fill()
-  .map(() => THREE.MathUtils.randFloatSpread(400));
+  .map(() => THREE.MathUtils.randFloatSpread(600));
 
   star.position.set(x -50, y, z -100);
   star.rotation.set(x, y, z);
   scene.add(star);
 }
 
-Array(150).fill().forEach(addStar);
+Array(200).fill().forEach(addStar);
 
 // Background
 
@@ -138,6 +137,14 @@ scene.add(daan);
 
 daan.position.z = -5;
 daan.position.x = 2;
+
+const secondDaanTexture = new THREE.TextureLoader().load('./CVcover3.png');
+const secondDaan = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: secondDaanTexture }));
+
+scene.add(secondDaan);
+
+secondDaan.position.set(-10, 0, 62)
+secondDaan.rotation.set(0, 1.6, 0)
 
 // Moon
 
@@ -183,7 +190,7 @@ function animate() {
   icosahedron.rotation.y += 0.0005;
   icosahedron.rotation.z += 0.001;
 
-  torusKnot.rotation.z += 0.00015;
+  secondDaan.rotation.y += 0.0002;
 
   moon.rotation.x += 0.005;
   moon.rotation.z += 0.0005;
