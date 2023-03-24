@@ -230,3 +230,11 @@ input[type="submit"]:active {
   box-shadow: none;
   transform: translateY(0);
 }
+
+.static:hover {
+  opacity: 0;
+}
+
+.active {
+  position: absolute;
+}
