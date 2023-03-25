@@ -111,16 +111,20 @@ function addStar(){
   const star = new THREE.Mesh(starGeometry, starMaterial);
 
 
-  const [x, y, z] = Array(3)
+  const [x, z] = Array(2)
   .fill()
-  .map(() => THREE.MathUtils.randFloatSpread(600));
+  .map(() => THREE.MathUtils.randFloatSpread(650));
+
+  const y = Array(1)
+  .fill()
+  .map(() => THREE.MathUtils.randFloatSpread(350));
 
   star.position.set(x -50, y, z -100);
   star.rotation.set(x, y, z);
   scene.add(star);
 }
 
-Array(200).fill().forEach(addStar);
+Array(250).fill().forEach(addStar);
 
 // Background
 
