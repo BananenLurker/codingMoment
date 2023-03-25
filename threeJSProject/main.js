@@ -143,7 +143,7 @@ const secondDaan = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.Mesh
 
 scene.add(secondDaan);
 
-secondDaan.position.set(-10, 0, 62)
+secondDaan.position.set(-9.5, 0, 61)
 secondDaan.rotation.set(0, 1.6, 0)
 
 // Moon
@@ -161,8 +161,8 @@ const moon = new THREE.Mesh(
 
 scene.add(moon);
 
-moon.position.z = 32;
-moon.position.x = -10;
+moon.position.z = 27;
+moon.position.x = -12;
 
 // Scroll Animation
 
