@@ -190,6 +190,10 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
+  document.getElementById('x-coord').innerText = "x: " + Math.round((camera.position.x + Number.EPSILON) * 100) / 100
+  document.getElementById('y-coord').innerText = "y: " + Math.round((camera.position.y + Number.EPSILON) * 100) / 100
+  document.getElementById('z-coord').innerText = "z: " + Math.round((camera.position.z + Number.EPSILON) * 100) / 100
+
   icosahedron.rotation.x += 0.001;
   icosahedron.rotation.y += 0.0005;
   icosahedron.rotation.z += 0.001;

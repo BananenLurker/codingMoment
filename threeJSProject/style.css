@@ -21,6 +21,12 @@ canvas {
   left: 0;
 }
 
+#cam-pos {
+  top: 0;
+  position: sticky;
+  width: 100%;
+}
+
 main {
   width: 100vw;
   color: white;
