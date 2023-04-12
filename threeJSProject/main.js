@@ -176,9 +176,14 @@ function moveCamera() {
   daan.rotation.y += 0.01;
   daan.rotation.z += 0.01;
 
+ if(camera.position.z < 34){
   camera.position.z = t * -0.01;
   camera.position.x = t * -0.0002;
   camera.rotation.y = t * -0.0002;
+ }
+ else{
+  camera.position.z = t * -0.01;
+ }
 
 }
 
