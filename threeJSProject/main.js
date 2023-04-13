@@ -147,7 +147,7 @@ const secondDaan = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.Mesh
 
 scene.add(secondDaan);
 
-secondDaan.position.set(-10, 0, 61.5)
+secondDaan.position.set(-10, 0, 57)
 secondDaan.rotation.set(0, 1.6, 0)
 
 // Moon
@@ -233,4 +233,14 @@ inputs.forEach(function(input) {
 
 document.getElementById("boven-button-button").onclick = function(){
   window.scrollTo(0, 0);
+}
+
+document.addEventListener("keydown", e => {
+  if(e.key == "e"){
+    hidePosition()
+  }
+})
+
+function hidePosition(){
+  document.getElementById('cam-pos').classList.toggle('cam-pos-hidden');
 }
