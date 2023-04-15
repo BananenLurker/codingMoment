@@ -235,12 +235,63 @@ document.getElementById("boven-button-button").onclick = function(){
   window.scrollTo(0, 0);
 }
 
-document.addEventListener("keydown", e => {
-  if(e.key == "e"){
-    hidePosition()
-  }
-})
-
 function hidePosition(){
   document.getElementById('cam-pos').classList.toggle('cam-pos-hidden');
 }
+
+let keys = {
+  d: false,
+  p: false,
+  e: false,
+  q: false,
+};
+
+document.addEventListener("keydown", e => {
+  if(e.key === "e"){
+    keys.e = true;
+  }
+  if(e.key === "q"){
+    keys.q = true;
+  }
+
+  if(keys.e && keys.q){
+    hidePosition();
+  }
+});
+
+document.addEventListener("keyup", e => {
+  if(e.key === "e"){
+    keys.e = false;
+  }
+  if(e.key === "q"){
+    keys.q = false;
+  }
+});
+
+document.addEventListener("keydown", e =>{
+  if(e.key === "d"){
+    keys.d = true;
+  }
+  if(e.key === "p"){
+    keys.p = true;
+  }
+
+  if(keys.d && keys.p){
+    wisseltijd();
+  }
+});
+
+document.addEventListener("keyup", e =>{
+  if(e.key === "d"){
+    keys.d = false;
+  }
+  if(e.key === "p"){
+    keys.p = false;
+  }
+});
+
+const externalHTML1 = "<blockquote><p>Goed gevonden. Klik <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" target=\"_blank\">hier</a> voor een verrassing!</p></blockquote>"
+
+function wisseltijd(){
+  document.getElementById("wisseltijd").innerHTML = externalHTML1;
+};
