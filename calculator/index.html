@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/calculator/style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <nav></nav>
+    <main>
+      <header>
+        <h1>Basic Calculator using JavaScript</h1>
+        <button data-all-clear class="non-numerical-button">AC</button>
+      </header>
+      <div id="content">
+        <div data-previous-operand class="previous-operand"></div>
+        <div data-current-operand class="current-operand"></div>
+        <div class="output"></div>
+        <div class="buttons">
+          <div id="first-row">
+            <button data-number class="numerical-button" id="7">7</button>
+            <button data-number class="numerical-button" id="8">8</button>
+            <button data-number class="numerical-button" id="9">9</button>
+            <button data-operation class="non-numerical-button" id="divider">
+              /
+            </button>
+          </div>
+          <div class="second-row">
+            <button data-number class="numerical-button" id="4">4</button>
+            <button data-number class="numerical-button" id="5">5</button>
+            <button data-number class="numerical-button" id="6">6</button>
+            <button data-operation class="non-numerical-button" id="times">
+              x
+            </button>
+          </div>
+          <div class="third-row">
+            <button data-number class="numerical-button" id="1">1</button>
+            <button data-number class="numerical-button" id="2">2</button>
+            <button data-number class="numerical-button" id="3">3</button>
+            <button data-operation class="non-numerical-button" id="minus">
+              -
+            </button>
+          </div>
+          <div class="fourth-row">
+            <button data-number class="numerical-button" id="0">0</button>
+            <button data-number class="non-numerical-button" id="decimal">
+              .
+            </button>
+            <button
+              data-operation
+              class="non-numerical-button fourth-row"
+              id="plus"
+            >
+              +
+            </button>
+            <button data-equals class="non-numerical-button" id="equals">
+              =
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script src="/calculator/main.js"></script>
+</html>
