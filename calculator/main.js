@@ -9,29 +9,52 @@ class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
       this.previousOperandTextElement = previousOperandTextElement
       this.currentOperandTextElement = currentOperandTextElement
-      this.clear()
+      this.leegte();
   }
 
   leegte(){
     this.currentOperand = ''
     this.previousOperand = ''
-    this.operatie = undefined
+    this.operation = undefined
   }
 
     nummerToevoegen(number){
-        this.currentOperand = number
+      if(number === '.' && this.currentOperand.includes('.')) return
+      this.currentOperand = this.currentOperand.toString() + number.toString()
     }
 
-    operatie(operation){
-
+    operatie(operation) {
+      this.operation = operation
+      this.previousOperand = this.currentOperand
+      this.currentOperand = ''
     }
 
     berekenMoment(){
-
+      let uitrekenen
+      const curr = parseFloat(this.currentOperand)
+      const prev = parseFloat(this.previousOperand)
+      switch(this.operation){
+        case '+':
+          uitrekenen = prev + curr;
+          break;
+        case 'x':
+          uitrekenen = prev * curr;
+          break;
+        case '/':
+          uitrekenen = prev / curr;
+          break;
+        case '-':
+          uitrekenen = prev - curr;
+          break;
+      }
+      this.currentOperand = uitrekenen;
+      this.operation = undefined
+      this.previousOperand = ''
     }
 
     updateDisplay(){
         this.currentOperandTextElement.innerText = this.currentOperand
+        this.previousOperandTextElement.innerText = this.previousOperand
     }
 
   }
@@ -44,4 +67,21 @@ numberButtons.forEach(button => {
         calculator.nummerToevoegen(button.innerText)
         calculator.updateDisplay()
     })
+})
+
+operationButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    calculator.operatie(button.innerText)
+    calculator.updateDisplay()
+  })
+})
+
+allClearButton.addEventListener('click', () => {
+  calculator.leegte()
+  calculator.updateDisplay()
+})
+
+equalsButton.addEventListener('click', () =>{
+  calculator.berekenMoment()
+  calculator.updateDisplay()
 })

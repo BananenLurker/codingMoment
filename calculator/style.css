@@ -17,16 +17,26 @@ main {
   height: auto;
 }
 
-.previous-operand {
-  height: 5vh;
-  width: 100%;
+#operands {
   background: darkgrey;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+/* i hate this */
+.previous-operand {
+  font-size: 3rem;
+  height: 5vh;
+  width: auto;
 }
 
 .current-operand {
-  height: 10vh;
-  width: 100%;
-  background: darkgrey;
+  font-size: 5rem;
+  height: 5vh;
+  width: auto;
 }
 
 header {
@@ -56,6 +66,7 @@ header {
   border-radius: 5rem;
   background: none;
   color: inherit;
+  /* why */
   width: 8vw;
   height: 18vh;
   font: inherit;
