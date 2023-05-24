@@ -24,8 +24,25 @@ class Calculator {
     }
 
     operatie(operation) {
+      let operatieTeken
+      const curr = parseFloat(this.currentOperand)
+      if(curr === '') return
       this.operation = operation
-      this.previousOperand = this.currentOperand
+      switch(this.operation){
+        case '+':
+          operatieTeken = '+';
+          break;
+        case 'x':
+          operatieTeken = 'x';
+          break;
+        case '/':
+          operatieTeken = '/';
+          break;
+        case '-':
+          operatieTeken = '-';
+          break;
+      }
+      this.previousOperand = this.currentOperand + ' ' + operatieTeken
       this.currentOperand = ''
     }
 
@@ -33,6 +50,7 @@ class Calculator {
       let uitrekenen
       const curr = parseFloat(this.currentOperand)
       const prev = parseFloat(this.previousOperand)
+      if(isNaN(curr) || isNaN(prev) || curr === '' || prev === '') return
       switch(this.operation){
         case '+':
           uitrekenen = prev + curr;
@@ -49,7 +67,7 @@ class Calculator {
       }
       this.currentOperand = uitrekenen;
       this.operation = undefined
-      this.previousOperand = ''
+      this.previousOperand = this.previousOperand + ' ' + this.currentOperandTextElement.innerText
     }
 
     updateDisplay(){
