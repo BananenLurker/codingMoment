@@ -4,6 +4,7 @@ const equalsButton = document.querySelector('[data-equals]')
 const allClearButton = document.querySelector('[data-all-clear]')
 const previousOperandTextElement = document.querySelector('[data-previous-operand]')
 const currentOperandTextElement = document.querySelector('[data-current-operand]')
+const deleteButton = document.querySelector('[data-delete-button]')
 
 class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
@@ -21,6 +22,11 @@ class Calculator {
     nummerToevoegen(number){
       if(number === '.' && this.currentOperand.includes('.')) return
       this.currentOperand = this.currentOperand.toString() + number.toString()
+    }
+
+    nummerVerwijderen(){
+      this.currentOperand = this.currentOperand.slice(0, -1);
+      this.currentOperandTextElement.innerText = this.currentOperand
     }
 
     operatie(operation) {
@@ -50,7 +56,11 @@ class Calculator {
       let uitrekenen
       const curr = parseFloat(this.currentOperand)
       const prev = parseFloat(this.previousOperand)
-      if(isNaN(curr) || isNaN(prev) || curr === '' || prev === '') return
+      const operatieTeken = this.previousOperandTextElement.innerText.slice(-1);
+      function isNum(huts){
+        return /\d/.test(huts);
+      }
+      if(isNaN(curr) || isNaN(prev) || curr === '' || prev === '' || isNum(operatieTeken)) return
       switch(this.operation){
         case '+':
           uitrekenen = prev + curr;
@@ -71,8 +81,31 @@ class Calculator {
     }
 
     updateDisplay(){
+      let fatoe = ''
+      switch(this.currentOperand){
+        case '80085':
+          fatoe = 'haha!';
+          break;
+        case '1337':
+          fatoe = 'leet.';
+          break;
+        case '1414':
+          fatoe = 'hihi';
+          break;
+        case '69':
+          fatoe = 'nice.';
+          break;
+        case '1234567890':
+          fatoe = 'https://www.youtube.com/watch?v=xvFZjo5PgG0';
+          break;
+      }
+      if(fatoe === ''){
         this.currentOperandTextElement.innerText = this.currentOperand
         this.previousOperandTextElement.innerText = this.previousOperand
+      }
+      else{
+        this.currentOperandTextElement.innerText = fatoe
+      }
     }
 
   }
@@ -81,10 +114,10 @@ class Calculator {
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
 numberButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        calculator.nummerToevoegen(button.innerText)
-        calculator.updateDisplay()
-    })
+  button.addEventListener('click', () => {
+    calculator.nummerToevoegen(button.innerText)
+    calculator.updateDisplay()
+  })
 })
 
 operationButtons.forEach(button => {
@@ -99,7 +132,11 @@ allClearButton.addEventListener('click', () => {
   calculator.updateDisplay()
 })
 
-equalsButton.addEventListener('click', () =>{
+equalsButton.addEventListener('click', () => {
   calculator.berekenMoment()
   calculator.updateDisplay()
+})
+
+deleteButton.addEventListener('click', () => {
+  calculator.nummerVerwijderen()
 })
