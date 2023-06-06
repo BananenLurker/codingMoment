@@ -295,3 +295,5 @@ const externalHTML1 = "<blockquote><p>Goed gevonden. Klik <a href=\"https://www.
 function wisseltijd(){
   document.getElementById("wisseltijd").innerHTML = externalHTML1;
 };
+
+// &#169; 2023 Daan van der Putten
