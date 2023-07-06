@@ -290,7 +290,7 @@ document.addEventListener("keyup", e =>{
   }
 });
 
-const externalHTML1 = "<blockquote><p>Goed gevonden. Klik <a href=\"https://www.youtube.com/watch?v=dQw4w9WgXcQ\" target=\"_blank\">hier</a> voor een verrassing!</p></blockquote>"
+const externalHTML1 = "<blockquote><p>Goed gevonden. Klik <a href=\"https://www.youtube.com/watch?v=xvFZjo5PgG0\" target=\"_blank\">hier</a> voor een verrassing!</p></blockquote>"
 
 function wisseltijd(){
   document.getElementById("wisseltijd").innerHTML = externalHTML1;
