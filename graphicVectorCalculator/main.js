@@ -14,6 +14,33 @@ function vectorCheck() {
   uitkomsty.innerHTML = '<h2>' + finaly + '</h2>'
 }
 
+function drawGrid(ctx, x1, y1, x2,y2, stroke = 'black', width = 1.5) {
+  ctx.beginPath();
+  ctx.moveTo(x1 + 1, y1);
+  ctx.lineTo(x2 + 1, y2);
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = width;
+  ctx.stroke();
+}
+let canvas = document.getElementById('uitkomst'),
+    ctx = canvas.getContext('2d');
+drawGrid(ctx, 150, 0, 150, 150, 1.5);
+drawGrid(ctx, -10, 75, 300, 75, 1.5);
+
+function tekenVector(ctx, x1, y1, x2,y2, width = 1) {
+  ctx.beginPath();
+  ctx.moveTo(x1 + 1, y1);
+  ctx.lineTo(x2 + 1, y2);
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = width;
+  ctx.stroke();
+}
+
 calculateButton.addEventListener('click', () => {
   vectorCheck();
+  let canvas = document.getElementById('uitkomst'),
+    ctx = canvas.getContext('2d');
+  tekenVector(ctx, 0, 0, vector1x, vector1y, 1);
+  tekenVector(ctx, vector1x, vector1y, vector2x, vector2y, 1);
+  tekenVector(ctx, 0, 0, finalx, finaly, 1.5);
 })
