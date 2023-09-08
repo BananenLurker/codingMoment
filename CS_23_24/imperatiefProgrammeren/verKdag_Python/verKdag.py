@@ -1,4 +1,3 @@
-import datetime
 from datetime import date, datetime, timedelta
 
 print("Wat is je geboortejaar?")
@@ -12,13 +11,11 @@ geboorteDatum = datetime(int(y), int(m), int(d)).date()
 datumNu = date.today()
 
 verschil = datumNu - geboorteDatum
-verKDag = verschil.days % 1000
-
-vorigeVerKdag = datumNu + timedelta(days=-verKDag)
-volgendeVerKdag = datumNu + timedelta(days=1000-verKDag)
+vorigeVerKdag = datumNu + timedelta(days=-verschil.days % 1000)
+volgendeVerKdag = datumNu + timedelta(days=1000-verschil.days % 1000)
 volgendeKroonVerKDag = datumNu + timedelta(days=8000-verschil.days % 8000)
 
-if(verKDag == 0):
+if(verschil.days % 1000 == 0):
     print("Gefeliciteerd, het is je verKdag!")
 else:
     print(f"Je volgende verKdag is op {volgendeVerKdag}.")
