@@ -1,0 +1,15 @@
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\bin\Debug\net7.0\VerKdag_Cscherp.exe
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\bin\Debug\net7.0\VerKdag_Cscherp.deps.json
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\bin\Debug\net7.0\VerKdag_Cscherp.runtimeconfig.json
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\bin\Debug\net7.0\VerKdag_Cscherp.dll
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\bin\Debug\net7.0\VerKdag_Cscherp.pdb
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.GeneratedMSBuildEditorConfig.editorconfig
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.AssemblyInfoInputs.cache
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.AssemblyInfo.cs
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.csproj.CoreCompileInputs.cache
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.sourcelink.json
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.dll
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\refint\VerKdag_Cscherp.dll
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.pdb
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\VerKdag_Cscherp.genruntimeconfig.cache
+C:\LocalRepo\CS_23_24\imperatiefProgrammeren\VerKdag_Cscherp\obj\Debug\net7.0\ref\VerKdag_Cscherp.dll
