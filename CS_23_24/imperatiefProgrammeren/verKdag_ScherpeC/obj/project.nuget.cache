@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "MRx5ZQ09rQFaimOpWslv361nHZ9mF+Fe48DAi7DB5PQfX5ooDalNAJ4HerRw8btqIlVChNGKMH+We5v4ZDw3qw==",
+  "success": true,
+  "projectFilePath": "C:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\verKdag_ScherpeC\\verKdag_ScherpeC.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\daanv\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\7.0.9\\microsoft.windowsdesktop.app.ref.7.0.9.nupkg.sha512",
+    "C:\\Users\\daanv\\.nuget\\packages\\microsoft.netcore.app.ref\\7.0.9\\microsoft.netcore.app.ref.7.0.9.nupkg.sha512",
+    "C:\\Users\\daanv\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\7.0.9\\microsoft.aspnetcore.app.ref.7.0.9.nupkg.sha512",
+    "C:\\Users\\daanv\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\7.0.9\\microsoft.netcore.app.host.win-x64.7.0.9.nupkg.sha512"
+  ],
+  "logs": []
+}
