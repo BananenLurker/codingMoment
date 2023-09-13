@@ -32,7 +32,5 @@ def naLaatste():
 
 def studentNummer():
     student = input("Wat is je studentnummer? ")
-    checksum = student[0] * 7 + student[1] * 6 + student[2] * 5 + student[3] * 4 + student[4] * 3 + student[5] * 2 + student[6] * 1
-    print(str(checksum % 11))
-
-studentNummer()
+    checksum = (int(student[0]) * 7 + int(student[1]) * 6 + int(student[2]) * 5 + int(student[3]) * 4 + int(student[4]) * 3 + int(student[5]) * 2 + int(student[6])) % 11
+    print("De rest van je studentnummer is " + str(checksum) + ".")
