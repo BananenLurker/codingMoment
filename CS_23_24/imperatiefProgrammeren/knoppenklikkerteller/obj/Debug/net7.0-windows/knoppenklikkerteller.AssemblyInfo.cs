@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("knoppenklikkerteller")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6dbc16d516dd9d069b9ce23e9213367451d4af23")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+047f6bad02137f515edfb29b87274003d97b2689")]
 [assembly: System.Reflection.AssemblyProductAttribute("knoppenklikkerteller")]
 [assembly: System.Reflection.AssemblyTitleAttribute("knoppenklikkerteller")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
