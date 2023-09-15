@@ -1,4 +1,3 @@
-import math
 from tkinter import Frame, Label, Button, Entry
 
 scherm = Frame()
