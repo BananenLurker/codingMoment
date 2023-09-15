@@ -7,7 +7,6 @@ C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-wi
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.AssemblyInfoInputs.cache
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.AssemblyInfo.cs
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.csproj.CoreCompileInputs.cache
-C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.sourcelink.json
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.dll
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\refint\grafischeSmiley.dll
 C:\LocalRepo\CS_23_24\imperatiefProgrammeren\grafischeSmiley\obj\Debug\net7.0-windows\grafischeSmiley.pdb
