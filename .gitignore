@@ -1,6 +1,11 @@
-# Local Netlify folder
 .netlify
 **/.vs
 **/bin
 **/Demo2023
-*/bin
+**/bin
+**/Debug
+**/obj
+**.vs
+**bin
+**Debug
+**obj
