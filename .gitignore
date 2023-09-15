@@ -1,2 +1,5 @@
 # Local Netlify folder
 .netlify
+**/.vs
+**/bin
+**/Demo2023
