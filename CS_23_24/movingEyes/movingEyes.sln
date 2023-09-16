@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "movingEyes", "movingEyes.csproj", "{3EAC84F8-B43F-49A0-AF1B-75B75B5A7E18}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EAC84F8-B43F-49A0-AF1B-75B75B5A7E18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EAC84F8-B43F-49A0-AF1B-75B75B5A7E18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EAC84F8-B43F-49A0-AF1B-75B75B5A7E18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EAC84F8-B43F-49A0-AF1B-75B75B5A7E18}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9B31D1B8-EF2D-451D-98F5-BD52182F972D}
+	EndGlobalSection
+EndGlobal
