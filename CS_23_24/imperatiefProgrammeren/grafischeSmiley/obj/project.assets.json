@@ -9,19 +9,19 @@
   },
   "packageFolders": {
     "C:\\Users\\daanv\\.nuget\\packages\\": {},
-    "D:\\Visual studio\\Visual Studio Shared components, tools, SDKs\\NuGetPackages": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\grafischeSmiley.csproj",
+      "projectUniqueName": "C:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\grafischeSmiley.csproj",
       "projectName": "grafischeSmiley",
-      "projectPath": "E:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\grafischeSmiley.csproj",
+      "projectPath": "C:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\grafischeSmiley.csproj",
       "packagesPath": "C:\\Users\\daanv\\.nuget\\packages\\",
-      "outputPath": "E:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\obj\\",
+      "outputPath": "C:\\LocalRepo\\CS_23_24\\imperatiefProgrammeren\\grafischeSmiley\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Visual studio\\Visual Studio Shared components, tools, SDKs\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\daanv\\AppData\\Roaming\\NuGet\\NuGet.Config",
