@@ -7,7 +7,11 @@ using System.Windows.Forms;
 
 Stopwatch timer = new Stopwatch();
 
-int mandelGrootte = 500; // For better looking image, use 800. For ~50% faster computing, use 500.
+Color lighterGreen = ColorTranslator.FromHtml("#3a7415");
+Color darkMagenta = ColorTranslator.FromHtml("#230513");
+Color forestGreen = ColorTranslator.FromHtml("#092f0d");
+
+int mandelGrootte = 500; // For better looking image, use 800. For ~60% faster computing, use 500.
 int clientBreedte = mandelGrootte + 100;
 int clientHoogte = mandelGrootte + 200;
 
@@ -212,15 +216,15 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             }
             if (mandelgetal % 2 == 0)
             {
-                mandelMap.SetPixel(column, row, Color.Black);
+                mandelMap.SetPixel(column, row, darkMagenta);
             }
             else if (mandelgetal % 3 == 0)
             {
-                mandelMap.SetPixel(column, row, Color.Blue);
+                mandelMap.SetPixel(column, row, lighterGreen);
             }
             else
             {
-                mandelMap.SetPixel(column, row, Color.DarkBlue);
+                mandelMap.SetPixel(column, row, forestGreen);
             }
         }
     }
