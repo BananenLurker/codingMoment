@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 Stopwatch timer = new Stopwatch();
 
-int mandelGrootte = 500;
+int mandelGrootte = 500; // For better looking image, use 800. For ~50% faster computing, use 500.
 int clientBreedte = mandelGrootte + 100;
 int clientHoogte = mandelGrootte + 200;
 
@@ -37,25 +37,11 @@ Label middenxL = new Label
     Text = "Midden X:"
 };
 
-TextBox middenxBox = new TextBox
-{
-    Location = new Point(110, 6),
-    Size = new Size(200, 16),
-    Text = "-0,108625"
-};
-
 Label middenyL = new Label
 {
     Size = new Size(60, 16),
     Location = new Point(10, 36),
     Text = "Midden Y:"
-};
-
-TextBox middenyBox = new TextBox
-{
-    Location = new Point(110, 36),
-    Size = new Size(200, 16),
-    Text = "0,9014428"
 };
 
 Label schaalL = new Label
@@ -65,32 +51,11 @@ Label schaalL = new Label
     Text = "Schaal:"
 };
 
-TextBox schaalBox = new TextBox
-{
-    Location = new Point(110, 66),
-    Size = new Size(200, 16),
-    Text = "3,8147E-8"
-};
-
 Label aantalL = new Label
 {
     Size = new Size(60, 16),
     Location = new Point(10, 96),
     Text = "Max aantal iteraties:"
-};
-
-TextBox aantalBox = new TextBox
-{
-    Location = new Point(110, 96),
-    Size = new Size(60, 16),
-    Text = "400"
-};
-
-Button mandelButton = new Button
-{
-    Size = new Size(60, 20),
-    Location = new Point(170, 96),
-    Text = "Go!"
 };
 
 Label loading = new Label
@@ -100,6 +65,59 @@ Label loading = new Label
     Text = "",
     BackColor = Color.White
 };
+
+TextBox middenxBox = new TextBox
+{
+    Location = new Point(110, 6),
+    Size = new Size(200, 16),
+    Text = "0"
+};
+
+TextBox middenyBox = new TextBox
+{
+    Location = new Point(110, 36),
+    Size = new Size(200, 16),
+    Text = "0"
+};
+
+TextBox schaalBox = new TextBox
+{
+    Location = new Point(110, 66),
+    Size = new Size(200, 16),
+    Text = "0,008"
+};
+
+TextBox aantalBox = new TextBox
+{
+    Location = new Point(110, 96),
+    Size = new Size(60, 16),
+    Text = "100"
+};
+
+Button mandelButton = new Button
+{
+    Size = new Size(60, 20),
+    Location = new Point(170, 96),
+    Text = "Go!"
+};
+
+Button presetButton = new Button
+{
+    Size = new Size(60, 20),
+    Location = new Point(110, 125),
+    Text = "Presets"
+};
+
+ContextMenuStrip presetStrip = new ContextMenuStrip();
+ToolStripMenuItem toolStrip1 = new ToolStripMenuItem();
+ToolStripMenuItem toolStrip2 = new ToolStripMenuItem();
+ToolStripMenuItem toolStrip3 = new ToolStripMenuItem();
+
+toolStrip1.Text = "Preset 1";
+toolStrip2.Text = "Preset 2";
+toolStrip3.Text = "Preset 3";
+
+presetStrip.Items.AddRange(new ToolStripItem[] {toolStrip1, toolStrip2, toolStrip3});
 
 // Adding controls
 
@@ -114,6 +132,7 @@ scherm.Controls.Add(schaalBox);
 scherm.Controls.Add(aantalL);
 scherm.Controls.Add(aantalBox);
 scherm.Controls.Add(loading);
+scherm.Controls.Add(presetButton);
 
 // Calculation variables
 
@@ -125,7 +144,7 @@ int mandelgetal;
 
 // Calculations
 
-void muisMandelRekenen(object sender, MouseEventArgs mea)
+void mandelRekenen_MouseClick(object sender, MouseEventArgs mea)
 {
     timer.Start();
     maxIteraties = double.Parse(aantalBox.Text);
@@ -133,31 +152,32 @@ void muisMandelRekenen(object sender, MouseEventArgs mea)
     if(mea.Button == MouseButtons.Left)
     {
         sch *= 0.5;
+        xmidden = (mea.X - mandelGrootte / 2.0) * sch + xmidden;
+        ymidden = (mea.Y - mandelGrootte / 2.0) * sch + ymidden;
+        schaalBox.Text = $"{sch}";
+        middenxBox.Text = $"{xmidden}";
+        middenyBox.Text = $"{ymidden}";
     }
     else if(mea.Button == MouseButtons.Right)
     {
         sch *= 2.0;
+        schaalBox.Text = $"{sch}";
     }
     else
     {
-        sch = 0.01;
         xmidden = 0;
         ymidden = 0;
-        schaalBox.Text = $"{(decimal)sch}";
+        sch = 0.008;
+        maxIteraties = 100;
+        schaalBox.Text = $"{sch}";
         middenxBox.Text = $"{xmidden}";
         middenyBox.Text = $"{ymidden}";
-        mandelRekenen(maxIteraties, sch, xmidden, ymidden);
-        return;
+        aantalBox.Text = $"{maxIteraties}";
     }
-    xmidden = (mea.X - mandelGrootte / 2.0) * sch + xmidden;
-    ymidden = (mea.Y - mandelGrootte / 2.0) * sch + ymidden;
-    schaalBox.Text = $"{sch}";
-    middenxBox.Text = $"{xmidden}";
-    middenyBox.Text = $"{ymidden}";
     mandelRekenen(maxIteraties, sch, xmidden, ymidden);
 }
 
-void preMandelRekenen(object o, EventArgs e)
+void mandelRekenen_Click(object o, EventArgs e)
 {
     timer.Start();
     maxIteraties = double.Parse(aantalBox.Text);
@@ -177,8 +197,8 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             double a = 0;
             double b = 0;
 
-            double x = ((column - mandelGrootte / 2.0) * s + xm);
-            double y = ((row - mandelGrootte / 2.0) * s + ym);
+            double x = (column - mandelGrootte / 2.0) * s + xm;
+            double y = (row - mandelGrootte / 2.0) * s + ym;
 
             mandelgetal = 0;
 
@@ -212,8 +232,52 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
     timer.Reset();
 }
 
-mandelButton.Click += preMandelRekenen;
-mandelLabel.MouseClick += muisMandelRekenen;
 
-preMandelRekenen(null, null);
+// Preset functions
+
+void showPresets(object sender, EventArgs e)
+{
+    presetStrip.Show(presetButton, 0, 20);
+}
+
+void toolStrip1_Click(object o, EventArgs e)
+{
+    middenxBox.Text = "0,3233934";
+    middenyBox.Text = "0,41776";
+    schaalBox.Text = "6,62939453125E-08";
+    aantalBox.Text = "600";
+    mandelRekenen_Click(null, null);
+};
+
+void toolStrip2_Click(object o, EventArgs e)
+{
+    middenxBox.Text = "-0,108625";
+    middenyBox.Text = "0,9014428";
+    schaalBox.Text = "3,8147E-08";
+    aantalBox.Text = "400";
+    mandelRekenen_Click(null, null);
+};
+void toolStrip3_Click(object o, EventArgs e)
+{
+    middenxBox.Text = "0,3346749973297119";
+    middenyBox.Text = "0,3832778453826904";
+    schaalBox.Text = "3,814697265625E-08";
+    aantalBox.Text = "400";
+    mandelRekenen_Click(null, null);
+};
+
+// Toolstrip controls
+
+toolStrip1.Click += toolStrip1_Click;
+toolStrip2.Click += toolStrip2_Click;
+toolStrip3.Click += toolStrip3_Click;
+
+// Other (mouse-)button controls + run on startup command
+
+mandelButton.Click += mandelRekenen_Click;
+mandelLabel.MouseClick += mandelRekenen_MouseClick;
+presetButton.Click += showPresets;
+
+mandelRekenen_Click(null, null);
+
 Application.Run(scherm);
