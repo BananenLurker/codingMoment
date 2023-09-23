@@ -11,9 +11,9 @@ Color lighterGreen = ColorTranslator.FromHtml("#3a7415");
 Color darkMagenta = ColorTranslator.FromHtml("#230513");
 Color forestGreen = ColorTranslator.FromHtml("#092f0d");
 
-int mandelGrootte = 500; // For better looking image, use 800. For ~60% faster computing, use 500.
+int mandelGrootte = 800; // For better looking image, use 800. For ~60% faster computing, use 500.
 int clientBreedte = mandelGrootte + 100;
-int clientHoogte = mandelGrootte + 200;
+int clientHoogte = mandelGrootte + 200; 
 
 // GUI: instantiating and settings
 
@@ -216,15 +216,19 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             }
             if (mandelgetal % 2 == 0)
             {
-                mandelMap.SetPixel(column, row, darkMagenta);
+                mandelMap.SetPixel(column, row, Color.Black);
             }
             else if (mandelgetal % 3 == 0)
             {
-                mandelMap.SetPixel(column, row, lighterGreen);
+                mandelMap.SetPixel(column, row, Color.Pink);
+            }
+            else if (mandelgetal % 5 == 0)
+            {
+                mandelMap.SetPixel(column, row, Color.Black);
             }
             else
             {
-                mandelMap.SetPixel(column, row, forestGreen);
+                mandelMap.SetPixel(column, row, Color.Pink);
             }
         }
     }
