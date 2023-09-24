@@ -5,15 +5,28 @@ using System.Windows.Forms;
 
 // Global variables
 
+int mandelGrootte = 500; // For better looking image, use 800. For ~60% faster computing, use 500.
+int clientBreedte = mandelGrootte + 100;
+int clientHoogte = mandelGrootte + 200;
 Stopwatch timer = new Stopwatch();
+
+// Colors
+
+Color darkestGreen = Color.FromArgb(52, 78, 65);
+Color green1 = Color.FromArgb(58, 90, 64);
+Color green2 = Color.FromArgb(88, 129, 87);
+Color green3 = Color.FromArgb(163, 177, 138);
+Color lightestGreen = Color.FromArgb(233, 237, 201);
 
 Color lighterGreen = ColorTranslator.FromHtml("#3a7415");
 Color darkMagenta = ColorTranslator.FromHtml("#230513");
 Color forestGreen = ColorTranslator.FromHtml("#092f0d");
 
-int mandelGrootte = 800; // For better looking image, use 800. For ~60% faster computing, use 500.
-int clientBreedte = mandelGrootte + 100;
-int clientHoogte = mandelGrootte + 200; 
+Color[] zwartWitteLijst = new Color[] { Color.Black, Color.White };
+Color[] groeneLijst = new Color[] { darkestGreen, green1, green2, green3, lightestGreen };
+Color[] funkyLijst = new Color[] { Color.Black, Color.Orange, Color.Purple, Color.Yellow };
+
+Color[] kleurenLijst = zwartWitteLijst;
 
 // GUI: instantiating and settings
 
@@ -65,7 +78,7 @@ Label aantalL = new Label
 Label loading = new Label
 {
     Size = new Size(175, 16),
-    Location = new Point(mandelGrootte - 125, 125),
+    Location = new Point(mandelGrootte - 125, mandelGrootte + 150),
     Text = "",
     BackColor = Color.White
 };
@@ -112,16 +125,41 @@ Button presetButton = new Button
     Text = "Presets"
 };
 
+Button kleurenGenButton = new Button
+{
+    Size = new Size(125, 25),
+    Location = new Point(350, 120),
+    Text = "Kleuren generatie"
+};
+
+Button kleurenFunkyButton = new Button
+{
+    Size = new Size(60, 20),
+    Location = new Point(180, 125),
+    Text = "Kleuren1"
+};
+
+Button kleurenGroenButton = new Button
+{
+    Size = new Size(60, 20),
+    Location = new Point(250, 125),
+    Text = "Kleuren2"
+};
+
 ContextMenuStrip presetStrip = new ContextMenuStrip();
 ToolStripMenuItem toolStrip1 = new ToolStripMenuItem();
 ToolStripMenuItem toolStrip2 = new ToolStripMenuItem();
 ToolStripMenuItem toolStrip3 = new ToolStripMenuItem();
+ToolStripMenuItem toolStrip4 = new ToolStripMenuItem();
+
+ToolStripMenuItem lastToolStrip = toolStrip1;
 
 toolStrip1.Text = "Preset 1";
 toolStrip2.Text = "Preset 2";
 toolStrip3.Text = "Preset 3";
+toolStrip4.Text = "Preset 4";
 
-presetStrip.Items.AddRange(new ToolStripItem[] {toolStrip1, toolStrip2, toolStrip3});
+presetStrip.Items.AddRange(new ToolStripItem[] {toolStrip1, toolStrip2, toolStrip3, toolStrip4});
 
 // Adding controls
 
@@ -137,6 +175,9 @@ scherm.Controls.Add(aantalL);
 scherm.Controls.Add(aantalBox);
 scherm.Controls.Add(loading);
 scherm.Controls.Add(presetButton);
+scherm.Controls.Add(kleurenFunkyButton);
+scherm.Controls.Add(kleurenGroenButton);
+scherm.Controls.Add(kleurenGenButton);
 
 // Calculation variables
 
@@ -214,22 +255,17 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
                 b = btijdelijk;
                 mandelgetal++;
             }
-            if (mandelgetal % 2 == 0)
+            string kleurenSelectie = kleurenGenButton.Text;
+            if (kleurenSelectie == "Kleuren generatie")
             {
-                mandelMap.SetPixel(column, row, Color.Black);
+                mandelMap.SetPixel(column, row, zwartWitteLijst[mandelgetal % zwartWitteLijst.Length]);
             }
-            else if (mandelgetal % 3 == 0)
+            else if (kleurenSelectie == "Kleur presets")
             {
-                mandelMap.SetPixel(column, row, Color.Pink);
+                mandelMap.SetPixel(column, row, kleurenLijst[mandelgetal % kleurenLijst.Length]);
             }
-            else if (mandelgetal % 5 == 0)
-            {
-                mandelMap.SetPixel(column, row, Color.Black);
-            }
-            else
-            {
-                mandelMap.SetPixel(column, row, Color.Pink);
-            }
+            mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % 100, mandelgetal % 50, mandelgetal % 10));
+            //mandelMap.SetPixel(column, row, kleurenLijst[mandelgetal % kleurenLijst.Length]);
         }
     }
 
@@ -239,7 +275,6 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
     loading.Text = $"Loading time: {timer.ElapsedMilliseconds} ms.";
     timer.Reset();
 }
-
 
 // Preset functions
 
@@ -254,6 +289,10 @@ void toolStrip1_Click(object o, EventArgs e)
     middenyBox.Text = "0,41776";
     schaalBox.Text = "6,62939453125E-08";
     aantalBox.Text = "600";
+
+    lastToolStrip.Checked = false;
+    toolStrip1.Checked = true;
+    lastToolStrip = toolStrip1;
     mandelRekenen_Click(null, null);
 };
 
@@ -263,6 +302,10 @@ void toolStrip2_Click(object o, EventArgs e)
     middenyBox.Text = "0,9014428";
     schaalBox.Text = "3,8147E-08";
     aantalBox.Text = "400";
+
+    lastToolStrip.Checked = false;
+    toolStrip2.Checked = true;
+    lastToolStrip = toolStrip2;
     mandelRekenen_Click(null, null);
 };
 void toolStrip3_Click(object o, EventArgs e)
@@ -271,6 +314,37 @@ void toolStrip3_Click(object o, EventArgs e)
     middenyBox.Text = "0,3832778453826904";
     schaalBox.Text = "3,814697265625E-08";
     aantalBox.Text = "400";
+
+    lastToolStrip.Checked = false;
+    toolStrip3.Checked = true;
+    lastToolStrip = toolStrip3;
+    mandelRekenen_Click(null, null);
+};
+
+void toolStrip4_Click(object o, EventArgs e)
+{
+    middenxBox.Text = "0,328020";
+    middenyBox.Text = "-0,528115";
+    schaalBox.Text = "2,80031E-07";
+    aantalBox.Text = "200";
+
+    lastToolStrip.Checked = false;
+    toolStrip4.Checked = true;
+    lastToolStrip = toolStrip4;
+    mandelRekenen_Click(null, null);
+};
+
+// Color preset functions
+
+void kleurenGroen_Click(object o, EventArgs e)
+{
+    kleurenLijst = groeneLijst;
+    mandelRekenen_Click(null, null);
+};
+
+void kleurenFunky_Click(object o, EventArgs e)
+{
+    kleurenLijst = funkyLijst;
     mandelRekenen_Click(null, null);
 };
 
@@ -279,12 +353,16 @@ void toolStrip3_Click(object o, EventArgs e)
 toolStrip1.Click += toolStrip1_Click;
 toolStrip2.Click += toolStrip2_Click;
 toolStrip3.Click += toolStrip3_Click;
+toolStrip4.Click += toolStrip4_Click;
 
 // Other (mouse-)button controls + run on startup command
 
 mandelButton.Click += mandelRekenen_Click;
 mandelLabel.MouseClick += mandelRekenen_MouseClick;
 presetButton.Click += showPresets;
+
+kleurenGroenButton.Click += kleurenGroen_Click;
+kleurenFunkyButton.Click += kleurenFunky_Click;
 
 mandelRekenen_Click(null, null);
 
