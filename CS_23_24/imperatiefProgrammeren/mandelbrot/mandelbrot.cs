@@ -146,20 +146,33 @@ Button kleurenGroenButton = new Button
     Text = "Kleuren2"
 };
 
+ContextMenuStrip kleurenStrip = new ContextMenuStrip();
+ToolStripMenuItem kleurenToolStrip1 = new ToolStripMenuItem();
+ToolStripMenuItem kleurenToolStrip2 = new ToolStripMenuItem();
+ToolStripMenuItem kleurenToolStrip3 = new ToolStripMenuItem();
+
+ToolStripMenuItem lastKleurenToolStrip = kleurenToolStrip1;
+
+kleurenToolStrip1.Text = "Zwart-Wit";
+kleurenToolStrip2.Text = "Kleur presets";
+kleurenToolStrip3.Text = "Vloeiende kleur";
+
+kleurenStrip.Items.AddRange(new ToolStripItem[] {kleurenToolStrip1, kleurenToolStrip2, kleurenToolStrip3});
+
 ContextMenuStrip presetStrip = new ContextMenuStrip();
-ToolStripMenuItem toolStrip1 = new ToolStripMenuItem();
-ToolStripMenuItem toolStrip2 = new ToolStripMenuItem();
-ToolStripMenuItem toolStrip3 = new ToolStripMenuItem();
-ToolStripMenuItem toolStrip4 = new ToolStripMenuItem();
+ToolStripMenuItem presetToolStrip1 = new ToolStripMenuItem();
+ToolStripMenuItem presetToolStrip2 = new ToolStripMenuItem();
+ToolStripMenuItem presetToolStrip3 = new ToolStripMenuItem();
+ToolStripMenuItem presetToolStrip4 = new ToolStripMenuItem();
 
-ToolStripMenuItem lastToolStrip = toolStrip1;
+ToolStripMenuItem lastPresetToolStrip = presetToolStrip1;
 
-toolStrip1.Text = "Preset 1";
-toolStrip2.Text = "Preset 2";
-toolStrip3.Text = "Preset 3";
-toolStrip4.Text = "Preset 4";
+presetToolStrip1.Text = "Preset 1";
+presetToolStrip2.Text = "Preset 2";
+presetToolStrip3.Text = "Preset 3";
+presetToolStrip4.Text = "Preset 4";
 
-presetStrip.Items.AddRange(new ToolStripItem[] {toolStrip1, toolStrip2, toolStrip3, toolStrip4});
+presetStrip.Items.AddRange(new ToolStripItem[] {presetToolStrip1, presetToolStrip2, presetToolStrip3, presetToolStrip4});
 
 // Adding controls
 
@@ -192,6 +205,7 @@ int mandelgetal;
 void mandelRekenen_MouseClick(object sender, MouseEventArgs mea)
 {
     timer.Start();
+    lastPresetToolStrip.Checked = false;
     maxIteraties = double.Parse(aantalBox.Text);
     sch = double.Parse(schaalBox.Text);
     if(mea.Button == MouseButtons.Left)
@@ -258,14 +272,25 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             string kleurenSelectie = kleurenGenButton.Text;
             if (kleurenSelectie == "Kleuren generatie")
             {
+                hideEverything();
+                mandelMap.SetPixel(column, row, zwartWitteLijst[mandelgetal % zwartWitteLijst.Length]);
+            }
+            else if(kleurenSelectie == "Zwart-Wit")
+            {
+                hideEverything();
                 mandelMap.SetPixel(column, row, zwartWitteLijst[mandelgetal % zwartWitteLijst.Length]);
             }
             else if (kleurenSelectie == "Kleur presets")
             {
+                kleurenGroenButton.Size = new Size(60, 20);
+                kleurenFunkyButton.Size = new Size(60, 20);
                 mandelMap.SetPixel(column, row, kleurenLijst[mandelgetal % kleurenLijst.Length]);
             }
-            mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % 100, mandelgetal % 50, mandelgetal % 10));
-            //mandelMap.SetPixel(column, row, kleurenLijst[mandelgetal % kleurenLijst.Length]);
+            else if (kleurenSelectie == "Vloeiende kleur")
+            {
+                hideEverything();
+                mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % 100, mandelgetal % 50, mandelgetal % 10));
+            }
         }
     }
 
@@ -278,59 +303,70 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
 
 // Preset functions
 
+void hideEverything()
+{
+    kleurenGroenButton.Size = new Size(0, 0);
+    kleurenFunkyButton.Size = new Size(0, 0);
+}
+
 void showPresets(object sender, EventArgs e)
 {
     presetStrip.Show(presetButton, 0, 20);
 }
 
-void toolStrip1_Click(object o, EventArgs e)
+void showKleuren(object sender, EventArgs e)
+{
+    kleurenStrip.Show(kleurenGenButton, 0, 20);
+}
+
+void presetToolStrip1_Click(object o, EventArgs e)
 {
     middenxBox.Text = "0,3233934";
     middenyBox.Text = "0,41776";
     schaalBox.Text = "6,62939453125E-08";
     aantalBox.Text = "600";
 
-    lastToolStrip.Checked = false;
-    toolStrip1.Checked = true;
-    lastToolStrip = toolStrip1;
+    lastPresetToolStrip.Checked = false;
+    presetToolStrip1.Checked = true;
+    lastPresetToolStrip = presetToolStrip1;
     mandelRekenen_Click(null, null);
 };
 
-void toolStrip2_Click(object o, EventArgs e)
+void presetToolStrip2_Click(object o, EventArgs e)
 {
     middenxBox.Text = "-0,108625";
     middenyBox.Text = "0,9014428";
     schaalBox.Text = "3,8147E-08";
     aantalBox.Text = "400";
 
-    lastToolStrip.Checked = false;
-    toolStrip2.Checked = true;
-    lastToolStrip = toolStrip2;
+    lastPresetToolStrip.Checked = false;
+    presetToolStrip2.Checked = true;
+    lastPresetToolStrip = presetToolStrip2;
     mandelRekenen_Click(null, null);
 };
-void toolStrip3_Click(object o, EventArgs e)
+void presetToolStrip3_Click(object o, EventArgs e)
 {
     middenxBox.Text = "0,3346749973297119";
     middenyBox.Text = "0,3832778453826904";
     schaalBox.Text = "3,814697265625E-08";
     aantalBox.Text = "400";
 
-    lastToolStrip.Checked = false;
-    toolStrip3.Checked = true;
-    lastToolStrip = toolStrip3;
+    lastPresetToolStrip.Checked = false;
+    presetToolStrip3.Checked = true;
+    lastPresetToolStrip = presetToolStrip3;
     mandelRekenen_Click(null, null);
 };
 
-void toolStrip4_Click(object o, EventArgs e)
+void presetToolStrip4_Click(object o, EventArgs e)
 {
     middenxBox.Text = "0,328020";
     middenyBox.Text = "-0,528115";
     schaalBox.Text = "2,80031E-07";
     aantalBox.Text = "200";
 
-    lastToolStrip.Checked = false;
-    toolStrip4.Checked = true;
-    lastToolStrip = toolStrip4;
+    lastPresetToolStrip.Checked = false;
+    presetToolStrip4.Checked = true;
+    lastPresetToolStrip = presetToolStrip4;
     mandelRekenen_Click(null, null);
 };
 
@@ -348,21 +384,53 @@ void kleurenFunky_Click(object o, EventArgs e)
     mandelRekenen_Click(null, null);
 };
 
-// Toolstrip controls
+void kleurenToolStrip1_Click(object o, EventArgs e)
+{
+    kleurenGenButton.Text = "Zwart-Wit";
+    lastKleurenToolStrip.Checked = false;
+    kleurenToolStrip1.Checked = true;
+    lastKleurenToolStrip = kleurenToolStrip1;
+    mandelRekenen_Click(null, null);
+};
 
-toolStrip1.Click += toolStrip1_Click;
-toolStrip2.Click += toolStrip2_Click;
-toolStrip3.Click += toolStrip3_Click;
-toolStrip4.Click += toolStrip4_Click;
+void kleurenToolStrip2_Click(object o, EventArgs e)
+{
+    kleurenGenButton.Text = "Kleur presets";
+    lastKleurenToolStrip.Checked = false;
+    kleurenToolStrip2.Checked = true;
+    lastKleurenToolStrip = kleurenToolStrip2;
+    mandelRekenen_Click(null, null);
+};
+
+void kleurenToolStrip3_Click(object o, EventArgs e)
+{
+    kleurenGenButton.Text = "Vloeiende kleur";
+    lastKleurenToolStrip.Checked = false;
+    kleurenToolStrip3.Checked = true;
+    lastKleurenToolStrip = kleurenToolStrip3;
+    mandelRekenen_Click(null, null);
+};
+
+// Toolstrip controls for presets and colors
+
+presetToolStrip1.Click += presetToolStrip1_Click;
+presetToolStrip2.Click += presetToolStrip2_Click;
+presetToolStrip3.Click += presetToolStrip3_Click;
+presetToolStrip4.Click += presetToolStrip4_Click;
+
+kleurenToolStrip1.Click += kleurenToolStrip1_Click;
+kleurenToolStrip2.Click += kleurenToolStrip2_Click;
+kleurenToolStrip3.Click += kleurenToolStrip3_Click;
+
+kleurenGroenButton.Click += kleurenGroen_Click;
+kleurenFunkyButton.Click += kleurenFunky_Click;
 
 // Other (mouse-)button controls + run on startup command
 
 mandelButton.Click += mandelRekenen_Click;
 mandelLabel.MouseClick += mandelRekenen_MouseClick;
 presetButton.Click += showPresets;
-
-kleurenGroenButton.Click += kleurenGroen_Click;
-kleurenFunkyButton.Click += kleurenFunky_Click;
+kleurenGenButton.Click += showKleuren;
 
 mandelRekenen_Click(null, null);
 
