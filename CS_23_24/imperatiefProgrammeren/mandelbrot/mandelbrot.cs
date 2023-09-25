@@ -12,6 +12,36 @@ Stopwatch timer = new Stopwatch();
 
 // Colors
 
+Color regenboogRood = Color.FromArgb(247, 2, 2);
+Color regenboogOranje = Color.FromArgb(247, 125, 2);
+Color regenboogGeel = Color.FromArgb(247, 235, 2);
+Color regenboogGroen = Color.FromArgb(2, 247, 2);
+Color regenboogBlauw = Color.FromArgb(2, 2, 247);
+
+Color kobaltBlauw = Color.FromArgb(60, 50, 149);
+Color royalPaars = Color.FromArgb(99, 28, 153);
+Color lichtLila = Color.FromArgb(177, 147, 196);
+Color donkerPaars = Color.FromArgb(59, 0, 101);
+Color blauwGroen = Color.FromArgb(52, 180, 174);
+
+Color donkerRood = Color.FromArgb(181, 0, 12);
+Color warmOranje = Color.FromArgb(247, 125, 2);
+Color helderGeel = Color.FromArgb(252, 220, 75);
+Color vuurRood = Color.FromArgb(251, 49, 4);
+Color lichtOranje = Color.FromArgb(252, 126, 20);
+
+Color zwart = Color.FromArgb(0, 0, 0);
+Color donkerGrijs = Color.FromArgb(69, 69, 69);
+Color middenGrijs = Color.FromArgb(102, 102, 102);
+Color lichtGrijs = Color.FromArgb(153, 153, 153);
+Color wit = Color.FromArgb(255, 255, 255);
+
+Color boterGeel = Color.FromArgb(255, 229, 74);
+Color lichtGroen = Color.FromArgb(152, 255, 110);
+Color luchtBlauw = Color.FromArgb(161, 248, 255);
+Color bosGroen = Color.FromArgb(0, 174, 125);
+Color grasGroen = Color.FromArgb(128, 216, 25);
+
 Color darkestGreen = Color.FromArgb(52, 78, 65);
 Color green1 = Color.FromArgb(58, 90, 64);
 Color green2 = Color.FromArgb(88, 129, 87);
@@ -23,7 +53,12 @@ Color darkMagenta = ColorTranslator.FromHtml("#230513");
 Color forestGreen = ColorTranslator.FromHtml("#092f0d");
 
 Color[] zwartWitteLijst = new Color[] { Color.Black, Color.White };
-Color[] groeneLijst = new Color[] { darkestGreen, green1, green2, green3, lightestGreen };
+Color[] regenboogLijst = new Color[] { regenboogRood, regenboogOranje, regenboogGeel, regenboogGroen, regenboogBlauw };
+Color[] koeleLijst = new Color[] { kobaltBlauw, royalPaars, lichtLila, donkerPaars, blauwGroen };
+Color[] vurigeLijst = new Color[] { donkerRood, warmOranje, helderGeel, vuurRood, lichtOranje };
+Color[] grijzeLijst = new Color[] { zwart, donkerGrijs, middenGrijs, lichtGrijs, wit };
+Color[] groeneLijst = new Color[] { boterGeel, lichtGroen, luchtBlauw, bosGroen, grasGroen };
+Color[] groeneLijst2 = new Color[] { darkestGreen, green1, green2, green3, lightestGreen };
 Color[] funkyLijst = new Color[] { Color.Black, Color.Orange, Color.Purple, Color.Yellow };
 
 Color[] kleurenLijst = zwartWitteLijst;
@@ -83,6 +118,30 @@ Label loading = new Label
     BackColor = Color.White
 };
 
+Label roodL = new Label
+{
+    Size = new Size(60, 15),
+    Location = new Point(320, 15),
+    Text = "R: 0",
+    BackColor = Color.FromArgb(255, 190, 190)
+};
+
+Label groenL = new Label
+{
+    Size = new Size(60, 15),
+    Location = new Point(320, 65),
+    Text = "G: 0",
+    BackColor = Color.FromArgb(190, 255, 190)
+};
+
+Label blauwL = new Label
+{
+    Size = new Size(60, 15),
+    Location = new Point(320, 115),
+    Text = "B: 0",
+    BackColor = Color.FromArgb(190, 190, 255)
+};
+
 TextBox middenxBox = new TextBox
 {
     Location = new Point(110, 6),
@@ -113,22 +172,22 @@ TextBox aantalBox = new TextBox
 
 Button mandelButton = new Button
 {
-    Size = new Size(60, 20),
-    Location = new Point(170, 96),
+    Size = new Size(60, 25),
+    Location = new Point(110, 120),
     Text = "Go!"
 };
 
 Button presetButton = new Button
 {
-    Size = new Size(60, 20),
-    Location = new Point(110, 125),
+    Size = new Size(125, 25),
+    Location = new Point(185, 95),
     Text = "Presets"
 };
 
 Button kleurenGenButton = new Button
 {
     Size = new Size(125, 25),
-    Location = new Point(350, 120),
+    Location = new Point(185, 120),
     Text = "Kleuren generatie"
 };
 
@@ -146,18 +205,44 @@ Button kleurenGroenButton = new Button
     Text = "Kleuren2"
 };
 
+TrackBar roodBar = new TrackBar
+{
+    Size = new Size(200, 10),
+    Location = new Point(360, 10),
+    Maximum = 255,
+    Minimum = 0
+};
+
+TrackBar groenBar = new TrackBar
+{
+    Size = new Size(200, 10),
+    Location = new Point(360, 60),
+    Maximum = 255,
+    Minimum = 0
+};
+
+TrackBar blauwBar = new TrackBar
+{
+    Size = new Size(200, 10),
+    Location = new Point(360, 110),
+    Maximum = 255,
+    Minimum = 0
+};
+
 ContextMenuStrip kleurenStrip = new ContextMenuStrip();
 ToolStripMenuItem kleurenToolStrip1 = new ToolStripMenuItem();
 ToolStripMenuItem kleurenToolStrip2 = new ToolStripMenuItem();
 ToolStripMenuItem kleurenToolStrip3 = new ToolStripMenuItem();
+ToolStripMenuItem kleurenToolStrip4 = new ToolStripMenuItem();
 
 ToolStripMenuItem lastKleurenToolStrip = kleurenToolStrip1;
 
 kleurenToolStrip1.Text = "Zwart-Wit";
 kleurenToolStrip2.Text = "Kleur presets";
 kleurenToolStrip3.Text = "Vloeiende kleur";
+kleurenToolStrip4.Text = "RGB sliders";
 
-kleurenStrip.Items.AddRange(new ToolStripItem[] {kleurenToolStrip1, kleurenToolStrip2, kleurenToolStrip3});
+kleurenStrip.Items.AddRange(new ToolStripItem[] {kleurenToolStrip1, kleurenToolStrip2, kleurenToolStrip3, kleurenToolStrip4});
 
 ContextMenuStrip presetStrip = new ContextMenuStrip();
 ToolStripMenuItem presetToolStrip1 = new ToolStripMenuItem();
@@ -191,6 +276,12 @@ scherm.Controls.Add(presetButton);
 scherm.Controls.Add(kleurenFunkyButton);
 scherm.Controls.Add(kleurenGroenButton);
 scherm.Controls.Add(kleurenGenButton);
+scherm.Controls.Add(roodBar);
+scherm.Controls.Add(groenBar);
+scherm.Controls.Add(blauwBar);
+scherm.Controls.Add(roodL);
+scherm.Controls.Add(groenL);
+scherm.Controls.Add(blauwL);
 
 // Calculation variables
 
@@ -199,6 +290,10 @@ double ymidden = double.Parse(middenyBox.Text);
 double maxIteraties;
 double sch;
 int mandelgetal;
+
+int rood = 0;
+int groen = 0;
+int blauw = 0;
 
 // Calculations
 
@@ -272,24 +367,24 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             string kleurenSelectie = kleurenGenButton.Text;
             if (kleurenSelectie == "Kleuren generatie")
             {
-                hideEverything();
                 mandelMap.SetPixel(column, row, zwartWitteLijst[mandelgetal % zwartWitteLijst.Length]);
             }
             else if(kleurenSelectie == "Zwart-Wit")
             {
-                hideEverything();
+
                 mandelMap.SetPixel(column, row, zwartWitteLijst[mandelgetal % zwartWitteLijst.Length]);
             }
             else if (kleurenSelectie == "Kleur presets")
             {
-                kleurenGroenButton.Size = new Size(60, 20);
-                kleurenFunkyButton.Size = new Size(60, 20);
                 mandelMap.SetPixel(column, row, kleurenLijst[mandelgetal % kleurenLijst.Length]);
             }
             else if (kleurenSelectie == "Vloeiende kleur")
             {
-                hideEverything();
                 mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % 100, mandelgetal % 50, mandelgetal % 10));
+            }
+            else if(kleurenSelectie == "RGB sliders")
+            {
+                mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal * rood % 256, mandelgetal * groen % 256, mandelgetal * blauw % 256));
             }
         }
     }
@@ -302,12 +397,6 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
 }
 
 // Preset functions
-
-void hideEverything()
-{
-    kleurenGroenButton.Size = new Size(0, 0);
-    kleurenFunkyButton.Size = new Size(0, 0);
-}
 
 void showPresets(object sender, EventArgs e)
 {
@@ -374,7 +463,7 @@ void presetToolStrip4_Click(object o, EventArgs e)
 
 void kleurenGroen_Click(object o, EventArgs e)
 {
-    kleurenLijst = groeneLijst;
+    kleurenLijst = groeneLijst2;
     mandelRekenen_Click(null, null);
 };
 
@@ -411,7 +500,33 @@ void kleurenToolStrip3_Click(object o, EventArgs e)
     mandelRekenen_Click(null, null);
 };
 
-// Toolstrip controls for presets and colors
+void kleurenToolStrip4_Click(object o, EventArgs e){
+    kleurenGenButton.Text = "RGB sliders";
+    lastKleurenToolStrip.Checked = false;
+    kleurenToolStrip4.Checked = true;
+    lastKleurenToolStrip = kleurenToolStrip4;
+    mandelRekenen_Click(null, null);
+};
+
+void roodBar_Scroll(object o, EventArgs e)
+{
+    rood = roodBar.Value;
+    roodL.Text = $"R: {rood}";
+}
+
+void groenBar_Scroll(object o, EventArgs e)
+{
+    groen = groenBar.Value;
+    groenL.Text = $"G: {groen}";
+}
+
+void blauwBar_Scroll(object o, EventArgs e)
+{
+    blauw = blauwBar.Value;
+    blauwL.Text = $"B: {blauw}";
+}
+
+// Toolstrip and button controls for presets and colors
 
 presetToolStrip1.Click += presetToolStrip1_Click;
 presetToolStrip2.Click += presetToolStrip2_Click;
@@ -421,9 +536,14 @@ presetToolStrip4.Click += presetToolStrip4_Click;
 kleurenToolStrip1.Click += kleurenToolStrip1_Click;
 kleurenToolStrip2.Click += kleurenToolStrip2_Click;
 kleurenToolStrip3.Click += kleurenToolStrip3_Click;
+kleurenToolStrip4.Click += kleurenToolStrip4_Click;
 
 kleurenGroenButton.Click += kleurenGroen_Click;
 kleurenFunkyButton.Click += kleurenFunky_Click;
+
+roodBar.Scroll += roodBar_Scroll;
+groenBar.Scroll += groenBar_Scroll;
+blauwBar.Scroll += blauwBar_Scroll;
 
 // Other (mouse-)button controls + run on startup command
 
