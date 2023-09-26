@@ -5,25 +5,55 @@ using System.Windows.Forms;
 
 // Global variables
 
-int mandelGrootte = 500; // For better looking image, use 800. For ~60% faster computing, use 500.
+int mandelGrootte = 800; // For better looking image, use 800. For ~50% faster computing, use 500.
 int clientBreedte = mandelGrootte + 100;
-int clientHoogte = mandelGrootte + 200;
+int clientHoogte = mandelGrootte + 250;
 Stopwatch timer = new Stopwatch();
 string kleurenSelectie = "Kleur presets";
+bool resetButtonClicked = false;
 
 // Colors
 
-Color regenboogRood = Color.FromArgb(247, 2, 2);
-Color regenboogOranje = Color.FromArgb(247, 125, 2);
-Color regenboogGeel = Color.FromArgb(247, 235, 2);
-Color regenboogGroen = Color.FromArgb(2, 247, 2);
-Color regenboogBlauw = Color.FromArgb(2, 2, 247);
+Color regenboogRood1 = Color.FromArgb(247, 2, 2);
+Color regenboogRood2 = Color.FromArgb(242, 24, 33);
+Color regenboogOranje1 = Color.FromArgb(247, 125, 2);
+Color regenboogOranje2 = Color.FromArgb(248, 99, 31);
+Color regenboogOranje3 = Color.FromArgb(250, 147, 26);
+Color regenboogGeel1 = Color.FromArgb(255, 195, 9);
+Color regenboogGeel2 = Color.FromArgb(247, 235, 2);
+Color regenboogGroen1 = Color.FromArgb(205, 222, 37);
+Color regenboogGroen2 = Color.FromArgb(139, 200, 59);
+Color regenboogGroen3 = Color.FromArgb(2, 247, 2);
+Color regenboogBlauw1 = Color.FromArgb(4, 185, 158);
+Color regenboogBlauw2 = Color.FromArgb(1, 174, 243);
+Color regenboogBlauw3 = Color.FromArgb(2, 2, 247);
+Color regenboogPaars1 = Color.FromArgb(89, 84, 168);
+Color regenboogPaars2 = Color.FromArgb(143, 89, 167);
+Color regenboogPaars3 = Color.FromArgb(191, 22, 141);
 
-Color kobaltBlauw = Color.FromArgb(60, 50, 149);
-Color royalPaars = Color.FromArgb(99, 28, 153);
-Color lichtLila = Color.FromArgb(177, 147, 196);
-Color donkerPaars = Color.FromArgb(59, 0, 101);
-Color blauwGroen = Color.FromArgb(52, 180, 174);
+Color kobaltBlauw1 = Color.FromArgb(60, 50, 149);
+Color kobaltBlauw2 = Color.FromArgb(36, 51, 99);
+Color kobaltBlauw3 = Color.FromArgb(97, 38, 125);
+Color kobaltBlauw4 = Color.FromArgb(85, 95, 163);
+Color kobaltBlauw5 = Color.FromArgb(205, 205, 224);
+Color royalPaars1 = Color.FromArgb(99, 28, 153);
+Color royalPaars2 = Color.FromArgb(36, 0, 84);
+Color royalPaars3 = Color.FromArgb(70, 0, 139);
+Color royalPaars4 = Color.FromArgb(117, 85, 163);
+Color royalPaars5 = Color.FromArgb(178, 164, 201);
+Color lichtLila1 = Color.FromArgb(177, 147, 196);
+Color lichtLila2 = Color.FromArgb(71, 0, 128);
+Color lichtLila3 = Color.FromArgb(99, 28, 153);
+Color lichtLila4 = Color.FromArgb(220, 204, 228);
+Color donkerPaars1 = Color.FromArgb(59, 0, 101);
+Color donkerPaars2 = Color.FromArgb(48, 0, 84);
+Color donkerPaars3 = Color.FromArgb(131, 72, 167);
+Color blauwGroen1 = Color.FromArgb(52, 180, 174);
+Color blauwGroen2 = Color.FromArgb(30, 97, 115);
+Color blauwGroen3 = Color.FromArgb(46, 114, 148);
+Color blauwGroen4 = Color.FromArgb(52, 132, 173);
+Color blauwGroen5 = Color.FromArgb(52, 143, 182);
+Color blauwGroen6 = Color.FromArgb(169, 218, 228);
 
 Color donkerRood = Color.FromArgb(181, 0, 12);
 Color warmOranje = Color.FromArgb(247, 125, 2);
@@ -38,10 +68,15 @@ Color lichtGrijs = Color.FromArgb(153, 153, 153);
 Color wit = Color.FromArgb(255, 255, 255);
 
 Color boterGeel = Color.FromArgb(255, 229, 74);
+Color boterGeel2 = Color.FromArgb(255, 244, 97);
 Color lichtGroen = Color.FromArgb(152, 255, 110);
+Color lichtGroen2 = Color.FromArgb(198, 249, 143);
 Color luchtBlauw = Color.FromArgb(161, 248, 255);
+Color luchtBlauw2 = Color.FromArgb(137, 222, 255);
 Color bosGroen = Color.FromArgb(0, 174, 125);
+Color bosGroen2 = Color.FromArgb(10, 187, 120);
 Color grasGroen = Color.FromArgb(128, 216, 25);
+Color grasGroen2 = Color.FromArgb(74, 135, 6);
 
 Color darkestGreen = Color.FromArgb(52, 78, 65);
 Color green1 = Color.FromArgb(58, 90, 64);
@@ -53,16 +88,57 @@ Color lighterGreen = Color.FromArgb(28, 116, 21);
 Color darkMagenta = Color.FromArgb(25, 5, 19);
 Color forestGreen = Color.FromArgb(9, 47, 13);
 
+Color emerald = Color.FromArgb(0, 152, 116);
+Color tangerineTango = Color.FromArgb(221, 65, 36);
+Color honeySuckle = Color.FromArgb(214, 80, 118);
+Color turquoise = Color.FromArgb(68, 184, 172);
+Color mimosa = Color.FromArgb(239, 192, 80);
+Color blueIzis = Color.FromArgb(91, 94, 166);
+Color chiliPeper = Color.FromArgb(155, 35, 53);
+Color sandDollar = Color.FromArgb(223, 207, 190);
+Color blueTurquoise = Color.FromArgb(85, 180, 176);
+Color tigerLily = Color.FromArgb(225, 93, 68);
+Color aquaSky = Color.FromArgb(127, 205, 205);
+Color trueRed = Color.FromArgb(188, 36, 60);
+Color fuchsiaRose = Color.FromArgb(195, 68, 122);
+Color ceruleanBlue = Color.FromArgb(152, 180, 212);
+
+Color donkerBlauw = Color.FromArgb(35, 31, 71);
+Color ijsBlauw = Color.FromArgb(137, 164, 195);
+Color beige = Color.FromArgb(237, 232, 225);
+Color gebrokenWit = Color.FromArgb(237, 251, 255);
+Color felBlauw = Color.FromArgb(160, 230, 253);
+Color viezeSneeuw = Color.FromArgb(172, 167, 155);
+
+Color pastelOranje1 = Color.FromArgb(254, 235, 201);
+Color pastelOranje2 = Color.FromArgb(253, 202, 162);
+Color pastelOranje3 = Color.FromArgb(252, 169, 133);
+Color pastelRoze1 = Color.FromArgb(253, 222, 238);
+Color pastelRoze2 = Color.FromArgb(251, 182, 209);
+Color pastelRoze3 = Color.FromArgb(249, 140, 182);
+Color pastelPaars1 = Color.FromArgb(221, 212, 232);
+Color pastelPaars2 = Color.FromArgb(193, 179, 215);
+Color pastelGroen1 = Color.FromArgb(207, 236, 207);
+Color pastelGroen2 = Color.FromArgb(181, 225, 174);
+Color pastelGroen3 = Color.FromArgb(145, 210, 144);
+Color pastelGeel1 = Color.FromArgb(125, 255, 176);
+Color pastelGeel2 = Color.FromArgb(255, 250, 129);
+
+
 // Color lists
 
 Color[] zwartWitteLijst = new Color[] { Color.Black, Color.White };
-Color[] regenboogLijst = new Color[] { regenboogRood, regenboogOranje, regenboogGeel, regenboogGroen, regenboogBlauw };
-Color[] koeleLijst = new Color[] { kobaltBlauw, royalPaars, lichtLila, donkerPaars, blauwGroen };
+Color[] regenboogLijst = new Color[] { regenboogRood1, regenboogRood2, regenboogOranje1, regenboogOranje2, regenboogOranje3, regenboogGeel1, regenboogGeel2, regenboogGroen1, regenboogGroen2, regenboogGroen3, regenboogBlauw1, regenboogBlauw2, regenboogBlauw3, regenboogPaars1, regenboogPaars2, regenboogPaars3 };
+Color[] koeleLijst = new Color[] { kobaltBlauw1, kobaltBlauw2, kobaltBlauw3, kobaltBlauw4, kobaltBlauw5, royalPaars1, royalPaars2, royalPaars3, royalPaars4, royalPaars5, lichtLila1, lichtLila2, lichtLila3, lichtLila4, donkerPaars1, donkerPaars2, donkerPaars3, blauwGroen1, blauwGroen2, blauwGroen3, blauwGroen4, blauwGroen5, blauwGroen6 };
 Color[] vurigeLijst = new Color[] { donkerRood, warmOranje, helderGeel, vuurRood, lichtOranje };
 Color[] grijzeLijst = new Color[] { zwart, donkerGrijs, middenGrijs, lichtGrijs, wit };
-Color[] groeneLijst = new Color[] { boterGeel, lichtGroen, luchtBlauw, bosGroen, grasGroen };
+Color[] groeneLijst = new Color[] { boterGeel, lichtGroen, luchtBlauw, bosGroen, grasGroen, boterGeel2, lichtGroen2, luchtBlauw2, bosGroen2, grasGroen2 };
 Color[] groeneLijst2 = new Color[] { darkestGreen, green1, green2, green3, lightestGreen };
 Color[] funkyLijst = new Color[] { Color.Black, Color.Orange, Color.Purple, Color.Yellow };
+Color[] pantoneLijst = new Color[] { emerald, tangerineTango, honeySuckle, turquoise, mimosa, blueIzis, chiliPeper, sandDollar, blueTurquoise, tigerLily, aquaSky, trueRed, fuchsiaRose, ceruleanBlue };
+Color[] winterLijst = new Color[] { donkerBlauw, ijsBlauw, beige, gebrokenWit, felBlauw, viezeSneeuw };
+Color[] lenteLijst = new Color[] { pastelGeel1, pastelGeel2, pastelGroen1, pastelGroen2, pastelGroen3, pastelOranje1, pastelOranje2, pastelOranje3, pastelPaars1, pastelPaars2, pastelRoze1, pastelRoze2, pastelRoze3 };
+
 
 Color[] kleurenLijst = zwartWitteLijst;
 
@@ -116,8 +192,16 @@ Label aantalL = new Label
 Label loading = new Label
 {
     Size = new Size(175, 16),
-    Location = new Point(mandelGrootte - 125, mandelGrootte + 150),
+    Location = new Point(mandelGrootte - 125, mandelGrootte + 155),
     Text = "",
+    BackColor = Color.White
+};
+
+Label uitleg = new Label
+{
+    Size = new Size(125, 50),
+    Location = new Point(50, mandelGrootte + 155),
+    Text = "LMB = zoom in\nRMB = zoom out\nMMB = reset position",
     BackColor = Color.White
 };
 
@@ -125,7 +209,7 @@ TextBox lichtDonkerBox = new TextBox
 {
     Size = new Size(50, 15),
     Location = new Point(320, 65),
-    Text = "10",
+    Text = "1",
     BackColor = Color.LightGray
 };
 
@@ -206,7 +290,7 @@ Button kleurenButton1 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 0),
-    Text = "Rood",
+    Text = "Winter",
     Visible = false
 };
 
@@ -214,7 +298,7 @@ Button kleurenButton2 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 0),
-    Text = "Gerbil",
+    Text = "Lente",
     Visible = false
 };
 
@@ -222,7 +306,7 @@ Button kleurenButton3 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 0),
-    Text = "Herfst",
+    Text = "Zomer",
     Visible = false
 };
 
@@ -230,7 +314,7 @@ Button kleurenButton4 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 0),
-    Text = "Blurple",
+    Text = "Herfst",
     Visible = false
 };
 
@@ -238,7 +322,7 @@ Button kleurenButton5 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 25),
-    Text = "Groen",
+    Text = "Rboog",
     Visible = false
 };
 
@@ -246,7 +330,7 @@ Button kleurenButton6 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 25),
-    Text = "Kleuren2",
+    Text = "Koel",
     Visible = false
 };
 
@@ -254,7 +338,7 @@ Button kleurenButton7 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 25),
-    Text = "Jurk",
+    Text = "Vurig",
     Visible = false
 };
 
@@ -262,7 +346,7 @@ Button kleurenButton8 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 25),
-    Text = "Barbie",
+    Text = "Grijs",
     Visible = false
 };
 
@@ -270,7 +354,7 @@ Button kleurenButton9 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 50),
-    Text = "Blauw",
+    Text = "Funky",
     Visible = false
 };
 
@@ -278,7 +362,7 @@ Button kleurenButton10 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 50),
-    Text = "",
+    Text = "Lgroen",
     Visible = false
 };
 
@@ -286,7 +370,7 @@ Button kleurenButton11 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 50),
-    Text = "",
+    Text = "Zw/Wit",
     Visible = false
 };
 
@@ -294,7 +378,7 @@ Button kleurenButton12 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 50),
-    Text = "",
+    Text = "Kantoor",
     Visible = false
 };
 
@@ -302,7 +386,7 @@ Button kleurenButton13 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 75),
-    Text = "",
+    Text = "Rood",
     Visible = false
 };
 
@@ -310,7 +394,7 @@ Button kleurenButton14 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 75),
-    Text = "",
+    Text = "Gerbil",
     Visible = false
 };
 
@@ -318,7 +402,7 @@ Button kleurenButton15 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 75),
-    Text = "",
+    Text = "Blurple",
     Visible = false
 };
 
@@ -326,7 +410,7 @@ Button kleurenButton16 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 75),
-    Text = "",
+    Text = "Jurk",
     Visible = false
 };
 
@@ -334,7 +418,7 @@ Button kleurenButton17 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 100),
-    Text = "Zw/Wit",
+    Text = "Groen",
     Visible = false
 };
 
@@ -342,7 +426,7 @@ Button kleurenButton18 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 100),
-    Text = "",
+    Text = "Barbie",
     Visible = false
 };
 
@@ -350,7 +434,7 @@ Button kleurenButton19 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 100),
-    Text = "LGroen",
+    Text = "Plant",
     Visible = false
 };
 
@@ -358,7 +442,7 @@ Button kleurenButton20 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 100),
-    Text = "Funky",
+    Text = "Papier",
     Visible = false
 };
 
@@ -366,7 +450,7 @@ Button kleurenButton21 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(320, 125),
-    Text = "RBoog",
+    Text = "Blauw",
     Visible = false
 };
 
@@ -374,7 +458,7 @@ Button kleurenButton22 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(377, 125),
-    Text = "Koel",
+    Text = "Error",
     Visible = false
 };
 
@@ -382,7 +466,7 @@ Button kleurenButton23 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(434, 125),
-    Text = "Vurig",
+    Text = "Groente",
     Visible = false
 };
 
@@ -390,10 +474,44 @@ Button kleurenButton24 = new Button
 {
     Size = new Size(57, 25),
     Location = new Point(491, 125),
-    Text = "Grijs",
+    Text = "Koffie",
     Visible = false
 };
 
+Button mandelResetButton = new Button
+{
+    Size = new Size(100, 25),
+    Location = new Point(10, 120),
+    Text = "Reset app",
+};
+
+Button up = new Button
+{
+    Size = new Size(25, 25),
+    Location = new Point(clientBreedte / 2 - 25, clientHoogte - 100),
+    Text = "U"
+};
+
+Button down = new Button
+{
+    Size = new Size(25, 25),
+    Location = new Point(clientBreedte / 2 - 25, clientHoogte - 50),
+    Text = "D"
+};
+
+Button left = new Button
+{
+    Size = new Size(25, 25),
+    Location = new Point(clientBreedte / 2 - 50, clientHoogte - 75),
+    Text = "L"
+};
+
+Button right = new Button
+{
+    Size = new Size(25, 25),
+    Location = new Point(clientBreedte / 2, clientHoogte - 75),
+    Text = "R"
+};
 
 TrackBar roodBar = new TrackBar
 {
@@ -434,16 +552,18 @@ ToolStripMenuItem kleurenToolStrip0 = new ToolStripMenuItem();
 ToolStripMenuItem kleurenToolStrip1 = new ToolStripMenuItem();
 ToolStripMenuItem kleurenToolStrip2 = new ToolStripMenuItem();
 ToolStripMenuItem kleurenToolStrip3 = new ToolStripMenuItem();
+ToolStripMenuItem kleurenToolStrip4 = new ToolStripMenuItem();
 
 ToolStripMenuItem lastKleurenToolStrip = kleurenToolStrip0;
 
 kleurenToolStrip1.Text = "Kleur presets";
-kleurenToolStrip2.Text = "Vloeiende kleur";
+kleurenToolStrip2.Text = "Donker - Licht";
 kleurenToolStrip3.Text = "RGB sliders";
 
-kleurenStrip.Items.AddRange(new ToolStripItem[] { kleurenToolStrip1, kleurenToolStrip2, kleurenToolStrip3});
+kleurenStrip.Items.AddRange(new ToolStripItem[] { kleurenToolStrip1, kleurenToolStrip2, kleurenToolStrip3, kleurenToolStrip4 });
 
 ContextMenuStrip presetStrip = new ContextMenuStrip();
+ToolStripMenuItem presetToolStrip0 = new ToolStripMenuItem();
 ToolStripMenuItem presetToolStrip1 = new ToolStripMenuItem();
 ToolStripMenuItem presetToolStrip2 = new ToolStripMenuItem();
 ToolStripMenuItem presetToolStrip3 = new ToolStripMenuItem();
@@ -465,28 +585,29 @@ ToolStripMenuItem presetToolStrip18 = new ToolStripMenuItem();
 ToolStripMenuItem presetToolStrip19 = new ToolStripMenuItem();
 ToolStripMenuItem presetToolStrip20 = new ToolStripMenuItem();
 
-ToolStripMenuItem lastPresetToolStrip = presetToolStrip1;
+ToolStripMenuItem lastPresetToolStrip = presetToolStrip0;
 
-presetToolStrip1.Text = "Preset 1";
-presetToolStrip2.Text = "Preset 2";
-presetToolStrip3.Text = "Preset 3";
-presetToolStrip4.Text = "Preset 4";
-presetToolStrip5.Text = "Preset 5";
-presetToolStrip6.Text = "Preset 6";
-presetToolStrip7.Text = "Preset 7";
-presetToolStrip8.Text = "Preset 8";
-presetToolStrip9.Text = "Preset 9";
-presetToolStrip10.Text = "Preset 10";
-presetToolStrip11.Text = "Preset 11";
-presetToolStrip12.Text = "Preset 12";
-presetToolStrip13.Text = "Preset 13";
-presetToolStrip14.Text = "Preset 14";
-presetToolStrip15.Text = "Preset 15";
-presetToolStrip16.Text = "Preset 16";
-presetToolStrip17.Text = "Preset 17";
-presetToolStrip18.Text = "Preset 18";
-presetToolStrip19.Text = "Preset 19";
-presetToolStrip20.Text = "Preset 20";
+presetToolStrip0.Text = $"{presetButton.Text}";
+presetToolStrip1.Text = "Spiraal";
+presetToolStrip2.Text = "Scheur";
+presetToolStrip3.Text = "Aderen";
+presetToolStrip4.Text = "Pupil";
+presetToolStrip5.Text = "Zeepaard";
+presetToolStrip6.Text = "Orkaan";
+presetToolStrip7.Text = "Droste";
+presetToolStrip8.Text = "Achtbaan";
+presetToolStrip9.Text = "Tentakel";
+presetToolStrip10.Text = "Wervelkolom";
+presetToolStrip11.Text = "Stelsel";
+presetToolStrip12.Text = "Kust";
+presetToolStrip13.Text = "Baai";
+presetToolStrip14.Text = "Zenuwen";
+presetToolStrip15.Text = "Zoom";
+presetToolStrip16.Text = "Straaljager";
+presetToolStrip17.Text = "Barst";
+presetToolStrip18.Text = "Ster";
+presetToolStrip19.Text = "Infectie";
+presetToolStrip20.Text = "Jelly Bean";
 
 presetStrip.Items.AddRange(new ToolStripItem[] { presetToolStrip1, presetToolStrip2, presetToolStrip3, presetToolStrip4, presetToolStrip5, presetToolStrip6, presetToolStrip7, presetToolStrip8, presetToolStrip9, presetToolStrip10, presetToolStrip11, presetToolStrip12, presetToolStrip13, presetToolStrip14, presetToolStrip15, presetToolStrip16, presetToolStrip17, presetToolStrip18, presetToolStrip19, presetToolStrip20 });
 
@@ -537,6 +658,12 @@ scherm.Controls.Add(kleurenButton22);
 scherm.Controls.Add(kleurenButton23);
 scherm.Controls.Add(kleurenButton24);
 scherm.Controls.Add(kleurenGenButton);
+scherm.Controls.Add(mandelResetButton);
+scherm.Controls.Add(uitleg);
+scherm.Controls.Add(up);
+scherm.Controls.Add(down);
+scherm.Controls.Add(left);
+scherm.Controls.Add(right);
 
 // Declaring calculation variables
 
@@ -557,10 +684,9 @@ int ld = 1;
 void mandelRekenen_MouseClick(object sender, MouseEventArgs mea)
 {
     timer.Start();
-    lastPresetToolStrip.Checked = false;
     maxIteraties = double.Parse(aantalBox.Text);
     sch = double.Parse(schaalBox.Text);
-    if(mea.Button == MouseButtons.Left)
+    if (mea.Button == MouseButtons.Left)
     {
         sch *= 0.5;
         xmidden = (mea.X - mandelGrootte / 2.0) * sch + xmidden;
@@ -569,13 +695,15 @@ void mandelRekenen_MouseClick(object sender, MouseEventArgs mea)
         middenxBox.Text = $"{xmidden}";
         middenyBox.Text = $"{ymidden}";
     }
-    else if(mea.Button == MouseButtons.Right)
+    else if (mea.Button == MouseButtons.Right)
     {
         sch *= 2.0;
         schaalBox.Text = $"{sch}";
     }
     else
     {
+        resetButtonClicked = true;
+        presetButton.Text = "Presets";
         xmidden = 0;
         ymidden = 0;
         sch = 0.008;
@@ -602,10 +730,35 @@ void mandelRekenen_Click(object o, EventArgs e)
 
 void mandelRekenen(double maxIt, double s, double xm, double ym)
 {
+    if(resetButtonClicked == false)
+    {
+        presetButton.Text = $"{lastPresetToolStrip}";
+    }
+    resetButtonClicked = false;
+    try
+    {
+        Int32.Parse(lichtDonkerBox.Text);
+        Int32.Parse(roodBox.Text);
+        Int32.Parse(groenBox.Text);
+        Int32.Parse(blauwBox.Text);
+
+    }
+    catch(Exception)
+    {
+        return;
+    }
     ld = Int32.Parse(lichtDonkerBox.Text);
     rood = Int32.Parse(roodBox.Text);
     groen = Int32.Parse(groenBox.Text);
     blauw = Int32.Parse(blauwBox.Text);
+    if (ld > 255 || ld < 0 || rood > 255 || rood < 0 || groen > 255 || groen < 0 || blauw > 255 || blauw < 0)
+    {
+        return;
+    }
+    lichtDonkerBar.Value = ld;
+    roodBar.Value = rood;
+    groenBar.Value = groen;
+    blauwBar.Value = blauw;
     for (int row = 0; row < mandelGrootte; row++)
     {
         mandelgetal = 0;
@@ -639,22 +792,53 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             }
             else if (kleurenSelectie == "RGB sliders")
             {
-                roodBar.Value = rood;
-                groenBar.Value = groen;
-                blauwBar.Value = blauw;
                 mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal * rood % 256, mandelgetal * groen % 256, mandelgetal * blauw % 256));
             }
-            else if (kleurenSelectie == "Vloeiende kleur")
+            else if (kleurenSelectie == "Donker - Licht")
             {
                 mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % ld, mandelgetal % ld, mandelgetal % ld));
             }
+            else if (kleurenSelectie == "Vloeiend")
+            {
+                if (mandelgetal * rood < 255 && mandelgetal * groen < 255 && mandelgetal * blauw < 255)
+                {
+                    mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal, mandelgetal, mandelgetal));
+                }
+                else
+                {
+                    mandelMap.SetPixel(column, row, Color.FromArgb(255 - ((mandelgetal * rood) % 256), 255 - ((mandelgetal * groen) % 256), 255 - ((mandelgetal * blauw)) % 256));
+                }
+                mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % ld, mandelgetal % ld, mandelgetal % ld));
+            }
         }
+        
     }
     mandelLabel.Image = mandelMap;
     scherm.Refresh();
     timer.Stop();
     loading.Text = $"Loading time: {timer.ElapsedMilliseconds} ms.";
     timer.Reset();
+}
+
+void mandelReset_Click(object o, EventArgs e)
+{
+    hideLichtDonker();
+    hideRGB();
+    hideColorPreset();
+    presetButton.Text = "Presets";
+    kleurenGenButton.Text = "Kleuren generatie";
+    xmidden = 0;
+    ymidden = 0;
+    sch = 0.008;
+    maxIteraties = 100;
+    schaalBox.Text = $"{sch}";
+    middenxBox.Text = $"{xmidden}";
+    middenyBox.Text = $"{ymidden}";
+    aantalBox.Text = $"{maxIteraties}";
+    lastKleurenToolStrip.Checked = false;
+    lastPresetToolStrip.Checked = false;
+    resetButtonClicked = true;
+    kleurenButton11_Click(null, null);
 }
 
 // UI visibility methods
@@ -748,6 +932,7 @@ void showColorPreset()
 }
 
 // Toolstrip methods
+// Presets
 
 void showPresets(object sender, EventArgs e)
 {
@@ -828,7 +1013,7 @@ void presetToolStrip6_Click(object o, EventArgs e)
 {
     middenxBox.Text = "-4,601222E-1";
     middenyBox.Text = "5,702860E-1";
-    schaalBox.Text = "2,009600E+5";
+    schaalBox.Text = "2,009600E-5";
     aantalBox.Text = "384";
 
     lastPresetToolStrip.Checked = false;
@@ -841,7 +1026,7 @@ void presetToolStrip7_Click(object o, EventArgs e)
 {
     middenxBox.Text = "-1,373547";
     middenyBox.Text = "-1,234831E-2";
-    schaalBox.Text = "7,054904E+2";
+    schaalBox.Text = "7,054904E-4";
     aantalBox.Text = "256";
 
     lastPresetToolStrip.Checked = false;
@@ -995,9 +1180,9 @@ void presetToolStrip18_Click(object o, EventArgs e)
 
 void presetToolStrip19_Click(object o, EventArgs e)
 {
-    middenxBox.Text = "0,35073828125";
-    middenyBox.Text = "-0,58119921875";
-    schaalBox.Text = "3,90625E-6";
+    middenxBox.Text = "0,3510585937499999";
+    middenyBox.Text = "-0,5814804687500001";
+    schaalBox.Text = "1,5625E-05";
     aantalBox.Text = "175";
 
     lastPresetToolStrip.Checked = false;
@@ -1019,182 +1204,12 @@ void presetToolStrip20_Click(object o, EventArgs e)
     mandelRekenen_Click(null, null);
 };
 
-// Color preset methods
-// Buttons
+// Toolstrip methods
+// Colour gen selection
 
-void kleurenButton1_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "251";
-    groenBox.Text = "0";
-    blauwBox.Text = "0";
-    mandelRekenen_Click(null, null);
-};
-
-void kleurenButton2_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "0";
-    groenBox.Text = "10";
-    blauwBox.Text = "251";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton3_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Herfst";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton4_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "3";
-    groenBox.Text = "0";
-    blauwBox.Text = "161";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton5_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "0";
-    groenBox.Text = "251";
-    blauwBox.Text = "0";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton6_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton7_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "255";
-    groenBox.Text = "255";
-    blauwBox.Text = "66";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton8_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "255";
-    groenBox.Text = "0";
-    blauwBox.Text = "255";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton9_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "RGB sliders";
-    roodBox.Text = "0";
-    groenBox.Text = "0";
-    blauwBox.Text = "251";
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton10_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton11_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton12_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton13_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton14_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton15_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton16_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton17_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = zwartWitteLijst;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton18_Click(object o, EventArgs e)
-{
-
-    // MOET NOG GEVULD WORDEN
-
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton19_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = groeneLijst2;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton20_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = funkyLijst;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton21_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = regenboogLijst;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton22_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = koeleLijst;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton23_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = vurigeLijst;
-    mandelRekenen_Click(null, null);
-};
-void kleurenButton24_Click(object o, EventArgs e)
-{
-    kleurenSelectie = "Kleur presets";
-    kleurenLijst = grijzeLijst;
-    mandelRekenen_Click(null, null);
-};
-
-// Color preset methods
-// Toolstrips
 void kleurenToolStrip1_Click(object o, EventArgs e)
 {
-    if(lastKleurenToolStrip != kleurenToolStrip1)
+    if (lastKleurenToolStrip != kleurenToolStrip1)
     {
         hideLichtDonker();
         hideRGB();
@@ -1206,7 +1221,6 @@ void kleurenToolStrip1_Click(object o, EventArgs e)
     lastKleurenToolStrip.Checked = false;
     kleurenToolStrip1.Checked = true;
     lastKleurenToolStrip = kleurenToolStrip1;
-    mandelRekenen_Click(null, null);
 };
 
 void kleurenToolStrip2_Click(object o, EventArgs e)
@@ -1217,17 +1231,16 @@ void kleurenToolStrip2_Click(object o, EventArgs e)
         hideColorPreset();
         showLichtDonker();
     }
-    kleurenGenButton.Text = "Vloeiende kleur";
-    kleurenSelectie = "Vloeiende kleur";
+    kleurenGenButton.Text = "Donker - Licht";
+    kleurenSelectie = "Donker - Licht";
     lastKleurenToolStrip.Checked = false;
     kleurenToolStrip2.Checked = true;
     lastKleurenToolStrip = kleurenToolStrip2;
-    mandelRekenen_Click(null, null);
 };
 
 void kleurenToolStrip3_Click(object o, EventArgs e)
 {
-    if(lastKleurenToolStrip != kleurenToolStrip3)
+    if (lastKleurenToolStrip != kleurenToolStrip3)
     {
         hideColorPreset();
         hideLichtDonker();
@@ -1238,8 +1251,197 @@ void kleurenToolStrip3_Click(object o, EventArgs e)
     lastKleurenToolStrip.Checked = false;
     kleurenToolStrip3.Checked = true;
     lastKleurenToolStrip = kleurenToolStrip3;
+};
+
+void kleurenToolStrip4_Click(object o, EventArgs e)
+{
+    if (!(lastKleurenToolStrip == kleurenToolStrip3 || lastKleurenToolStrip == kleurenToolStrip4))
+    {
+        hideColorPreset();
+        hideLichtDonker();
+        showRGB();
+    }
+    kleurenGenButton.Text = "Vloeiend";
+    kleurenSelectie = "Vloeiend";
+    lastKleurenToolStrip.Checked = false;
+    kleurenToolStrip4.Checked = true;
+    lastKleurenToolStrip = kleurenToolStrip4;
+}
+
+// Color preset buttons
+
+void kleurenButton1_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = winterLijst;
     mandelRekenen_Click(null, null);
 };
+
+void kleurenButton2_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = lenteLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton3_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = groeneLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton4_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Herfst";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton5_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = regenboogLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton6_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = koeleLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton7_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = vurigeLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton8_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = grijzeLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton9_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = funkyLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton10_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = groeneLijst2;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton11_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = zwartWitteLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton12_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "Kleur presets";
+    kleurenLijst = pantoneLijst;
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton13_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "251";
+    groenBox.Text = "0";
+    blauwBox.Text = "0";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton14_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "0";
+    groenBox.Text = "10";
+    blauwBox.Text = "251";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton15_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "3";
+    groenBox.Text = "0";
+    blauwBox.Text = "161";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton16_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "255";
+    groenBox.Text = "255";
+    blauwBox.Text = "66";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton17_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "0";
+    groenBox.Text = "251";
+    blauwBox.Text = "0";
+
+
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton18_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "255";
+    groenBox.Text = "0";
+    blauwBox.Text = "255";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton19_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "106";
+    groenBox.Text = "62";
+    blauwBox.Text = "255";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton20_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "91";
+    groenBox.Text = "0";
+    blauwBox.Text = "25";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton21_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "0";
+    groenBox.Text = "0";
+    blauwBox.Text = "251";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton22_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "171";
+    groenBox.Text = "113";
+    blauwBox.Text = "75";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton23_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "240";
+    groenBox.Text = "231";
+    blauwBox.Text = "205";
+    mandelRekenen_Click(null, null);
+};
+void kleurenButton24_Click(object o, EventArgs e)
+{
+    kleurenSelectie = "RGB sliders";
+    roodBox.Text = "252";
+    groenBox.Text = "168";
+    blauwBox.Text = "133";
+    mandelRekenen_Click(null, null);
+};
+
+// Scrollbar Methods
 
 void roodBar_Scroll(object o, EventArgs e)
 {
@@ -1290,6 +1492,7 @@ presetToolStrip20.Click += presetToolStrip20_Click;
 kleurenToolStrip1.Click += kleurenToolStrip1_Click;
 kleurenToolStrip2.Click += kleurenToolStrip2_Click;
 kleurenToolStrip3.Click += kleurenToolStrip3_Click;
+kleurenToolStrip4.Click += kleurenToolStrip4_Click;
 
 kleurenButton1.Click += kleurenButton1_Click;
 kleurenButton2.Click += kleurenButton2_Click;
@@ -1326,6 +1529,7 @@ lichtDonkerBar.Scroll += lichtDonkerBar_Scroll;
 
 mandelButton.Click += mandelRekenen_Click;
 mandelLabel.MouseClick += mandelRekenen_MouseClick;
+mandelResetButton.Click += mandelReset_Click;
 
 hideLichtDonker();
 hideRGB();
