@@ -6,12 +6,13 @@ using System.Windows.Forms;
 
 // ----- Start of editable variables -----
 
-int mandelGrootte = 500; // For better looking image, use 800. For ~50% faster computing, use 500.
+int mandelGrootte = 500;
+// For better looking image, use either 700 or 800, depending on your screen's resolution.
+// For ~2x faster computing, use 500.
 
 // ----- End of editable variables. Don't edit anything beyond this point! -----
 
 // Global UI variables
-
 int clientBreedte = mandelGrootte + 100;
 int clientHoogte = mandelGrootte + 250;
 
@@ -90,7 +91,6 @@ Color darkestGreen = Color.FromArgb(52, 78, 65);
 Color green1 = Color.FromArgb(58, 90, 64);
 Color green2 = Color.FromArgb(88, 129, 87);
 Color green3 = Color.FromArgb(163, 177, 138);
-Color lighterGreen = Color.FromArgb(28, 116, 21);
 Color lightestGreen = Color.FromArgb(233, 237, 201);
 
 // The following colors are used in the color list 'pantoneLijst' and were created using the color palette sourced from https://nl.pinterest.com/pin/13299761382982282/
