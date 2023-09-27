@@ -531,6 +531,13 @@ Button right = new Button
     Text = "R"
 };
 
+Button zoom = new Button
+{
+    Size = new Size(25, 25),
+    Location = new Point(clientBreedte / 2 - 35, clientHoogte - 70),
+    Text = "Z"
+};
+
 TrackBar roodBar = new TrackBar
 {
     Size = new Size(200, 10),
@@ -704,6 +711,7 @@ scherm.Controls.Add(up);
 scherm.Controls.Add(down);
 scherm.Controls.Add(left);
 scherm.Controls.Add(right);
+scherm.Controls.Add(zoom);
 scherm.Controls.Add(bewegenBar);
 scherm.Controls.Add(bewegenBox);
 scherm.Controls.Add(bestPresetButton);
@@ -722,10 +730,6 @@ int blauw = 0;
 
 int ld = 1;
 int hoeveelBewegen = 5;
-
-int mandelnormalR;
-int mandelnormalG;
-int mandelnormalB;
 
 // Moving around using mouse
 
@@ -824,6 +828,20 @@ void right_Click(object o, EventArgs e)
     mandelRekenen(maxIteraties, sch, xmidden, ymidden);
 }
 
+void zoom_Click(object o, EventArgs e)
+{
+    timer.Start();
+    checkHoeveelBewegen();
+    maxIteraties = double.Parse(aantalBox.Text);
+    sch = double.Parse(schaalBox.Text);
+
+    sch = sch - hoeveelBewegen * sch / 250;
+    schaalBox.Text = $"{sch}";
+    middenxBox.Text = $"{xmidden}";
+    middenyBox.Text = $"{ymidden}";
+    mandelRekenen(maxIteraties, sch, xmidden, ymidden);
+}
+
 void checkHoeveelBewegen()
 {
     hoeveelTijdelijk = Regex.Replace(bewegenBox.Text, "[^0-9.]", "");
@@ -888,7 +906,7 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
         presetButton.Text = $"{lastPresetToolStrip}";
     }
     resetButtonClicked = false;
-    if(kleurenSelectie == "RGB sliders" || kleurenSelectie == "Donker - Licht" || kleurenSelectie == "normalized")
+    if(kleurenSelectie == "RGB sliders" || kleurenSelectie == "Donker - Licht")
     {
         rekenenRGB();
     }
@@ -929,13 +947,6 @@ void mandelRekenen(double maxIt, double s, double xm, double ym)
             else if (kleurenSelectie == "Donker - Licht")
             {
                 mandelMap.SetPixel(column, row, Color.FromArgb(mandelgetal % ld, mandelgetal % ld, mandelgetal % ld));
-            }
-            else if (kleurenSelectie == "normalized")
-            {
-                mandelnormalR = ((mandelgetal * rood) - rood) / ((int)maxIt * rood - rood + 1) * 255;
-                mandelnormalG = ((mandelgetal * groen) - groen) / ((int)maxIt * groen - groen + 1) * 255;
-                mandelnormalB = ((mandelgetal * blauw) - blauw) / ((int)maxIt * blauw - blauw + 1) * 255;
-                mandelMap.SetPixel(column, row, Color.FromArgb(mandelnormalR, mandelnormalG, mandelnormalB));
             }
         }
         
@@ -1787,6 +1798,7 @@ up.Click += up_Click;
 down.Click += down_Click;
 left.Click += left_Click;
 right.Click += right_Click;
+zoom.Click += zoom_Click;
 
 mandelButton.Click += mandelRekenen_Click;
 mandelLabel.MouseClick += mandelRekenen_MouseClick;
