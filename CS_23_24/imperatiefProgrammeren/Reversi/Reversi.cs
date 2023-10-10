@@ -8,6 +8,7 @@ int bordGrootte = 8;
 int aanZet;
 int loop;
 
+int[] turfStenen = new int[4];
 int[,] bord = new int[bordGrootte, bordGrootte];
 int halfBord = bordGrootte / 2;
 bord[halfBord - 1, halfBord - 1] = 1;
@@ -102,11 +103,19 @@ void nieuwSpel_Click(object o, EventArgs e)
             bord[i, n] = 0;
         }
     }
-    bord[3, 3] = 1;
-    bord[4, 4] = 1;
-    bord[4, 3] = -1;
-    bord[3, 4] = -1;
+    bord[halfBord - 1, halfBord - 1] = 1;
+    bord[halfBord, halfBord] = 1;
+    bord[halfBord, halfBord - 1] = -1;
+    bord[halfBord - 1, halfBord] = -1;
     aantal++;
+    for (int h = 0; h < bordGrootte; h++)
+    {
+        for (int k = 0; k < bordGrootte; k++)
+        {
+            valideCheck(h, k);
+        }
+    }
+    tellen();
     roodAanZet = true;
     scherm.Invalidate();
 }
@@ -115,30 +124,30 @@ void tekenen(object o, PaintEventArgs pea)
 {
     Graphics gr = pea.Graphics;
 
-    for (int i = 0; i < 9; i++)
+    for (int i = 0; i < bordGrootte + 1; i++)
     {
         gr.DrawLine(Pens.Black, 10 + 75 * i, 200, 10 + 75 * i, 800);
         gr.DrawLine(Pens.Black, 10, 200 + 75 * i, 610, 200 + 75 * i);
     }
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < bordGrootte; i++)
     {
-        for (int n = 0; n < 8; n++)
+        for (int n = 0; n < bordGrootte; n++)
         {
-            if (bord[i, n] == 1)
-            {
-                vakjes[i, n].Image = roodcirkelbit;
-            }
-            else if (bord[i, n] == -1)
+            if (bord[i, n] == -1)
             {
                 vakjes[i, n].Image = blauwcirkelbit;
-            }
-            else if (bord[i, n] == 2)
-            {
-                vakjes[i, n].Image = validecirkelbit;
             }
             else if (bord[i, n] == 0)
             {
                 vakjes[i, n].Image = null;
+            }
+            else if (bord[i, n] == 1)
+            {
+                vakjes[i, n].Image = roodcirkelbit;
+            }
+            else if (bord[i, n] == 2)
+            {
+                vakjes[i, n].Image = validecirkelbit;
             }
         }
     }
@@ -147,11 +156,6 @@ void bord_Click(object o, MouseEventArgs mea)
 {
     hier = scherm.PointToClient(Cursor.Position);
 
-    if (roodKanNiet && blauwKanNiet)
-    {
-        // einde van het spel
-        return;
-    }
     if (hier.Y > 200)
     {
         roodKanNiet = false;
@@ -159,8 +163,6 @@ void bord_Click(object o, MouseEventArgs mea)
 
         int x = hier.X / 75;
         int y = (hier.Y - 200) / 75;
-        roodstatus.Text = x.ToString();
-        blauwstatus.Text = y.ToString();
         if (x > 7 || y > 7 || x < 0 || y < 0)
         {
             // Buiten het bord geklikt
@@ -181,6 +183,8 @@ void bord_Click(object o, MouseEventArgs mea)
             roodAanZet = !roodAanZet;
             helpknop.Text = roodAanZet.ToString();
             resetNaTurn();
+            tellen();
+            checkBewegen();
             for (int h = 0; h < bordGrootte; h++)
             {
                 for (int k = 0; k < bordGrootte; k++)
@@ -203,7 +207,7 @@ void overnemen(int x, int y)
         RofB = -1;
     }
 
-    for (int i = x + 1; i <= 7; i++)
+    for (int i = x + 1; i < bordGrootte; i++)
     {
         if (bord[i, y] == 0)
         {
@@ -233,7 +237,7 @@ void overnemen(int x, int y)
         }
     }
 
-    for (int i = y + 1; i <= 7; i++)
+    for (int i = y + 1; i < bordGrootte; i++)
     {
         if (bord[x, i] == 0)
         {
@@ -262,14 +266,73 @@ void overnemen(int x, int y)
             }
         }
     }
+
+    int[] dx = { -1, 1, -1, 1 };
+    int[] dy = { -1, -1, 1, 1 };
+
+    for (int d = 0; d < 4; d++)
+    {
+        for (int i = 1; i <= 7; i++)
+        {
+            int nx = x + i * dx[d];
+            int ny = y + i * dy[d];
+
+            if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8 || bord[nx, ny] == 0)
+            {
+                break;
+            }
+            else if (bord[nx, ny] == RofB)
+            {
+                for (int n = 0; n < i; n++)
+                {
+                    bord[x + n * dx[d], y + n * dy[d]] = RofB;
+                }
+                break;
+            }
+        }
+    }
+
     scherm.Invalidate();
+}
+
+void tellen()
+{
+    for(int i = 0; i < 4; i++)
+    {
+        turfStenen[i] = 0;
+    }
+    foreach(int l in bord)
+    {
+        turfStenen[l+1]++;
+    }
+    roodstatus.Text = turfStenen[2].ToString() + " stenen";
+    blauwstatus.Text = turfStenen[0].ToString() + " stenen";
+}
+
+void checkBewegen()
+{
+    if(roodAanZet && turfStenen[2] == 0)
+    {
+        roodKanNiet = true;
+        roodAanZet = !roodAanZet;
+    }
+    if(!roodAanZet && turfStenen[0] == 0)
+    {
+        blauwKanNiet = true;
+        roodAanZet = !roodAanZet;
+    }
+    if (turfStenen[1] == 0 || blauwKanNiet && roodKanNiet)
+    {
+        roodstatus.Text = "Einde van";
+        blauwstatus.Text = "het spel!";
+    }
 }
 
 void resetNaTurn()
 {
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < bordGrootte; i++)
     {
-        for (int n = 0; n < 8; n++)
+        for (int n = 0; n < bordGrootte; n++)
         {
             if (bord[i, n] == 2)
             {
