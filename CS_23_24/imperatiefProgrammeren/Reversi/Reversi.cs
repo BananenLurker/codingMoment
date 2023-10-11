@@ -2,34 +2,31 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-int aantal = 1;
-int RofB;
 int bordGrootte = 8;
-int aanZet;
-int loop;
 
+// Instantiating globally used variables
+// Arrays
 int[,] bord = new int[bordGrootte, bordGrootte];
 Label[,] vakjes = new Label[bordGrootte, bordGrootte];
 int[] turfStenen = new int[4];
 int[] xLijst = { 1, 1, 1, 0, -1, -1, -1, 0 };
 int[] yLijst = { 1, 0, -1, -1, -1, 0, 1, 1 };
 
+// GUI variables
 int halfBord = bordGrootte / 2;
-bord[halfBord - 1, halfBord - 1] = 1;
-bord[halfBord, halfBord] = 1;
-bord[halfBord, halfBord - 1] = -1;
-bord[halfBord - 1, halfBord] = -1;
-
-Point hier = new Point(0, 0);
-
-bool roodAanZet = true;
-bool blauwKanNiet = false;
-bool roodKanNiet = false;
-bool detectie = false;
-bool hulpAan = true;
 
 Font arial = new Font("Arial", 20, FontStyle.Bold);
 
+// Mousepointer
+Point hier = new Point(0, 0);
+
+// Boolean variables
+bool roodAanZet = true;
+bool blauwKanNiet = false;
+bool roodKanNiet = false;
+bool hulpAan = true;
+
+// Creating GUI elements
 Form scherm = new Form();
 scherm.Text = "Reversi";
 scherm.ClientSize = new Size(bordGrootte * 75 + 20, 100 * bordGrootte + 10);
@@ -62,20 +59,20 @@ blauwstatus.ForeColor = Color.Blue;
 
 Bitmap roodcirkelbit = new Bitmap(40, 40);
 Graphics roodteken = Graphics.FromImage(roodcirkelbit);
-Label roodcikellabel = new Label();
-scherm.Controls.Add(roodcikellabel);
-roodcikellabel.Location = new Point(60, 50);
-roodcikellabel.Size = new Size(40, 40);
-roodcikellabel.Image = roodcirkelbit;
+Label roodcirkellabel = new Label();
+scherm.Controls.Add(roodcirkellabel);
+roodcirkellabel.Location = new Point(60, 50);
+roodcirkellabel.Size = new Size(40, 40);
+roodcirkellabel.Image = roodcirkelbit;
 roodteken.FillEllipse(Brushes.Red, 0, 0, 40, 40);
 
 Bitmap blauwcirkelbit = new Bitmap(40, 40);
 Graphics blauwteken = Graphics.FromImage(blauwcirkelbit);
-Label blauwcikellabel = new Label();
-scherm.Controls.Add(blauwcikellabel);
-blauwcikellabel.Location = new Point(60, 100);
-blauwcikellabel.Size = new Size(40, 40);
-blauwcikellabel.Image = blauwcirkelbit;
+Label blauwcirkellabel = new Label();
+scherm.Controls.Add(blauwcirkellabel);
+blauwcirkellabel.Location = new Point(60, 100);
+blauwcirkellabel.Size = new Size(40, 40);
+blauwcirkellabel.Image = blauwcirkelbit;
 blauwteken.FillEllipse(Brushes.Blue, 0, 0, 40, 40);
 
 Bitmap validecirkelbit = new Bitmap(40, 40);
@@ -85,14 +82,20 @@ valideteken.DrawEllipse(Pens.Black, 10, 10, 20, 20);
 Label blauwKanLab = new Label();
 blauwKanLab.Size = new Size(100, 20);
 blauwKanLab.Location = new Point(100, 175);
-blauwKanLab.BackColor = Color.LightYellow;
+blauwKanLab.BackColor = Color.LightBlue;
 scherm.Controls.Add(blauwKanLab);
 
 Label roodKanLab = new Label();
 roodKanLab.Size = new Size(100, 20);
 roodKanLab.Location = new Point(250, 175);
-roodKanLab.BackColor = Color.LightYellow;
+roodKanLab.BackColor = Color.LightBlue;
 scherm.Controls.Add(roodKanLab);
+
+Label winnaarLabel = new Label();
+winnaarLabel.Size = new Size(300, 40);
+winnaarLabel.Location = new Point(300, 70);
+winnaarLabel.Font = arial;
+scherm.Controls.Add(winnaarLabel);
 
 for (int i = 0; i < bordGrootte; i++)
 {
@@ -109,6 +112,12 @@ for (int i = 0; i < bordGrootte; i++)
 
 void nieuwSpel_Click(object o, EventArgs e)
 {
+    roodKanLab.Text = "";
+    blauwKanLab.Text = "";
+    roodKanNiet = false;
+    blauwKanNiet = false;
+    winnaarLabel.Text = "";
+    winnaarLabel.ForeColor = Color.Black;
     for (int i = 0; i < bordGrootte; i++)
     {
         for (int n = 0; n < bordGrootte; n++)
@@ -120,7 +129,6 @@ void nieuwSpel_Click(object o, EventArgs e)
     bord[halfBord, halfBord] = 1;
     bord[halfBord, halfBord - 1] = -1;
     bord[halfBord - 1, halfBord] = -1;
-    aantal++;
     roodAanZet = true;
     for (int h = 0; h < bordGrootte; h++)
     {
@@ -133,38 +141,6 @@ void nieuwSpel_Click(object o, EventArgs e)
     scherm.Invalidate();
 }
 
-void tekenen(object o, PaintEventArgs pea)
-{
-    Graphics gr = pea.Graphics;
-
-    for (int i = 0; i < bordGrootte + 1; i++)
-    {
-        gr.DrawLine(Pens.Black, 10 + 75 * i, 200, 10 + 75 * i, 800);
-        gr.DrawLine(Pens.Black, 10, 200 + 75 * i, 610, 200 + 75 * i);
-    }
-    for (int i = 0; i < bordGrootte; i++)
-    {
-        for (int n = 0; n < bordGrootte; n++)
-        {
-            if (bord[i, n] == -1)
-            {
-                vakjes[i, n].Image = blauwcirkelbit;
-            }
-            else if (bord[i, n] == 0)
-            {
-                vakjes[i, n].Image = null;
-            }
-            else if (bord[i, n] == 1)
-            {
-                vakjes[i, n].Image = roodcirkelbit;
-            }
-            else if (bord[i, n] == 2)
-            {
-                vakjes[i, n].Image = validecirkelbit;
-            }
-        }
-    }
-}
 void bord_Click(object o, MouseEventArgs mea)
 {
     hier = scherm.PointToClient(Cursor.Position);
@@ -199,25 +175,9 @@ void bord_Click(object o, MouseEventArgs mea)
     }
 }
 
-void eindeBeurt()
-{
-    resetHulp();
-    if (hulpAan)
-    {
-        for (int h = 0; h < bordGrootte; h++)
-        {
-            for (int k = 0; k < bordGrootte; k++)
-            {
-                valideCheck(h, k);
-            }
-        }
-    }
-    tellen();
-    checkSoftlock();
-}
-
 void overnemen(int x, int y)
 {
+    int RofB;
     if (roodAanZet)
     {
         RofB = 1;
@@ -251,6 +211,81 @@ void overnemen(int x, int y)
     scherm.Invalidate();
 }
 
+void eindeBeurt()
+{
+    resetHulp();
+    for (int h = 0; h < bordGrootte; h++)
+    {
+        for (int k = 0; k < bordGrootte; k++)
+        {
+            valideCheck(h, k);
+        }
+    }
+    tellen();
+    checkSoftlock();
+}
+
+void resetHulp()
+{
+    for (int i = 0; i < bordGrootte; i++)
+    {
+        for (int n = 0; n < bordGrootte; n++)
+        {
+            if (bord[i, n] == 2)
+            {
+                bord[i, n] = 0;
+            }
+        }
+    }
+    scherm.Invalidate();
+}
+
+void valideCheck(int x, int y)
+{
+    int aanZet;
+    if (roodAanZet)
+    {
+        aanZet = 1;
+    }
+    else
+    {
+        aanZet = -1;
+    }
+
+    if (bord[x, y] != 0)
+    {
+        return;
+    }
+    for (int i = 0; i < 8; i++)
+    {
+        int loop = 1;
+        bool detectie = false;
+
+        int dx = x + xLijst[i] * loop;
+        int dy = y + yLijst[i] * loop;
+
+        while (dx >= 0 && dy >= 0 && dx < bordGrootte && dy < bordGrootte)
+        {
+            if (bord[dx, dy] == aanZet && detectie)
+            {
+                bord[x, y] = 2;
+            }
+            else if (bord[dx, dy] != aanZet * -1)
+            {
+                break;
+            }
+            else
+            {
+                detectie = true;
+            }
+
+            dx = x + loop * xLijst[i];
+            dy = y + loop * yLijst[i];
+            loop++;
+        }
+    }
+}
+
 void tellen()
 {
     for (int i = 0; i < 4; i++)
@@ -270,6 +305,7 @@ void tellen()
     {
         roodstatus.Text = turfStenen[2].ToString() + " Stenen";
     }
+
     if (turfStenen[0] == 1)
     {
         blauwstatus.Text = "1 Steen";
@@ -309,75 +345,49 @@ void eindeSpel()
     tellen();
     if (turfStenen[0] > turfStenen[2])
     {
-        // blauw heeft gewonnen
+        winnaarLabel.Text = "Blauw is de winnaar!";
+        winnaarLabel.ForeColor = Color.Blue;
     }
     else if (turfStenen[2] > turfStenen[0])
     {
-        // rood heeft gewonnen
+        winnaarLabel.Text = "Rood is de winnaar!";
+        winnaarLabel.ForeColor = Color.Red;
     }
     else
     {
-        // remise
+        winnaarLabel.Text = "Gelijkspel!";
     }
 }
 
-void resetHulp()
+void tekenen(object o, PaintEventArgs pea)
 {
+    Graphics gr = pea.Graphics;
+
+    for (int i = 0; i < bordGrootte + 1; i++)
+    {
+        gr.DrawLine(Pens.Black, 10 + 75 * i, 200, 10 + 75 * i, 800);
+        gr.DrawLine(Pens.Black, 10, 200 + 75 * i, 610, 200 + 75 * i);
+    }
     for (int i = 0; i < bordGrootte; i++)
     {
         for (int n = 0; n < bordGrootte; n++)
         {
-            if (bord[i, n] == 2)
+            if (bord[i, n] == -1)
             {
-                bord[i, n] = 0;
+                vakjes[i, n].Image = blauwcirkelbit;
             }
-        }
-    }
-    scherm.Invalidate();
-}
-
-void valideCheck(int x, int y)
-{
-    if (roodAanZet)
-    {
-        aanZet = 1;
-    }
-    else
-    {
-        aanZet = -1;
-    }
-
-    if (bord[x, y] != 0)
-    {
-        return;
-    }
-
-    for (int i = 0; i < 8; i++)
-    {
-        loop = 1;
-        detectie = false;
-
-        int dx = x + xLijst[i] * loop;
-        int dy = y + yLijst[i] * loop;
-
-        while (dx >= 0 && dy >= 0 && dx < bordGrootte && dy < bordGrootte)
-        {
-            if (bord[dx, dy] == aanZet && detectie)
+            else if (bord[i, n] == 0 || !hulpAan && bord[i, n] == 2)
             {
-                bord[x, y] = 2;
+                vakjes[i, n].Image = null;
             }
-            else if (bord[dx, dy] != aanZet * -1)
+            else if (bord[i, n] == 1)
             {
-                break;
+                vakjes[i, n].Image = roodcirkelbit;
             }
-            else
+            else if (bord[i, n] == 2 && hulpAan)
             {
-                detectie = true;
+                vakjes[i, n].Image = validecirkelbit;
             }
-
-            dx = x + loop * xLijst[i];
-            dy = y + loop * yLijst[i];
-            loop++;
         }
     }
 }
@@ -385,28 +395,35 @@ void valideCheck(int x, int y)
 void helpKnop_Click(Object o, EventArgs ea)
 {
     hulpAan = !hulpAan;
-    if (hulpAan)
-    {
-        for (int h = 0; h < bordGrootte; h++)
-        {
-            for (int k = 0; k < bordGrootte; k++)
-            {
-                valideCheck(h, k);
-            }
-        }
-    }
-    if (!hulpAan)
-    {
-        resetHulp();
-    }
     scherm.Invalidate();
 }
 
-nieuwspelknop.Click += nieuwSpel_Click;
-scherm.Paint += tekenen;
-scherm.MouseClick += bord_Click;
-helpKnop.Click += helpKnop_Click;
+// ----- WORDT GEBRUIKT VOOR DEBUGGING - NIET WEGHALEN -----
+//void cijfer()
+//{
+//    for (int i = 0; i < 8; i++)
+//    {
+//        for (int n = 0; n < 8; n++)
+//        {
+//            vakjes[i, n].Text = bord[i, n].ToString();
+//        }
+//    }
+//}
 
-eindeBeurt();
+void start()
+{
+    bord[halfBord - 1, halfBord - 1] = 1;
+    bord[halfBord, halfBord] = 1;
+    bord[halfBord, halfBord - 1] = -1;
+    bord[halfBord - 1, halfBord] = -1;
 
+    nieuwspelknop.Click += nieuwSpel_Click;
+    scherm.Paint += tekenen;
+    scherm.MouseClick += bord_Click;
+    helpKnop.Click += helpKnop_Click;
+
+    eindeBeurt();
+}
+
+start();
 Application.Run(scherm);
