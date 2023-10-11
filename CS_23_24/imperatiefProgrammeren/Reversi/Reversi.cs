@@ -23,6 +23,7 @@ bool roodAanZet = true;
 bool blauwKanNiet = false;
 bool roodKanNiet = false;
 bool detectie = false;
+bool hulpAan = true;
 
 int[] xLijst = { 1, 1, 1, 0, -1, -1, -1, 0 };
 int[] yLijst = { 1, 0, -1, -1, -1, 0, 1, 1 };
@@ -81,6 +82,18 @@ Bitmap validecirkelbit = new Bitmap(40, 40);
 Graphics valideteken = Graphics.FromImage(validecirkelbit);
 valideteken.DrawEllipse(Pens.Black, 0, 0, 20, 20);
 
+Label blauwKanLab = new Label();
+blauwKanLab.Size = new Size(100, 20);
+blauwKanLab.Location = new Point(100, 175);
+blauwKanLab.BackColor = Color.LightYellow;
+scherm.Controls.Add(blauwKanLab);
+
+Label roodKanLab = new Label();
+roodKanLab.Size = new Size(100, 20);
+roodKanLab.Location = new Point(250, 175);
+roodKanLab.BackColor = Color.LightYellow;
+scherm.Controls.Add(roodKanLab);
+
 for (int i = 0; i < 8; i++)
 {
     for (int n = 0; n < 8; n++)
@@ -108,6 +121,7 @@ void nieuwSpel_Click(object o, EventArgs e)
     bord[halfBord, halfBord - 1] = -1;
     bord[halfBord - 1, halfBord] = -1;
     aantal++;
+    roodAanZet = true;
     for (int h = 0; h < bordGrootte; h++)
     {
         for (int k = 0; k < bordGrootte; k++)
@@ -116,7 +130,6 @@ void nieuwSpel_Click(object o, EventArgs e)
         }
     }
     tellen();
-    roodAanZet = true;
     scherm.Invalidate();
 }
 
@@ -183,15 +196,18 @@ void bord_Click(object o, MouseEventArgs mea)
             roodAanZet = !roodAanZet;
             helpknop.Text = roodAanZet.ToString();
             resetNaTurn();
-            tellen();
-            checkBewegen();
-            for (int h = 0; h < bordGrootte; h++)
+            if (hulpAan)
             {
-                for (int k = 0; k < bordGrootte; k++)
+                for (int h = 0; h < bordGrootte; h++)
                 {
-                    valideCheck(h, k);
+                    for (int k = 0; k < bordGrootte; k++)
+                    {
+                        valideCheck(h, k);
+                    }
                 }
             }
+            tellen();
+            checkBewegen();
         }
     }
 }
@@ -311,17 +327,21 @@ void tellen()
 
 void checkBewegen()
 {
-    if(roodAanZet && turfStenen[2] == 0)
+    if(roodAanZet && turfStenen[3] == 0)
     {
         roodKanNiet = true;
         roodAanZet = !roodAanZet;
+        roodKanLab.Text = "rood kan niet";
+        tellen();
     }
-    if(!roodAanZet && turfStenen[0] == 0)
+    if(!roodAanZet && turfStenen[3] == 0)
     {
         blauwKanNiet = true;
         roodAanZet = !roodAanZet;
+        blauwKanLab.Text = "blauw kan niet";
+        tellen();
     }
-    if (turfStenen[1] == 0 || blauwKanNiet && roodKanNiet)
+    if (blauwKanNiet && roodKanNiet || turfStenen[1] == 0 && turfStenen[3] == 0)
     {
         roodstatus.Text = "Einde van";
         blauwstatus.Text = "het spel!";
@@ -340,6 +360,15 @@ void resetNaTurn()
             }
         }
     }
+
+    //foreach(int a in bord)
+    //{
+    //    int b = a / bordGrootte;
+    //    if(a == 2)
+    //    {
+    //        bord[b, a] = 0;
+    //    }
+    //}
     scherm.Invalidate();
 }
 
@@ -389,9 +418,30 @@ void valideCheck(int x, int y)
     }
 }
 
+void helpKnop_Click(Object o, EventArgs ea)
+{
+    hulpAan = !hulpAan;
+    if (hulpAan)
+    {
+        for (int h = 0; h < bordGrootte; h++)
+        {
+            for (int k = 0; k < bordGrootte; k++)
+            {
+                valideCheck(h, k);
+            }
+        }
+    }
+    if (!hulpAan)
+    {
+        resetNaTurn();
+    }
+    scherm.Invalidate();
+}
+
 nieuwspelknop.Click += nieuwSpel_Click;
 scherm.Paint += tekenen;
 scherm.MouseClick += bord_Click;
+helpknop.Click += helpKnop_Click;
 
 for (int h = 0; h < bordGrootte; h++)
 {
