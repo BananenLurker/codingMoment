@@ -2,9 +2,14 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
+// -- Instantiating globally used variables --
+// GUI variables
 int bordGrootte = 6;
+int halfBord = bordGrootte / 2;
+int afstandBord = (770 - bordGrootte * 75) / 2;
 
-// Instantiating globally used variables
+Font arial = new Font("Arial", 20, FontStyle.Bold);
+
 // Arrays
 int[,] bord = new int[bordGrootte, bordGrootte];
 Label[,] vakjes = new Label[bordGrootte, bordGrootte];
@@ -12,31 +17,42 @@ int[] turfStenen = new int[4];
 int[] xLijst = { 1, 1, 1, 0, -1, -1, -1, 0 };
 int[] yLijst = { 1, 0, -1, -1, -1, 0, 1, 1 };
 
-// GUI variables
-int halfBord = bordGrootte / 2;
-
-Font arial = new Font("Arial", 20, FontStyle.Bold);
-
 // Mousepointer
 Point hier = new Point(0, 0);
 
 // Boolean variables
 bool roodAanZet = true;
+bool roodBegint = true;
 bool blauwKanNiet = false;
 bool roodKanNiet = false;
 bool hulpAan = true;
 
-// Creating GUI elements
+// Function variables
+int wieBegintAantal = 1;
+// -- End of globally used variables --
+
+// -- Creating GUI elements --
 Form scherm = new Form();
 scherm.Text = "Reversi";
 scherm.ClientSize = new Size(770, 75 * bordGrootte + 210);
 
-Bitmap roodcirkelbit = new Bitmap(40, 40);
-Bitmap blauwcirkelbit = new Bitmap(40, 40);
-Bitmap validecirkelbit = new Bitmap(40, 40);
-Graphics roodteken = Graphics.FromImage(roodcirkelbit);
-Graphics blauwteken = Graphics.FromImage(blauwcirkelbit);
-Graphics valideteken = Graphics.FromImage(validecirkelbit);
+Bitmap roodCirkelBit = new Bitmap(40, 40);
+Bitmap blauwCirkelBit = new Bitmap(40, 40);
+Bitmap valideCirkelBit = new Bitmap(40, 40);
+Graphics roodTeken = Graphics.FromImage(roodCirkelBit);
+Graphics blauwTeken = Graphics.FromImage(blauwCirkelBit);
+Graphics valideTeken = Graphics.FromImage(valideCirkelBit);
+
+roodTeken.FillEllipse(Brushes.Red, 0, 0, 40, 40);
+blauwTeken.FillEllipse(Brushes.Blue, 0, 0, 40, 40);
+valideTeken.DrawEllipse(Pens.Black, 10, 10, 20, 20);
+
+Button wieBegintKnop = new Button
+{
+    Location = new Point(30, 10),
+    Size = new Size(100, 20),
+    Text = "Rood begint"
+};
 
 Button nieuwspelknop = new Button
 {
@@ -72,19 +88,15 @@ Label roodcirkellabel = new Label
 {
     Location = new Point(60, 50),
     Size = new Size(40, 40),
-    Image = roodcirkelbit
+    Image = roodCirkelBit
 };
 
 Label blauwcirkellabel = new Label
 {
     Location = new Point(60, 100),
     Size = new Size(40, 40),
-    Image = blauwcirkelbit
+    Image = blauwCirkelBit
 };
-
-roodteken.FillEllipse(Brushes.Red, 0, 0, 40, 40);
-blauwteken.FillEllipse(Brushes.Blue, 0, 0, 40, 40);
-valideteken.DrawEllipse(Pens.Black, 10, 10, 20, 20);
 
 Label blauwKanLab = new Label
 {
@@ -110,7 +122,7 @@ Label winnaarLabel = new Label
 ComboBox bordGrootteComboBox = new ComboBox
 {
     Location = new Point(390, 10),
-    Size = new Size(100, 20),
+    Size = new Size(100, 20)
 };
 bordGrootteComboBox.Items.AddRange(new string[] { "4x4", "6x6", "8x8", "10x10" });
 bordGrootteComboBox.SelectedIndex = 1;
@@ -120,7 +132,7 @@ for (int i = 0; i < bordGrootte; i++)
     for (int n = 0; n < bordGrootte; n++)
     {
         Label vakje = new Label();
-        vakje.Location = new Point(20 + i * 75, 210 + n * 75);
+        vakje.Location = new Point(afstandBord + 10 + i * 75, 210 + n * 75);
         vakje.Size = new Size(55, 55);
         vakje.MouseClick += bord_Click;
         scherm.Controls.Add(vakje);
@@ -138,6 +150,8 @@ scherm.Controls.Add(roodKanLab);
 scherm.Controls.Add(blauwKanLab);
 scherm.Controls.Add(winnaarLabel);
 scherm.Controls.Add(bordGrootteComboBox);
+scherm.Controls.Add(wieBegintKnop);
+// -- End of GUI elements --
 
 void nieuwSpel_Click(object o, EventArgs e)
 {
@@ -145,7 +159,14 @@ void nieuwSpel_Click(object o, EventArgs e)
     blauwKanLab.Text = "";
     roodKanNiet = false;
     blauwKanNiet = false;
-    roodAanZet = true;
+    if (roodBegint)
+    {
+        roodAanZet = true;
+    }
+    else
+    {
+        roodAanZet = false;
+    }
     aanDeBeurt();
     for (int i = 0; i < bordGrootte; i++)
     {
@@ -178,7 +199,7 @@ void bord_Click(object o, MouseEventArgs mea)
         roodKanNiet = false;
         blauwKanNiet = false;
 
-        int x = hier.X / 75;
+        int x = (hier.X - afstandBord) / 75;
         int y = (hier.Y - 200) / 75;
         if (x > bordGrootte - 1 || y > bordGrootte - 1 || x < 0 || y < 0)
         {
@@ -411,8 +432,8 @@ void tekenen(object o, PaintEventArgs pea)
 
     for (int i = 0; i < bordGrootte + 1; i++)
     {
-        gr.DrawLine(Pens.Black, 10 + 75 * i, 200, 10 + 75 * i, 75 * bordGrootte + 200);
-        gr.DrawLine(Pens.Black, 10, 200 + 75 * i, 75 * bordGrootte + 10, 200 + 75 * i);
+        gr.DrawLine(Pens.Black, afstandBord + 75 * i, 200, afstandBord + 75 * i, 75 * bordGrootte + 200);
+        gr.DrawLine(Pens.Black, afstandBord, 200 + 75 * i, afstandBord + 75 * bordGrootte, 200 + 75 * i);
     }
     for (int i = 0; i < bordGrootte; i++)
     {
@@ -420,7 +441,7 @@ void tekenen(object o, PaintEventArgs pea)
         {
             if (bord[i, n] == -1)
             {
-                vakjes[i, n].Image = blauwcirkelbit;
+                vakjes[i, n].Image = blauwCirkelBit;
             }
             else if (bord[i, n] == 0 || !hulpAan && bord[i, n] == 2)
             {
@@ -428,11 +449,11 @@ void tekenen(object o, PaintEventArgs pea)
             }
             else if (bord[i, n] == 1)
             {
-                vakjes[i, n].Image = roodcirkelbit;
+                vakjes[i, n].Image = roodCirkelBit;
             }
             else if (bord[i, n] == 2 && hulpAan)
             {
-                vakjes[i, n].Image = validecirkelbit;
+                vakjes[i, n].Image = valideCirkelBit;
             }
         }
     }
@@ -444,7 +465,22 @@ void helpKnop_Click(Object o, EventArgs ea)
     scherm.Invalidate();
 }
 
-void bordGrootteComboBoxverander(object sender, EventArgs e)
+void wieBegint_Click(object o, EventArgs ea)
+{
+    if(wieBegintAantal % 2 == 0)
+    {
+        roodBegint = true;
+        wieBegintKnop.Text = "Rood begint";
+    }
+    else
+    {
+        roodBegint = false;
+        wieBegintKnop.Text = "Blauw begint";
+    }
+    wieBegintAantal++;
+}
+
+void bordGrootteComboBoxVerander(object sender, EventArgs e)
 {
     string selectedSize = (string)bordGrootteComboBox.SelectedItem;
     int newSize = int.Parse(selectedSize.Split('x')[0]);
@@ -456,6 +492,7 @@ void bordGrootteComboBoxverander(object sender, EventArgs e)
 
     bordGrootte = newSize;
     halfBord = bordGrootte / 2;
+    afstandBord = (770 - bordGrootte * 75) / 2;
     bord = new int[bordGrootte, bordGrootte];
     vakjes = new Label[bordGrootte, bordGrootte];
 
@@ -466,7 +503,7 @@ void bordGrootteComboBoxverander(object sender, EventArgs e)
         for (int n = 0; n < bordGrootte; n++)
         {
             Label vakje = new Label();
-            vakje.Location = new Point(20 + i * 75, 210 + n * 75);
+            vakje.Location = new Point(afstandBord + 10 + i * 75, 210 + n * 75);
             vakje.Size = new Size(55, 55);
             vakje.MouseClick += bord_Click;
             scherm.Controls.Add(vakje);
@@ -475,7 +512,6 @@ void bordGrootteComboBoxverander(object sender, EventArgs e)
     }
     nieuwSpel_Click(null, null);
 }
-
 void start()
 {
     bord[halfBord - 1, halfBord - 1] = 1;
@@ -487,7 +523,8 @@ void start()
     scherm.Paint += tekenen;
     scherm.MouseClick += bord_Click;
     helpKnop.Click += helpKnop_Click;
-    bordGrootteComboBox.SelectedIndexChanged += bordGrootteComboBoxverander;
+    wieBegintKnop.Click += wieBegint_Click;
+    bordGrootteComboBox.SelectedIndexChanged += bordGrootteComboBoxVerander;
     eindeBeurt();
 }
 
