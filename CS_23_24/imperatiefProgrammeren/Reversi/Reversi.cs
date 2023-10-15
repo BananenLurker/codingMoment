@@ -213,12 +213,10 @@ void Bord_Click(object o, MouseEventArgs mea)
         {
             if (WitAanZet)
             {
-                bord[x, y] = 1;
                 Overnemen(x, y);
             }
             else
             {
-                bord[x, y] = -1;
                 Overnemen(x, y);
             }
             WitAanZet = !WitAanZet;
@@ -229,14 +227,14 @@ void Bord_Click(object o, MouseEventArgs mea)
 
 void Overnemen(int x, int y)
 {
-    int RofB;
+    int WofZ;
     if (WitAanZet)
     {
-        RofB = 1;
+        WofZ = 1;
     }
     else
     {
-        RofB = -1;
+        WofZ = -1;
     }
 
     for (int d = 0; d < 8; d++)
@@ -250,13 +248,12 @@ void Overnemen(int x, int y)
             {
                 break;
             }
-            else if (bord[nx, ny] == RofB)
+            else if (bord[nx, ny] == WofZ)
             {
                 for (int n = 0; n < i; n++)
                 {
-                    bord[x + n * xLijst[d], y + n * yLijst[d]] = RofB;
+                    bord[x + n * xLijst[d], y + n * yLijst[d]] = WofZ;
                 }
-                break;
             }
         }
     }
