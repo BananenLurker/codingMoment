@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,6 +11,7 @@ int halfBord = bordGrootte / 2;
 int afstandBord = (770 - bordGrootte * 75) / 2;
 
 Font arial = new Font("Arial", 20, FontStyle.Bold);
+Font arialSubHeader = new Font("Arial", 15, FontStyle.Bold);
 
 Pen bordPen = new Pen(Brushes.Black, 3);
 
@@ -19,12 +22,17 @@ int[] turfStenen = new int[4];
 int[] xLijst = { 1, 1, 1, 0, -1, -1, -1, 0 };
 int[] yLijst = { 1, 0, -1, -1, -1, 0, 1, 1 };
 
+List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
+
 // Boolean variables
-bool WitAanZet = true;
-bool WitBegint = true;
-bool ZwartKanNiet = false;
-bool WitKanNiet = false;
+bool ZwartAanZet = true;
+bool ZwartBegint = true;
+bool zwartKanNiet = false;
+bool witKanNiet = false;
 bool hulpAan = true;
+bool botActive = false;
+bool AIbeurt = false;
+bool botSpeeltZwart = true;
 
 // -- End of globally used variables --
 
@@ -34,22 +42,30 @@ scherm.Text = "Reversi";
 scherm.BackColor = Color.DarkGreen;
 scherm.ClientSize = new Size(770, 75 * bordGrootte + 210);
 
-Bitmap witCirkelBit = new Bitmap(40, 40);
 Bitmap zwartCirkelBit = new Bitmap(40, 40);
+Bitmap witCirkelBit = new Bitmap(40, 40);
 Bitmap valideCirkelBit = new Bitmap(40, 40);
-Graphics witTeken = Graphics.FromImage(witCirkelBit);
 Graphics zwartTeken = Graphics.FromImage(zwartCirkelBit);
+Graphics witTeken = Graphics.FromImage(witCirkelBit);
 Graphics valideTeken = Graphics.FromImage(valideCirkelBit);
 
-witTeken.FillEllipse(Brushes.White, 0, 0, 40, 40);
 zwartTeken.FillEllipse(Brushes.Black, 0, 0, 40, 40);
-valideTeken.DrawEllipse(bordPen, 10, 10, 20, 20);
+witTeken.FillEllipse(Brushes.White, 0, 0, 40, 40);
+valideTeken.DrawEllipse(Pens.Black, 10, 10, 20, 20);
 
 Button wieBegintKnop = new Button
 {
     Location = new Point(30, 10),
     Size = new Size(100, 25),
-    Text = "Wit begint",
+    Text = "Zwart begint",
+    BackColor = Color.Green
+};
+
+Button activateAIButton = new Button
+{
+    Location = new Point(390, 40),
+    Size = new Size(100, 25),
+    Text = "Activeer AI",
     BackColor = Color.Green
 };
 
@@ -69,44 +85,44 @@ Button helpKnop = new Button
     BackColor = Color.Green
 };
 
-Label witStatus = new Label
-{
-    Location = new Point(120, 55),
-    Size = new Size(150, 40),
-    Font = arial,
-    ForeColor = Color.White
-};
-
 Label zwartStatus = new Label
 {
-    Location = new Point(120, 105),
+    Location = new Point(120, 55),
     Size = new Size(150, 40),
     Font = arial,
     ForeColor = Color.Black
 };
 
-Label witCirkelLabel = new Label
+Label witStatus = new Label
 {
-    Location = new Point(60, 50),
-    Size = new Size(40, 40),
-    Image = witCirkelBit
+    Location = new Point(120, 105),
+    Size = new Size(150, 40),
+    Font = arial,
+    ForeColor = Color.White
 };
 
 Label zwartCirkelLabel = new Label
 {
-    Location = new Point(60, 100),
+    Location = new Point(60, 50),
     Size = new Size(40, 40),
     Image = zwartCirkelBit
 };
 
-Label zwartKanLab = new Label
+Label witCirkelLabel = new Label
+{
+    Location = new Point(60, 100),
+    Size = new Size(40, 40),
+    Image = witCirkelBit
+};
+
+Label witKanLab = new Label
 {
     Size = new Size(100, 20),
     Location = new Point(100, 175),
     BackColor = Color.Green
 };
 
-Label witKanLab = new Label
+Label zwartKanLab = new Label
 {
     Size = new Size(100, 20),
     Location = new Point(250, 175),
@@ -120,6 +136,15 @@ Label winnaarLabel = new Label
     Font = arial
 };
 
+Label botLabel = new Label
+{
+    Size = new Size(220, 25),
+    Location = new Point(500, 40),
+    Font = arialSubHeader,
+    ForeColor = Color.Gray,
+    Text = "bot speelt niet"
+};
+
 ComboBox bordGrootteComboBox = new ComboBox
 {
     Location = new Point(390, 10),
@@ -128,6 +153,8 @@ ComboBox bordGrootteComboBox = new ComboBox
 
 bordGrootteComboBox.Items.AddRange(new string[] { "4x4", "6x6", "8x8", "10x10" });
 bordGrootteComboBox.SelectedIndex = 1;
+
+Random random = new Random();
 
 for (int i = 0; i < bordGrootte; i++)
 {
@@ -144,30 +171,34 @@ for (int i = 0; i < bordGrootte; i++)
 
 scherm.Controls.Add(nieuwSpelKnop);
 scherm.Controls.Add(helpKnop);
-scherm.Controls.Add(witStatus);
 scherm.Controls.Add(zwartStatus);
-scherm.Controls.Add(witCirkelLabel);
+scherm.Controls.Add(witStatus);
 scherm.Controls.Add(zwartCirkelLabel);
-scherm.Controls.Add(witKanLab);
+scherm.Controls.Add(witCirkelLabel);
 scherm.Controls.Add(zwartKanLab);
+scherm.Controls.Add(witKanLab);
 scherm.Controls.Add(winnaarLabel);
 scherm.Controls.Add(bordGrootteComboBox);
 scherm.Controls.Add(wieBegintKnop);
+scherm.Controls.Add(activateAIButton);
+scherm.Controls.Add(botLabel);
 // -- End of GUI elements --
 
 void NieuwSpel_Click(object o, EventArgs e)
 {
-    witKanLab.Text = "";
+    Debug.WriteLine("huts");
+
     zwartKanLab.Text = "";
-    WitKanNiet = false;
-    ZwartKanNiet = false;
-    if (WitBegint)
+    witKanLab.Text = "";
+    zwartKanNiet = false;
+    witKanNiet = false;
+    if (ZwartBegint)
     {
-        WitAanZet = true;
+        ZwartAanZet = true;
     }
     else
     {
-        WitAanZet = false;
+        ZwartAanZet = false;
     }
     AanDeBeurt();
     for (int i = 0; i < bordGrootte; i++)
@@ -189,17 +220,21 @@ void NieuwSpel_Click(object o, EventArgs e)
         }
     }
     Tellen();
+    UpdateBotText();
     scherm.Invalidate();
 }
 
 void Bord_Click(object o, MouseEventArgs mea)
 {
+    zwartKanLab.Text = "";
+    witKanLab.Text = "";
+
     Point hier = scherm.PointToClient(Cursor.Position);
 
     if (hier.Y > 200)
     {
-        WitKanNiet = false;
-        ZwartKanNiet = false;
+        zwartKanNiet = false;
+        witKanNiet = false;
 
         int x = (hier.X - afstandBord) / 75;
         int y = (hier.Y - 200) / 75;
@@ -211,26 +246,75 @@ void Bord_Click(object o, MouseEventArgs mea)
         }
         if (bord[x, y] == 2)
         {
-            if (WitAanZet)
-            {
-                bord[x, y] = 1;
-                Overnemen(x, y);
-            }
-            else
-            {
-                bord[x, y] = -1;
-                Overnemen(x, y);
-            }
-            WitAanZet = !WitAanZet;
+            Debug.WriteLine("Speler neemt een tegel over");
+
+            Overnemen(x, y);
+            ZwartAanZet = !ZwartAanZet;
             EindeBeurt();
+            scherm.Invalidate();
+            if (botActive)
+            {
+                AI_Move();
+            }
         }
     }
 }
 
+void AI_Move()
+{
+    ResetHulp();
+    for (int h = 0; h < bordGrootte; h++)
+    {
+        for (int k = 0; k < bordGrootte; k++)
+        {
+            ValideCheck(h, k);
+        }
+    }
+    Tellen();
+
+    validMoves.Clear();
+
+    for (int i = 0; i < bordGrootte; i++)
+    {
+        for (int n = 0; n < bordGrootte; n++)
+        {
+            if (bord[i, n] == 2)
+            {
+                validMoves.Add(Tuple.Create(i, n));
+            }
+        }
+    }
+
+    if (validMoves.Count == 0)
+    {
+        Debug.WriteLine("Er zijn geen valide moves voor de AI");
+        ZwartAanZet = !ZwartAanZet;
+        EindeBeurt();
+    }
+    else
+    {
+        Tuple<int, int> randomMove = validMoves[random.Next(validMoves.Count)];
+
+        Bord_ClickAI(randomMove.Item1, randomMove.Item2);
+    }
+}
+
+void Bord_ClickAI(int x, int y)
+{
+    Debug.WriteLine($"Bot neemt een tegel over op {x}, {y}");
+    Overnemen(x, y);
+    ZwartAanZet = !ZwartAanZet;
+    EindeBeurt();
+}
+
+
 void Overnemen(int x, int y)
 {
+    zwartKanLab.Text = "";
+    witKanLab.Text = "";
+
     int RofB;
-    if (WitAanZet)
+    if (ZwartAanZet)
     {
         RofB = 1;
     }
@@ -295,7 +379,7 @@ void ResetHulp()
 void ValideCheck(int x, int y)
 {
     int aanZet;
-    if (WitAanZet)
+    if (ZwartAanZet)
     {
         aanZet = 1;
     }
@@ -351,61 +435,109 @@ void Tellen()
 
     if (turfStenen[2] == 1)
     {
-        witStatus.Text = "1 Steen";
-    }
-    else
-    {
-        witStatus.Text = turfStenen[2].ToString() + " Stenen";
-    }
-
-    if (turfStenen[0] == 1)
-    {
         zwartStatus.Text = "1 Steen";
     }
     else
     {
-        zwartStatus.Text = turfStenen[0].ToString() + " Stenen";
+        zwartStatus.Text = turfStenen[2].ToString() + " Stenen";
+    }
+
+    if (turfStenen[0] == 1)
+    {
+        witStatus.Text = "1 Steen";
+    }
+    else
+    {
+        witStatus.Text = turfStenen[0].ToString() + " Stenen";
     }
 }
 
 void CheckSoftlock()
 {
     //Cijfer();
-    witKanLab.Text = "";
-    zwartKanLab.Text = "";
-    if (WitAanZet && turfStenen[3] == 0 && !WitKanNiet)
+    if (ZwartAanZet && turfStenen[3] == 0 && !zwartKanNiet)
     {
-        WitKanNiet = true;
-        WitAanZet = !WitAanZet;
-        EindeBeurt();
-        witKanLab.Text = "Wit kan niet";
-    }
-    if (!WitAanZet && turfStenen[3] == 0 && !ZwartKanNiet)
-    {
-        ZwartKanNiet = true;
-        WitAanZet = !WitAanZet;
+        Debug.WriteLine("Zwart kan niet");
+        zwartKanNiet = true;
+        ZwartAanZet = false;
+        if (botActive && !botSpeeltZwart)
+        {
+            Debug.WriteLine("--- Bot actief en bot speelt wit ---");
+            AI_Move();
+            return;
+        }
         EindeBeurt();
         zwartKanLab.Text = "Zwart kan niet";
+        return;
+    }
+    //Debug.WriteLine($"{!ZwartAanZet}, {turfStenen[3] == 0}, {!witKanNiet}");
+    if (!ZwartAanZet && turfStenen[3] == 0 && !witKanNiet)
+    {
+        Debug.WriteLine("Wit kan niet");
+        witKanNiet = true;
+        ZwartAanZet = true;
+        if (botActive && botSpeeltZwart)
+        {
+            Debug.WriteLine("--- Bot actief en bot speelt zwart ---");
+            AI_Move();
+            return;
+        }
+        EindeBeurt();
+        witKanLab.Text = "Wit kan niet";
+        return;
     }
 
     AanDeBeurt();
-    if (ZwartKanNiet && WitKanNiet || turfStenen[0] == 0 || turfStenen[2] == 0)
+    Tellen();
+    if (zwartKanNiet && witKanNiet || turfStenen[0] == 0 || turfStenen[2] == 0 || turfStenen[1] + turfStenen[3] == 0)
     {
-        EindeSpel();
+        CheckSpelEinde();
     }
+
+    zwartKanNiet = false;
+    witKanNiet = false;
+}
+
+bool CheckSpelEinde()
+{
+    if (zwartKanNiet && witKanNiet)
+    {
+        Debug.WriteLine("GAME END: Wit kan niet en zwart kan niet");
+        EindeSpel();
+        return true;
+    }
+    if(turfStenen[1] + turfStenen[3] == 0)
+    {
+        Debug.WriteLine("GAME END: Geen lege of valide stenen meer over");
+        EindeSpel();
+        return true;
+    }
+    if(turfStenen[0] == 0)
+    {
+        Debug.WriteLine("GAME END: Geen witte stenen meer over");
+        EindeSpel();
+        return true;
+    }
+    if(turfStenen[2] == 0)
+    {
+        Debug.WriteLine("GAME END: Geen zwarte stenen meer over");
+        EindeSpel();
+        return true;
+    }
+    return false;
 }
 
 void AanDeBeurt()
 {
-    if (WitAanZet)
-    {
-        winnaarLabel.Text = "Wit is aan zet";
-        winnaarLabel.ForeColor = Color.White;
-    }
-    else
+    if (ZwartAanZet)
     {
         winnaarLabel.Text = "Zwart is aan zet";
         winnaarLabel.ForeColor = Color.Black;
+    }
+    else
+    {
+        winnaarLabel.Text = "Wit is aan zet";
+        winnaarLabel.ForeColor = Color.White;
     }
 }
 
@@ -414,19 +546,20 @@ void EindeSpel()
     Tellen();
     if (turfStenen[0] > turfStenen[2])
     {
-        winnaarLabel.Text = "Zwart is de winnaar!";
-        winnaarLabel.ForeColor = Color.Black;
+        winnaarLabel.Text = "Wit is de winnaar!";
+        winnaarLabel.ForeColor = Color.White;
     }
     else if (turfStenen[2] > turfStenen[0])
     {
-        winnaarLabel.Text = "Wit is de winnaar!";
-        winnaarLabel.ForeColor = Color.White;
+        winnaarLabel.Text = "Zwart is de winnaar!";
+        winnaarLabel.ForeColor = Color.Black;
     }
     else
     {
         winnaarLabel.Text = "Gelijkspel!";
         winnaarLabel.ForeColor = Color.Black;
     }
+    return;
 }
 
 void Tekenen(object o, PaintEventArgs pea)
@@ -435,8 +568,8 @@ void Tekenen(object o, PaintEventArgs pea)
 
     for (int i = 0; i < bordGrootte + 1; i++)
     {
-        gr.DrawLine(bordPen, afstandBord + 75 * i, 200, afstandBord + 75 * i, 75 * bordGrootte + 200);
-        gr.DrawLine(bordPen, afstandBord, 200 + 75 * i, afstandBord + 75 * bordGrootte, 200 + 75 * i);
+        gr.DrawLine(Pens.Black, afstandBord + 75 * i, 200, afstandBord + 75 * i, 75 * bordGrootte + 200);
+        gr.DrawLine(Pens.Black, afstandBord, 200 + 75 * i, afstandBord + 75 * bordGrootte, 200 + 75 * i);
     }
     for (int i = 0; i < bordGrootte; i++)
     {
@@ -444,7 +577,7 @@ void Tekenen(object o, PaintEventArgs pea)
         {
             if (bord[i, n] == -1)
             {
-                vakjes[i, n].Image = zwartCirkelBit;
+                vakjes[i, n].Image = witCirkelBit;
             }
             else if (bord[i, n] == 0 || !hulpAan && bord[i, n] == 2)
             {
@@ -452,13 +585,45 @@ void Tekenen(object o, PaintEventArgs pea)
             }
             else if (bord[i, n] == 1)
             {
-                vakjes[i, n].Image = witCirkelBit;
+                vakjes[i, n].Image = zwartCirkelBit;
             }
             else if (bord[i, n] == 2 && hulpAan)
             {
                 vakjes[i, n].Image = valideCirkelBit;
             }
         }
+    }
+}
+
+void ActivateAI_Click(object o, EventArgs ea)
+{
+    botActive = !botActive;
+    UpdateBotText();
+}
+
+void UpdateBotText()
+{
+    if (botActive)
+    {
+        activateAIButton.Text = "Deactiveer AI";
+        if (ZwartAanZet)
+        {
+            botLabel.Text = "Bot speelt als: wit";
+            botLabel.ForeColor = Color.White;
+            botSpeeltZwart = false;
+        }
+        else
+        {
+            botLabel.Text = "Bot speelt als: zwart";
+            botLabel.ForeColor = Color.Black;
+            botSpeeltZwart = true;
+        }
+    }
+    else
+    {
+        activateAIButton.Text = "Activeer AI";
+        botLabel.Text = "Bot speelt niet";
+        botLabel.ForeColor = Color.Gray;
     }
 }
 
@@ -470,14 +635,14 @@ void HelpKnop_Click(Object o, EventArgs ea)
 
 void WieBegint_Click(object o, EventArgs ea)
 {
-    WitBegint = !WitBegint;
-    if (WitBegint)
+    ZwartBegint = !ZwartBegint;
+    if (ZwartBegint)
     {
-        wieBegintKnop.Text = "Wit begint";
+        wieBegintKnop.Text = "Zwart begint";
     }
     else
     {
-        wieBegintKnop.Text = "Zwart begint";
+        wieBegintKnop.Text = "Wit begint";
     }
 }
 
@@ -526,6 +691,7 @@ void Start()
     helpKnop.Click += HelpKnop_Click;
     wieBegintKnop.Click += WieBegint_Click;
     bordGrootteComboBox.SelectedIndexChanged += BordGrotte_Verander;
+    activateAIButton.Click += ActivateAI_Click;
     EindeBeurt();
 }
 
