@@ -313,7 +313,7 @@ void Overnemen(int x, int y)
     zwartKanLab.Text = "";
     witKanLab.Text = "";
 
-    int RofB;
+    int WofZ;
     if (ZwartAanZet)
     {
         WofZ = 1;
