@@ -8,7 +8,10 @@ using System.Windows.Forms;
 // GUI variables
 int bordGrootte = 6;
 int halfBord = bordGrootte / 2;
-int afstandBord = (770 - bordGrootte * 75) / 2;
+int schermGrootte = 75;
+int afstandVakjes = 10;
+int vakjesGrootte = 55;
+int afstandBord = (770 - bordGrootte * schermGrootte) / 2;
 
 Font arial = new Font("Arial", 20, FontStyle.Bold);
 Font arialSubHeader = new Font("Arial", 15, FontStyle.Bold);
@@ -22,25 +25,22 @@ int[] turfStenen = new int[4];
 int[] xLijst = { 1, 1, 1, 0, -1, -1, -1, 0 };
 int[] yLijst = { 1, 0, -1, -1, -1, 0, 1, 1 };
 
-List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
-
 // Boolean variables
-bool ZwartAanZet = true;
-bool ZwartBegint = true;
+bool zwartAanZet = true;
+bool zwartBegint = true;
 bool zwartKanNiet = false;
 bool witKanNiet = false;
 bool hulpAan = true;
 bool botActive = false;
-bool AIbeurt = false;
 bool botSpeeltZwart = true;
-
+bool kleinerScherm = false;
 // -- End of globally used variables --
 
 // -- Creating GUI elements --
 Form scherm = new Form();
 scherm.Text = "Reversi";
 scherm.BackColor = Color.DarkGreen;
-scherm.ClientSize = new Size(770, 75 * bordGrootte + 210);
+scherm.ClientSize = new Size(770, schermGrootte * bordGrootte + 210);
 
 Bitmap zwartCirkelBit = new Bitmap(40, 40);
 Bitmap witCirkelBit = new Bitmap(40, 40);
@@ -66,6 +66,14 @@ Button activateAIButton = new Button
     Location = new Point(390, 40),
     Size = new Size(100, 25),
     Text = "Activeer AI",
+    BackColor = Color.Green
+};
+
+Button kleinerSchermButton = new Button
+{
+    Location = new Point(490, 40),
+    Size = new Size(100, 25),
+    Text = "Kleiner scherm",
     BackColor = Color.Green
 };
 
@@ -142,7 +150,7 @@ Label botLabel = new Label
     Location = new Point(500, 40),
     Font = arialSubHeader,
     ForeColor = Color.Gray,
-    Text = "bot speelt niet"
+    Text = "Bot speelt niet"
 };
 
 ComboBox bordGrootteComboBox = new ComboBox
@@ -161,8 +169,8 @@ for (int i = 0; i < bordGrootte; i++)
     for (int n = 0; n < bordGrootte; n++)
     {
         Label vakje = new Label();
-        vakje.Location = new Point(afstandBord + 10 + i * 75, 210 + n * 75);
-        vakje.Size = new Size(55, 55);
+        vakje.Location = new Point(afstandBord + afstandVakjes + i * schermGrootte, 200 + afstandVakjes + n * schermGrootte);
+        vakje.Size = new Size(vakjesGrootte, vakjesGrootte);
         vakje.MouseClick += Bord_Click;
         scherm.Controls.Add(vakje);
         vakjes[i, n] = vakje;
@@ -182,23 +190,22 @@ scherm.Controls.Add(bordGrootteComboBox);
 scherm.Controls.Add(wieBegintKnop);
 scherm.Controls.Add(activateAIButton);
 scherm.Controls.Add(botLabel);
+scherm.Controls.Add(kleinerSchermButton);
 // -- End of GUI elements --
 
 void NieuwSpel_Click(object o, EventArgs e)
 {
-    Debug.WriteLine("huts");
-
     zwartKanLab.Text = "";
     witKanLab.Text = "";
     zwartKanNiet = false;
     witKanNiet = false;
-    if (ZwartBegint)
+    if (zwartBegint)
     {
-        ZwartAanZet = true;
+        zwartAanZet = true;
     }
     else
     {
-        ZwartAanZet = false;
+        zwartAanZet = false;
     }
     AanDeBeurt();
     for (int i = 0; i < bordGrootte; i++)
@@ -226,9 +233,6 @@ void NieuwSpel_Click(object o, EventArgs e)
 
 void Bord_Click(object o, MouseEventArgs mea)
 {
-    zwartKanLab.Text = "";
-    witKanLab.Text = "";
-
     Point hier = scherm.PointToClient(Cursor.Position);
 
     if (hier.Y > 200)
@@ -236,8 +240,8 @@ void Bord_Click(object o, MouseEventArgs mea)
         zwartKanNiet = false;
         witKanNiet = false;
 
-        int x = (hier.X - afstandBord) / 75;
-        int y = (hier.Y - 200) / 75;
+        int x = (hier.X - afstandBord) / schermGrootte;
+        int y = (hier.Y - 200) / schermGrootte;
 
         if (x > bordGrootte - 1 || y > bordGrootte - 1 || x < 0 || y < 0)
         {
@@ -246,10 +250,11 @@ void Bord_Click(object o, MouseEventArgs mea)
         }
         if (bord[x, y] == 2)
         {
-            Debug.WriteLine("Speler neemt een tegel over");
+            zwartKanLab.Text = "";
+            witKanLab.Text = "";
 
             Overnemen(x, y);
-            ZwartAanZet = !ZwartAanZet;
+            zwartAanZet = !zwartAanZet;
             EindeBeurt();
             scherm.Invalidate();
             if (botActive)
@@ -272,6 +277,8 @@ void AI_Move()
     }
     Tellen();
 
+    List<Tuple<int, int>> validMoves = new List<Tuple<int, int>>();
+
     validMoves.Clear();
 
     for (int i = 0; i < bordGrootte; i++)
@@ -287,23 +294,25 @@ void AI_Move()
 
     if (validMoves.Count == 0)
     {
-        Debug.WriteLine("Er zijn geen valide moves voor de AI");
-        ZwartAanZet = !ZwartAanZet;
+        zwartAanZet = !zwartAanZet;
         EindeBeurt();
     }
     else
     {
         Tuple<int, int> randomMove = validMoves[random.Next(validMoves.Count)];
-
         Bord_ClickAI(randomMove.Item1, randomMove.Item2);
     }
 }
 
 void Bord_ClickAI(int x, int y)
 {
-    Debug.WriteLine($"Bot neemt een tegel over op {x}, {y}");
+    if((botSpeeltZwart && !zwartAanZet) || (!botSpeeltZwart && zwartAanZet))
+    {
+        Debug.WriteLine("AI neemt GEEN veld over");
+        return;
+    }
     Overnemen(x, y);
-    ZwartAanZet = !ZwartAanZet;
+    zwartAanZet = !zwartAanZet;
     EindeBeurt();
 }
 
@@ -314,7 +323,7 @@ void Overnemen(int x, int y)
     witKanLab.Text = "";
 
     int WofZ;
-    if (ZwartAanZet)
+    if (zwartAanZet)
     {
         WofZ = 1;
     }
@@ -378,7 +387,7 @@ void ResetHulp()
 void ValideCheck(int x, int y)
 {
     int aanZet;
-    if (ZwartAanZet)
+    if (zwartAanZet)
     {
         aanZet = 1;
     }
@@ -454,14 +463,12 @@ void Tellen()
 void CheckSoftlock()
 {
     //Cijfer();
-    if (ZwartAanZet && turfStenen[3] == 0 && !zwartKanNiet)
+    if (zwartAanZet && turfStenen[3] == 0 && !zwartKanNiet)
     {
-        Debug.WriteLine("Zwart kan niet");
         zwartKanNiet = true;
-        ZwartAanZet = false;
+        zwartAanZet = false;
         if (botActive && !botSpeeltZwart)
         {
-            Debug.WriteLine("--- Bot actief en bot speelt wit ---");
             AI_Move();
             return;
         }
@@ -469,15 +476,12 @@ void CheckSoftlock()
         zwartKanLab.Text = "Zwart kan niet";
         return;
     }
-    //Debug.WriteLine($"{!ZwartAanZet}, {turfStenen[3] == 0}, {!witKanNiet}");
-    if (!ZwartAanZet && turfStenen[3] == 0 && !witKanNiet)
+    if (!zwartAanZet && turfStenen[3] == 0 && !witKanNiet)
     {
-        Debug.WriteLine("Wit kan niet");
         witKanNiet = true;
-        ZwartAanZet = true;
+        zwartAanZet = true;
         if (botActive && botSpeeltZwart)
         {
-            Debug.WriteLine("--- Bot actief en bot speelt zwart ---");
             AI_Move();
             return;
         }
@@ -490,45 +494,16 @@ void CheckSoftlock()
     Tellen();
     if (zwartKanNiet && witKanNiet || turfStenen[0] == 0 || turfStenen[2] == 0 || turfStenen[1] + turfStenen[3] == 0)
     {
-        CheckSpelEinde();
+        EindeSpel();
     }
 
     zwartKanNiet = false;
     witKanNiet = false;
 }
 
-bool CheckSpelEinde()
-{
-    if (zwartKanNiet && witKanNiet)
-    {
-        Debug.WriteLine("GAME END: Wit kan niet en zwart kan niet");
-        EindeSpel();
-        return true;
-    }
-    if(turfStenen[1] + turfStenen[3] == 0)
-    {
-        Debug.WriteLine("GAME END: Geen lege of valide stenen meer over");
-        EindeSpel();
-        return true;
-    }
-    if(turfStenen[0] == 0)
-    {
-        Debug.WriteLine("GAME END: Geen witte stenen meer over");
-        EindeSpel();
-        return true;
-    }
-    if(turfStenen[2] == 0)
-    {
-        Debug.WriteLine("GAME END: Geen zwarte stenen meer over");
-        EindeSpel();
-        return true;
-    }
-    return false;
-}
-
 void AanDeBeurt()
 {
-    if (ZwartAanZet)
+    if (zwartAanZet)
     {
         winnaarLabel.Text = "Zwart is aan zet";
         winnaarLabel.ForeColor = Color.Black;
@@ -567,8 +542,8 @@ void Tekenen(object o, PaintEventArgs pea)
 
     for (int i = 0; i < bordGrootte + 1; i++)
     {
-        gr.DrawLine(Pens.Black, afstandBord + 75 * i, 200, afstandBord + 75 * i, 75 * bordGrootte + 200);
-        gr.DrawLine(Pens.Black, afstandBord, 200 + 75 * i, afstandBord + 75 * bordGrootte, 200 + 75 * i);
+        gr.DrawLine(Pens.Black, afstandBord + schermGrootte * i, 200, afstandBord + schermGrootte * i, schermGrootte * bordGrootte + 200);
+        gr.DrawLine(Pens.Black, afstandBord, 200 + schermGrootte * i, afstandBord + schermGrootte * bordGrootte, 200 + schermGrootte * i);
     }
     for (int i = 0; i < bordGrootte; i++)
     {
@@ -605,7 +580,7 @@ void UpdateBotText()
     if (botActive)
     {
         activateAIButton.Text = "Deactiveer AI";
-        if (ZwartAanZet)
+        if (zwartAanZet)
         {
             botLabel.Text = "Bot speelt als: wit";
             botLabel.ForeColor = Color.White;
@@ -634,8 +609,8 @@ void HelpKnop_Click(Object o, EventArgs ea)
 
 void WieBegint_Click(object o, EventArgs ea)
 {
-    ZwartBegint = !ZwartBegint;
-    if (ZwartBegint)
+    zwartBegint = !zwartBegint;
+    if (zwartBegint)
     {
         wieBegintKnop.Text = "Zwart begint";
     }
@@ -657,18 +632,18 @@ void BordGrotte_Verander(object sender, EventArgs e)
 
     bordGrootte = newSize;
     halfBord = bordGrootte / 2;
-    afstandBord = (770 - bordGrootte * 75) / 2;
+    afstandBord = (770 - bordGrootte * schermGrootte) / 2;
     bord = new int[bordGrootte, bordGrootte];
     vakjes = new Label[bordGrootte, bordGrootte];
 
-    scherm.ClientSize = new Size(770, 75 * bordGrootte + 210);
+    scherm.ClientSize = new Size(770, schermGrootte * bordGrootte + 210);
 
     for (int i = 0; i < bordGrootte; i++)
     {
         for (int n = 0; n < bordGrootte; n++)
         {
             Label vakje = new Label();
-            vakje.Location = new Point(afstandBord + 10 + i * 75, 210 + n * 75);
+            vakje.Location = new Point(afstandBord + 10 + i * schermGrootte, 210 + n * schermGrootte);
             vakje.Size = new Size(55, 55);
             vakje.MouseClick += Bord_Click;
             scherm.Controls.Add(vakje);
@@ -677,6 +652,24 @@ void BordGrotte_Verander(object sender, EventArgs e)
     }
     NieuwSpel_Click(null, null);
 }
+
+void KleinerScherm_Click(object o, EventArgs ea)
+{
+    kleinerScherm = !kleinerScherm;
+    UpdateScherm();
+}
+
+void UpdateScherm()
+{
+    if (kleinerScherm)
+    {
+        schermGrootte = 55;
+        afstandVakjes = 3;
+        vakjesGrootte = 49;
+        BordGrotte_Verander(null, null);
+    }
+}
+
 void Start()
 {
     bord[halfBord - 1, halfBord - 1] = 1;
@@ -691,6 +684,7 @@ void Start()
     wieBegintKnop.Click += WieBegint_Click;
     bordGrootteComboBox.SelectedIndexChanged += BordGrotte_Verander;
     activateAIButton.Click += ActivateAI_Click;
+    kleinerSchermButton.Click += KleinerScherm_Click;
     EindeBeurt();
 }
 
