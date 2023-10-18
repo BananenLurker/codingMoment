@@ -15,7 +15,7 @@ int afstandBord = (770 - bordGrootte * schermGrootte) / 2;
 Font arial = new Font("Arial", 20, FontStyle.Bold);
 Font arialSubHeader = new Font("Arial", 15, FontStyle.Bold);
 
-Pen bordPen = new Pen(Brushes.Black, 3);
+Pen bordPen = new Pen(Brushes.Black, 2);
 
 // Arrays
 int[,] bord = new int[bordGrootte, bordGrootte]; // Array to give each square a number
@@ -50,7 +50,7 @@ Graphics valideTeken = Graphics.FromImage(valideCirkelBit);
 
 zwartTeken.FillEllipse(Brushes.Black, 0, 0, 40, 40);
 witTeken.FillEllipse(Brushes.White, 0, 0, 40, 40);
-valideTeken.DrawEllipse(Pens.Black, 10, 10, 20, 20);
+valideTeken.DrawEllipse(bordPen, 10, 10, 20, 20);
 
 Button wieBegintKnop = new Button
 {
@@ -160,8 +160,6 @@ ComboBox bordGrootteComboBox = new ComboBox
 
 bordGrootteComboBox.Items.AddRange(new string[] { "4x4", "6x6", "8x8", "10x10" });
 bordGrootteComboBox.SelectedIndex = 1;
-
-Random random = new Random();
 
 for (int i = 0; i < bordGrootte; i++)
 {
@@ -304,13 +302,14 @@ void AI_Move()
 
     if (validMoves.Count == 0)
     {
-        // Bot can't move
+        // Bot can't move: skips a turn
         zwartAanZet = !zwartAanZet;
         EindeBeurt();
     }
     else
     {
         // Bot can move and selects a random move to play
+        Random random = new Random();
         Tuple<int, int> randomMove = validMoves[random.Next(validMoves.Count)];
         Bord_ClickAI(randomMove.Item1, randomMove.Item2);
     }
@@ -583,8 +582,8 @@ void Tekenen(object o, PaintEventArgs pea)
     // Drawing the board
     for (int i = 0; i < bordGrootte + 1; i++)
     {
-        gr.DrawLine(Pens.Black, afstandBord + schermGrootte * i, 200, afstandBord + schermGrootte * i, schermGrootte * bordGrootte + 200);
-        gr.DrawLine(Pens.Black, afstandBord, 200 + schermGrootte * i, afstandBord + schermGrootte * bordGrootte, 200 + schermGrootte * i);
+        gr.DrawLine(bordPen, afstandBord + schermGrootte * i, 200, afstandBord + schermGrootte * i, schermGrootte * bordGrootte + 200);
+        gr.DrawLine(bordPen, afstandBord, 200 + schermGrootte * i, afstandBord + schermGrootte * bordGrootte, 200 + schermGrootte * i);
     }
 
     // Checking each square based on the int associated with it,
