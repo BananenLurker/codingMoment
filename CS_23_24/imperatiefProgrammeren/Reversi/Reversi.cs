@@ -69,11 +69,11 @@ Button activateAIButton = new Button
     BackColor = Color.Green
 };
 
-Button kleinerSchermButton = new Button
+Button bordSizeButton = new Button
 {
-    Location = new Point(490, 40),
+    Location = new Point(510, 10),
     Size = new Size(100, 25),
-    Text = "Kleiner scherm",
+    Text = "Kleiner bord",
     BackColor = Color.Green
 };
 
@@ -190,7 +190,7 @@ scherm.Controls.Add(bordGrootteComboBox);
 scherm.Controls.Add(wieBegintKnop);
 scherm.Controls.Add(activateAIButton);
 scherm.Controls.Add(botLabel);
-scherm.Controls.Add(kleinerSchermButton);
+scherm.Controls.Add(bordSizeButton);
 // -- End of GUI elements --
 
 void NieuwSpel_Click(object o, EventArgs e)
@@ -643,8 +643,8 @@ void BordGrotte_Verander(object sender, EventArgs e)
         for (int n = 0; n < bordGrootte; n++)
         {
             Label vakje = new Label();
-            vakje.Location = new Point(afstandBord + 10 + i * schermGrootte, 210 + n * schermGrootte);
-            vakje.Size = new Size(55, 55);
+            vakje.Location = new Point(afstandBord + afstandVakjes + i * schermGrootte, 200 + afstandVakjes + n * schermGrootte);
+            vakje.Size = new Size(vakjesGrootte, vakjesGrootte);
             vakje.MouseClick += Bord_Click;
             scherm.Controls.Add(vakje);
             vakjes[i, n] = vakje;
@@ -666,6 +666,15 @@ void UpdateScherm()
         schermGrootte = 55;
         afstandVakjes = 3;
         vakjesGrootte = 49;
+        bordSizeButton.Text = "Groter bord";
+        BordGrotte_Verander(null, null);
+    }
+    else
+    {
+        schermGrootte = 75;
+        afstandVakjes = 10;
+        vakjesGrootte = 55;
+        bordSizeButton.Text = "Kleiner bord";
         BordGrotte_Verander(null, null);
     }
 }
@@ -684,7 +693,7 @@ void Start()
     wieBegintKnop.Click += WieBegint_Click;
     bordGrootteComboBox.SelectedIndexChanged += BordGrotte_Verander;
     activateAIButton.Click += ActivateAI_Click;
-    kleinerSchermButton.Click += KleinerScherm_Click;
+    bordSizeButton.Click += KleinerScherm_Click;
     EindeBeurt();
 }
 
