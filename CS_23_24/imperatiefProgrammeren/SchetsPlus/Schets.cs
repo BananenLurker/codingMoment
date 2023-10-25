@@ -10,6 +10,11 @@ public class Schets
     {
         bitmap = new Bitmap(1, 1);
     }
+    public Schets(Bitmap bitmap)
+    {
+        this.bitmap = bitmap;
+    }
+
     public Graphics BitmapGraphics
     {
         get { return Graphics.FromImage(bitmap); }
