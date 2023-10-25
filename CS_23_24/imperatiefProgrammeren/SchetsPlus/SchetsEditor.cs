@@ -1,0 +1,75 @@
+using System;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Windows.Forms;
+
+public class SchetsEditor : Form
+{
+    private MenuStrip menuStrip;
+
+    public SchetsEditor()
+    {   
+        this.ClientSize = new Size(800, 600);
+        menuStrip = new MenuStrip();
+        this.Controls.Add(menuStrip);
+        this.maakFileMenu();
+        this.maakHelpMenu();
+        this.Text = "Schets editor";
+        this.IsMdiContainer = true;
+        this.MainMenuStrip = menuStrip;
+    }
+    private void maakFileMenu()
+    {   
+        ToolStripDropDownItem menu = new ToolStripMenuItem("File");
+        menu.DropDownItems.Add("Nieuw", null, this.nieuw);
+        menu.DropDownItems.Add("Exit", null, this.afsluiten);
+        menu.DropDownItems.Add("Open", null, this.open);
+        menuStrip.Items.Add(menu);
+    }
+    private void maakHelpMenu()
+    {   
+        ToolStripDropDownItem menu = new ToolStripMenuItem("Help");
+        menu.DropDownItems.Add("Over \"Schets\"", null, this.about);
+        menuStrip.Items.Add(menu);
+    }
+    private void about(object o, EventArgs ea)
+    {   
+        MessageBox.Show ( "Schets versie 2.0\n(c) UU Informatica 2022"
+                        , "Over \"Schets\""
+                        , MessageBoxButtons.OK
+                        , MessageBoxIcon.Information
+                        );
+    }
+
+    private void nieuw(object sender, EventArgs e)
+    {   
+        SchetsWin s = new SchetsWin();
+        s.MdiParent = this;
+        s.Wijzig = false;
+        s.Show();
+    }
+    private void afsluiten(object sender, EventArgs e)
+    {   
+        this.Close();
+    }
+    private void open(object sender, EventArgs e)
+    {
+        OpenFileDialog ofd = new OpenFileDialog();
+        ofd.InitialDirectory = "c:\\";
+        ofd.RestoreDirectory = true;
+        ofd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+
+        if(ofd.ShowDialog() == DialogResult.OK)
+        {
+            this.lees(ofd.FileName);
+        }
+    }
+    private void lees(string naam)
+    {
+        //StreamReader sr = new StreamReader(naam);
+        //this.invoer.Text = sr.ReadToEnd();
+        //sr.Close();
+        //this.Text = naam;
+    }
+}
