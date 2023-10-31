@@ -1,11 +1,11 @@
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Windows.Forms;
 
 public class SchetsEditor : Form
 {
+    public List<SchetsWin> windows = new List<SchetsWin>();
     private MenuStrip menuStrip;
 
     public SchetsEditor()
@@ -47,10 +47,11 @@ public class SchetsEditor : Form
         SchetsWin s = new SchetsWin();
         s.MdiParent = this;
         s.Wijzig = false;
+        windows.Add(s);
         s.Show();
     }
     private void afsluiten(object sender, EventArgs e)
-    {   
+    {
         this.Close();
     }
     private void open(object sender, EventArgs e)
@@ -71,5 +72,10 @@ public class SchetsEditor : Form
         //this.invoer.Text = sr.ReadToEnd();
         //sr.Close();
         //this.Text = naam;
+    }
+    public void Gewijzigd()
+    {
+        SchetsWin activeChild = (SchetsWin)this.ActiveMdiChild;
+        activeChild.Wijzig = true;
     }
 }

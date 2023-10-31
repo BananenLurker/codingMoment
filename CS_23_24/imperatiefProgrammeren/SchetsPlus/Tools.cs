@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -12,6 +13,8 @@ public interface ISchetsTool
 
 public abstract class StartpuntTool : ISchetsTool
 {
+    public int aantal = 0;
+
     protected Point startpunt;
     protected Brush kwast;
 
@@ -77,6 +80,9 @@ public abstract class TweepuntTool : StartpuntTool
     public override void MuisLos(SchetsControl s, Point p)
     {   base.MuisLos(s, p);
         this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
+        Debug.WriteLine($"Wijziging {aantal}");
+        Program.se.Gewijzigd();
+        aantal++;
         s.Invalidate();
     }
     public override void Letter(SchetsControl s, char c)

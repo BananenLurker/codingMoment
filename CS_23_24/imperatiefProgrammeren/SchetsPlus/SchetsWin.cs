@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 public class SchetsWin : Form
 {
-    private bool wijzig;
+    public bool wijzig;
     MenuStrip menuStrip;
     SchetsControl schetscontrol;
     ISchetsTool huidigeTool;
@@ -29,9 +29,35 @@ public class SchetsWin : Form
         this.huidigeTool = (ISchetsTool)((RadioButton)obj).Tag;
     }
 
-    private void afsluiten(object obj, EventArgs ea)
+    private void afsluiten(object sender, FormClosingEventArgs fcea)
     {
-        this.Close();
+        this.FormClosing -= this.afsluiten;
+        if (Wijzig == true)
+        {
+            DialogResult dr = MessageBox.Show("You have unsaved changes, save before quitting?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
+            if (dr == DialogResult.Yes)
+            {
+                opslaanAls(null, null);
+                Wijzig = false;
+            }
+            else if (dr == DialogResult.No)
+            {
+                this.Close();
+            }
+            else
+            {
+                fcea.Cancel = true;
+            }
+        }
+        else
+        {
+            this.Close();
+        }
+        this.FormClosing += this.afsluiten;
+    }
+    private void SluitenButton_Click(object obj, EventArgs ea)
+    {
+        afsluiten(this, null);
     }
 
     private void opslaanAls(object obj, EventArgs ea)
@@ -39,13 +65,19 @@ public class SchetsWin : Form
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
 
-        if(sfd.ShowDialog() == DialogResult.OK)
+        if (sfd.ShowDialog() == DialogResult.OK)
         {
             Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
             schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
             map.Save(sfd.FileName);
+
             this.Text = $"{sfd.FileName}";
-            wijzig = false;
+            Wijzig = false;
+            if(obj == null)
+            {
+                this.Close();
+            }
+            return;
         }
     }
     public bool Wijzig
@@ -98,6 +130,7 @@ public class SchetsWin : Form
         this.maakToolButtons(deTools);
         this.maakActieButtons(deKleuren);
         this.Resize += this.veranderAfmeting;
+        this.FormClosing += this.afsluiten;
         this.veranderAfmeting(null, null);
     }
 
@@ -105,7 +138,7 @@ public class SchetsWin : Form
     {   
         ToolStripMenuItem menu = new ToolStripMenuItem("File");
         menu.MergeAction = MergeAction.MatchOnly;
-        menu.DropDownItems.Add("Sluiten", null, this.afsluiten);
+        menu.DropDownItems.Add("Sluiten", null, this.SluitenButton_Click);
         menu.DropDownItems.Add("Opslaan als...", null, this.opslaanAls);
         menuStrip.Items.Add(menu);
     }

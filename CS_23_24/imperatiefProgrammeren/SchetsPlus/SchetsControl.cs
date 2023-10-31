@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 public class SchetsControl : UserControl
-{   
+{
     private Schets schets;
     private Color penkleur;
 
@@ -27,7 +27,6 @@ public class SchetsControl : UserControl
     }
     private void teken(object o, PaintEventArgs pea)
     {   schets.Teken(pea.Graphics);
-        Debug.WriteLine("tekenen");
     }
     private void veranderAfmeting(object o, EventArgs ea)
     {   schets.VeranderAfmeting(this.ClientSize);
