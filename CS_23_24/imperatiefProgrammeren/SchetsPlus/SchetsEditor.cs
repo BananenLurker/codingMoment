@@ -68,10 +68,14 @@ public class SchetsEditor : Form
     }
     private void lees(string naam)
     {
-        //StreamReader sr = new StreamReader(naam);
-        //this.invoer.Text = sr.ReadToEnd();
-        //sr.Close();
-        //this.Text = naam;
+        SchetsWin sw = new SchetsWin();
+        Bitmap bmp = new Bitmap(naam);
+        PictureBox pb = new PictureBox();
+
+        pb.Image = bmp;
+        sw.voegimagetoe(pb);
+        sw.MdiParent = this;
+        sw.Show();
     }
     public void Gewijzigd()
     {
