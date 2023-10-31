@@ -73,7 +73,6 @@ public class SchetsEditor : Form
         PictureBox pb = new PictureBox();
 
         pb.Image = bmp;
-        sw.voegimagetoe(pb);
         sw.MdiParent = this;
         sw.Show();
     }

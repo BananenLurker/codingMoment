@@ -17,9 +17,12 @@ public abstract class StartpuntTool : ISchetsTool
 
     protected Point startpunt;
     protected Brush kwast;
+    protected TekenElement te;
+    protected TekenElementMaster tem;
 
     public virtual void MuisVast(SchetsControl s, Point p)
-    {   startpunt = p;
+    {
+        te = new TekenElement();
     }
     public virtual void MuisLos(SchetsControl s, Point p)
     {   kwast = new SolidBrush(s.PenKleur);
