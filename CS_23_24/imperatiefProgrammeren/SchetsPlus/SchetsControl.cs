@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 public class SchetsControl : UserControl
 {
-    private Schets schets;
+    public Schets schets;
     private Color penkleur;
 
     public Color PenKleur
@@ -45,6 +45,17 @@ public class SchetsControl : UserControl
     {   schets.VeranderAfmeting(new Size(this.ClientSize.Height, this.ClientSize.Width));
         schets.Roteer();
         this.Invalidate();
+    }
+    public void Opslaan(object o, EventArgs ea)
+    {
+        foreach (TekenElement te in schets.tem.TekenElementLijst)
+        {
+            Debug.WriteLine($"{te.Tool}");
+            Debug.WriteLine($"{te.Kleur}");
+            Debug.WriteLine($"{te.Punten[0]}");
+            Debug.WriteLine($"{te.Punten[1]}");
+            Debug.WriteLine($"----------------");
+        }
     }
     public void VeranderKleur(object obj, EventArgs ea)
     {   string kleurNaam = ((ComboBox)obj).Text;

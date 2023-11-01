@@ -5,7 +5,8 @@ using System.Drawing;
 public class Schets
 {
     private Bitmap bitmap;
-        
+    public TekenElementMaster tem = new TekenElementMaster();
+
     public Schets()
     {
         bitmap = new Bitmap(1, 1);

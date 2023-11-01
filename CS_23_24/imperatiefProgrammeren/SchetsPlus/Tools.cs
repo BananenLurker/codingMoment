@@ -25,8 +25,10 @@ public abstract class StartpuntTool : ISchetsTool
         startpunt = p;
         te = new TekenElement();
         te.Punten.Add(p);
-        te.Tool = Program.se.windows[0].huidigeTool.ToString();
-        te.Kleur = Program.se.windows[0].schetscontrol.PenKleur;
+        te.Tool = ToString();
+        te.Kleur = s.PenKleur;
+
+        s.schets.tem.TekenElementLijst.Add(te);
     }
     public virtual void MuisLos(SchetsControl s, Point p)
     {   

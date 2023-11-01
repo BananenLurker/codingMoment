@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class TekenElementMaster
 {
-
-    private List<TekenElement> TekenElementLijst;
+    public List<TekenElement> TekenElementLijst;
 
     public TekenElementMaster()
     {
@@ -23,5 +23,4 @@ public class TekenElementMaster
     {
         TekenElementLijst.Clear();
     }
-
 }
