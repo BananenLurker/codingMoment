@@ -21,7 +21,7 @@ public class TekenElement
         set;
     }
 
-    public String Kleur
+    public Color Kleur
     {
         get;
         set;
@@ -36,11 +36,6 @@ public class TekenElement
     {
         get;
         set;
-    }
-
-    public void LetterToevoegen(char c)
-    {
-        Letters.Add(c);
     }
 
     public int Rotatie

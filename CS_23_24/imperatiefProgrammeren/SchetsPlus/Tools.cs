@@ -22,10 +22,16 @@ public abstract class StartpuntTool : ISchetsTool
 
     public virtual void MuisVast(SchetsControl s, Point p)
     {
+        startpunt = p;
         te = new TekenElement();
+        te.Punten.Add(p);
+        te.Tool = Program.se.windows[0].huidigeTool.ToString();
+        te.Kleur = Program.se.windows[0].schetscontrol.PenKleur;
     }
     public virtual void MuisLos(SchetsControl s, Point p)
-    {   kwast = new SolidBrush(s.PenKleur);
+    {   
+        kwast = new SolidBrush(s.PenKleur);
+        te.Punten.Add(p);
     }
     public abstract void MuisDrag(SchetsControl s, Point p);
     public abstract void Letter(SchetsControl s, char c);
@@ -50,6 +56,7 @@ public class TekstTool : StartpuntTool
                                             this.startpunt, StringFormat.GenericTypographic);
             // gr.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);
             startpunt.X += (int)sz.Width;
+            te.Letters.Add(c);
             s.Invalidate();
         }
     }

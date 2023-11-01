@@ -7,8 +7,8 @@ public class SchetsWin : Form
 {
     public bool wijzig;
     MenuStrip menuStrip;
-    SchetsControl schetscontrol;
-    ISchetsTool huidigeTool;
+    public SchetsControl schetscontrol;
+    public ISchetsTool huidigeTool;
     Panel paneel;
     bool vast;
 
