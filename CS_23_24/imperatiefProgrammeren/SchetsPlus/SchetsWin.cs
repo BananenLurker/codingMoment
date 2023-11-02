@@ -142,7 +142,6 @@ public class SchetsWin : Form
         this.FormClosing += this.afsluiten;
         this.veranderAfmeting(null, null);
     }
-
     private void maakFileMenu()
     {   
         ToolStripMenuItem menu = new ToolStripMenuItem("File");
