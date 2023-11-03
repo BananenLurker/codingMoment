@@ -18,9 +18,4 @@ public class TekenElementMaster
     {
         get { return TekenElementLijst; }
     }
-
-    public void Reset()
-    {
-        TekenElementLijst.Clear();
-    }
 }

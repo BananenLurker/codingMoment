@@ -29,8 +29,10 @@ public abstract class StartpuntTool : ISchetsTool
         te.Punten.Add(p);
         te.Tool = ToString();
         te.Kleur = s.PenKleur;
-
-        s.schets.tem.TekenElementLijst.Add(te);
+        if(te.Tool != "gum")
+        {
+            s.schets.tem.TekenElementLijst.Add(te);
+        }
     }
     public virtual void MuisLos(SchetsControl s, Point p)
     {   
@@ -92,7 +94,9 @@ public abstract class TweepuntTool : StartpuntTool
         this.Bezig(s.CreateGraphics(), this.startpunt, p);
     }
     public override void MuisLos(SchetsControl s, Point p)
-    {   base.MuisLos(s, p);
+    {
+        SchetsC = s;
+        base.MuisLos(s, p);
         this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
         Program.se.Gewijzigd();
         s.Invalidate();
@@ -200,7 +204,8 @@ public class GumTool : PenTool
                 case "kader":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
-                        VerwijderElement(te, g, p1, p2);
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("kader yup " + $"{te.Kleur}");
                         return;
                     }
@@ -208,6 +213,8 @@ public class GumTool : PenTool
                 case "vlak":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("vlak yup " + $"{te.Kleur}");
                         return;
                     }
@@ -215,6 +222,8 @@ public class GumTool : PenTool
                 case "ovaal":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("ovaal yup " + $"{te.Kleur}");
                         return;
                     }
@@ -222,6 +231,8 @@ public class GumTool : PenTool
                 case "disc":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("disc yup " + $"{te.Kleur}");
                         return;
                     }
@@ -229,6 +240,8 @@ public class GumTool : PenTool
                 case "lijn":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("lijn yup " + $"{te.Kleur}");
                         return;
                     }
@@ -236,6 +249,8 @@ public class GumTool : PenTool
                 case "pen":
                     if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
                     {
+                        tel.Remove(te);
+                        VerwijderElement(g);
                         Debug.WriteLine("pen yup " + $"{te.Kleur}");
                         return;
                     }
@@ -243,15 +258,14 @@ public class GumTool : PenTool
             }
         }
     }
-    private void VerwijderElement(TekenElement te, Graphics g, Point p1, Point p2)
+    private void VerwijderElement(Graphics g)
     {
-        tel.Remove(te);
         SchetsC.Schoon(this, null);
-        OpnieuwTekenen(g, p1, p2);
+        OpnieuwTekenen(g);
         SchetsC.Invalidate();
     }
     // Moet op basis van MuisVast en MuisLos gemaakt worden, niet op basis van Bezig!
-    private void OpnieuwTekenen(Graphics g, Point p1, Point p2)
+    private void OpnieuwTekenen(Graphics g)
     {
         foreach (TekenElement te in tel)
         {
@@ -261,27 +275,28 @@ public class GumTool : PenTool
             {
                 case "kader":
                     RechthoekTool rht = new RechthoekTool();
-                    rht.Compleet(g, p1, p2);
+                    rht.Bezig(g, te.Punten[0], te.Punten[1]);
                     break;
                 case "vlak":
                     VolRechthoekTool vrt = new VolRechthoekTool();
-                    vrt.Compleet(g, p1, p2);
+                    Graphics greffiks = SchetsC.MaakBitmapGraphics();
+                    vrt.Compleet(greffiks, te.Punten[0], te.Punten[1]);
                     break;
                 case "ovaal":
                     OvaalTool ot = new OvaalTool();
-                    ot.Compleet(g, p1, p2);
+                    ot.Bezig(g, te.Punten[0], te.Punten[1]);
                     break;
                 case "disc":
                     VolOvaalTool vot = new VolOvaalTool();
-                    vot.Compleet(g, p1, p2);
+                    vot.Compleet(g, te.Punten[0], te.Punten[1]);
                     break;
                 case "lijn":
                     LijnTool lt = new LijnTool();
-                    lt.Compleet(g, p1, p2);
+                    lt.Bezig(g, te.Punten[0], te.Punten[1]);
                     break;
                 case "pen":
                     PenTool pt = new PenTool();
-                    pt.Compleet(g, p1, p2);
+                    pt.Bezig(g, te.Punten[0], te.Punten[1]);
                     break;
             }
         }
