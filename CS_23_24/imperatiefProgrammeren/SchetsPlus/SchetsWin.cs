@@ -31,10 +31,9 @@ public class SchetsWin : Form
 
     private void afsluiten(object sender, FormClosingEventArgs fcea)
     {
+        this.FormClosing -= this.afsluiten;
         if (Wijzig == true)
         {
-            this.FormClosing -= this.afsluiten;
-
             DialogResult dr = MessageBox.Show("You have unsaved changes, save before quitting?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
@@ -52,17 +51,13 @@ public class SchetsWin : Form
                     this.FormClosing += this.afsluiten;
                     fcea.Cancel = true;
                 }
-                else
-                {
-                    this.FormClosing += this.afsluiten;
-                    return;
-                }
             }
         }
         else
         {
             this.Close();
         }
+        this.FormClosing += this.afsluiten;
     }
     private void SluitenButton_Click(object obj, EventArgs ea)
     {

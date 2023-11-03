@@ -7,7 +7,6 @@ public class TekenElement
     public TekenElement()
     {
         Punten = new List<Point>();
-        Letters = new List<char>();
     }
     public String Tool
     {
@@ -32,13 +31,19 @@ public class TekenElement
         Punten.Add(p);
     }
 
-    public List<char> Letters
+    public string Letters
     {
         get;
         set;
     }
 
     public int Rotatie
+    {
+        get;
+        set;
+    }
+
+    public int Hoek
     {
         get;
         set;

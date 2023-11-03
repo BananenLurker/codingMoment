@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -9,6 +10,10 @@ public class SchetsControl : UserControl
     public Schets schets;
     private Color penkleur;
 
+    public TekenElementMaster Ophalen
+    {
+        get { return schets.Ophalen; }
+    }
     public Color PenKleur
     { get { return penkleur; }
     }
@@ -48,7 +53,7 @@ public class SchetsControl : UserControl
     }
     public void Opslaan(object o, EventArgs ea)
     {
-        foreach (TekenElement te in schets.tem.TekenElementLijst)
+        foreach (TekenElement te in schets.Ophalen.TekenElementLijst)
         {
             Debug.WriteLine($"{te.Tool}");
             Debug.WriteLine($"{te.Kleur}");

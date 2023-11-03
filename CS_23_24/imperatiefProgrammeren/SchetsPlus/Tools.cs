@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
@@ -14,8 +13,6 @@ public interface ISchetsTool
 
 public abstract class StartpuntTool : ISchetsTool
 {
-    public SchetsControl SchetsC;
-
     protected Point startpunt;
     protected Brush kwast;
     protected TekenElement te;
@@ -23,7 +20,6 @@ public abstract class StartpuntTool : ISchetsTool
 
     public virtual void MuisVast(SchetsControl s, Point p)
     {
-        SchetsC = s;
         startpunt = p;
         te = new TekenElement();
         te.Punten.Add(p);
@@ -31,11 +27,11 @@ public abstract class StartpuntTool : ISchetsTool
         te.Kleur = s.PenKleur;
         if(te.Tool != "gum")
         {
-            s.schets.tem.TekenElementLijst.Add(te);
+            s.schets.Ophalen.TekenElementLijst.Add(te);
         }
     }
     public virtual void MuisLos(SchetsControl s, Point p)
-    {   
+    {
         kwast = new SolidBrush(s.PenKleur);
         te.Punten.Add(p);
     }
@@ -58,11 +54,9 @@ public class TekstTool : StartpuntTool
             string tekst = c.ToString();
             SizeF sz = 
             gr.MeasureString(tekst, font, this.startpunt, StringFormat.GenericTypographic);
-            gr.DrawString   (tekst, font, kwast, 
-                                            this.startpunt, StringFormat.GenericTypographic);
-            // gr.DrawRectangle(Pens.Black, startpunt.X, startpunt.Y, sz.Width, sz.Height);
+            gr.DrawString   (tekst, font, kwast, this.startpunt, StringFormat.GenericTypographic);
             startpunt.X += (int)sz.Width;
-            te.Letters.Add(c);
+            te.Letters += c;
             s.Invalidate();
         }
     }
@@ -80,7 +74,7 @@ public abstract class TweepuntTool : StartpuntTool
                             );
     }
     public static Pen MaakPen(Brush b, int dikte)
-    {   Pen pen = new Pen(Brushes.Black, 3);
+    {   Pen pen = new Pen(b, 3);
         pen.StartCap = LineCap.Round;
         pen.EndCap = LineCap.Round;
         return pen;
@@ -91,24 +85,22 @@ public abstract class TweepuntTool : StartpuntTool
     }
     public override void MuisDrag(SchetsControl s, Point p)
     {   s.Refresh();
-        this.Bezig(s.CreateGraphics(), this.startpunt, p);
+        this.Teken(s.CreateGraphics(), this.startpunt, p);
     }
     public override void MuisLos(SchetsControl s, Point p)
     {
-        SchetsC = s;
-        base.MuisLos(s, p);
-        this.Compleet(s.MaakBitmapGraphics(), this.startpunt, p);
-        Program.se.Gewijzigd();
+        te.Punten.Add(p);
+        this.Teken(s.MaakBitmapGraphics(), this.startpunt, p);
+        Schets.Teken(s.MaakBitmapGraphics(), s.Ophalen.TekenElementLijst);
         s.Invalidate();
+        Program.se.Gewijzigd();
     }
     public override void Letter(SchetsControl s, char c)
     {
     }
-    public abstract void Bezig(Graphics g, Point p1, Point p2);
-        
-    public virtual void Compleet(Graphics g, Point p1, Point p2)
-    {   this.Bezig(g, p1, p2);
-    }
+    public abstract void Teken(Graphics g, Point p1, Point p2);
+
+    public abstract void Teken(Graphics g, Point p1, Point p2, Brush kwast);
 }
 
 public struct Ellipse
@@ -135,48 +127,63 @@ public class RechthoekTool : TweepuntTool
 {
     public override string ToString() { return "kader"; }
 
-    public override void Bezig(Graphics g, Point p1, Point p2)
-    {   g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));
+    public override void Teken(Graphics g, Point p1, Point p2, Brush kwast)
+    {   
+        g.DrawRectangle(MaakPen(kwast,3), TweepuntTool.Punten2Rechthoek(p1, p2));
+    }
+    public override void Teken(Graphics g, Point p1, Point p2)
+    {
+        Teken(g, p1, p2, kwast);
     }
 }
 public class VolRechthoekTool : RechthoekTool
 {
     public override string ToString() { return "vlak"; }
-
-    public override void Compleet(Graphics g, Point p1, Point p2)
-    {   g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
+    public override void Teken(Graphics g, Point p1, Point p2)
+    {
+        Teken(g, p1, p2, kwast);
+    }
+    public override void Teken(Graphics g, Point p1, Point p2, Brush kwast)
+    {   
+        g.FillRectangle(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
     }
 }
 
 public class OvaalTool : TweepuntTool
 {
     public override string ToString() { return "ovaal"; }
-
-    public override void Bezig(Graphics g, Point p1, Point p2)
+    public override void Teken(Graphics g, Point p1, Point p2)
     {
-        Ellipse ellipse = TweepuntTool.Punten2Ovaal(p1, p2);
-        g.DrawEllipse(MaakPen(kwast, 3), ellipse.OvaalOmtrek());
+        Teken(g, p1, p2, kwast);
+    }
+    public override void Teken(Graphics g, Point p1, Point p2, Brush kwast)
+    {
+        g.DrawEllipse(MaakPen(kwast, 3), TweepuntTool.Punten2Rechthoek(p1, p2));
     }
 }
 
-public class VolOvaalTool : TweepuntTool
+public class VolOvaalTool : OvaalTool
 {
     public override string ToString() { return "disc"; }
-
-    public override void Bezig(Graphics g, Point p1, Point p2)
+    public override void Teken(Graphics g, Point p1, Point p2)
     {
-        Ellipse ellipse = TweepuntTool.Punten2Ovaal(p1, p2);
-        g.FillEllipse(kwast, ellipse.OvaalOmtrek());
+        Teken(g, p1, p2, kwast);
+    }
+    public override void Teken(Graphics g, Point p1, Point p2, Brush kwast)
+    {
+        g.FillEllipse(kwast, TweepuntTool.Punten2Rechthoek(p1, p2));
     }
 }
-
 
 public class LijnTool : TweepuntTool
 {
     public override string ToString() { return "lijn"; }
-
-    public override void Bezig(Graphics g, Point p1, Point p2)
-    {   g.DrawLine(MaakPen(this.kwast,3), p1, p2);
+    public override void Teken(Graphics g, Point p1, Point p2)
+    {
+        Teken(g, p1, p2, kwast);
+    }
+    public override void Teken(Graphics g, Point p1, Point p2, Brush kwast)
+    {   g.DrawLine(MaakPen(kwast, 3), p1, p2);
     }
 }
 
@@ -185,120 +192,34 @@ public class PenTool : LijnTool
     public override string ToString() { return "pen"; }
 
     public override void MuisDrag(SchetsControl s, Point p)
-    {   this.MuisLos(s, p);
-        this.MuisVast(s, p);
+    {
+        te.Punten.Add(p);
+        kwast = new SolidBrush(s.PenKleur);
+        TekenLijn(s.CreateGraphics(), te.Punten, kwast);
+    }
+
+    public void TekenLijn(Graphics g, List<Point> points, Brush kwast)
+    {
+        for (int i = 1; i < points.Count; i++)
+            g.DrawLine(MaakPen(kwast, 3), points[i - 1], points[i]);
     }
 }
-
-public class GumTool : PenTool
+    public class GumTool : ISchetsTool
 {
-    public List<TekenElement> tel;
+    protected TekenElementMaster tem;
+
+    public void Letter(SchetsControl s, char c) { }
+    public void MuisDrag(SchetsControl s, Point p) { }
+    public void MuisLos(SchetsControl s, Point p) { }
+
     public override string ToString() { return "gum"; }
-    public override void Bezig(Graphics g, Point p1, Point p2)
+
+    public void MuisVast(SchetsControl s, Point p)
     {
-        tel = SchetsC.schets.tem.TekenElementLijst;
-        foreach (TekenElement te in tel)
-        {
-            switch (te.Tool)
-            {
-                case "kader":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("kader yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-                case "vlak":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("vlak yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-                case "ovaal":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("ovaal yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-                case "disc":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("disc yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-                case "lijn":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("lijn yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-                case "pen":
-                    if (p1.X > te.Punten[0].X && p1.Y > te.Punten[0].Y && p1.X < te.Punten[1].X && p1.Y < te.Punten[1].Y)
-                    {
-                        tel.Remove(te);
-                        VerwijderElement(g);
-                        Debug.WriteLine("pen yup " + $"{te.Kleur}");
-                        return;
-                    }
-                    break;
-            }
-        }
-    }
-    private void VerwijderElement(Graphics g)
-    {
-        SchetsC.Schoon(this, null);
-        OpnieuwTekenen(g);
-        SchetsC.Invalidate();
-    }
-    // Moet op basis van MuisVast en MuisLos gemaakt worden, niet op basis van Bezig!
-    private void OpnieuwTekenen(Graphics g)
-    {
-        foreach (TekenElement te in tel)
-        {
-            kwast = new SolidBrush(te.Kleur);
-            Debug.WriteLine(((SolidBrush)kwast).Color);
-            switch (te.Tool)
-            {
-                case "kader":
-                    RechthoekTool rht = new RechthoekTool();
-                    rht.Bezig(g, te.Punten[0], te.Punten[1]);
-                    break;
-                case "vlak":
-                    VolRechthoekTool vrt = new VolRechthoekTool();
-                    Graphics greffiks = SchetsC.MaakBitmapGraphics();
-                    vrt.Compleet(greffiks, te.Punten[0], te.Punten[1]);
-                    break;
-                case "ovaal":
-                    OvaalTool ot = new OvaalTool();
-                    ot.Bezig(g, te.Punten[0], te.Punten[1]);
-                    break;
-                case "disc":
-                    VolOvaalTool vot = new VolOvaalTool();
-                    vot.Compleet(g, te.Punten[0], te.Punten[1]);
-                    break;
-                case "lijn":
-                    LijnTool lt = new LijnTool();
-                    lt.Bezig(g, te.Punten[0], te.Punten[1]);
-                    break;
-                case "pen":
-                    PenTool pt = new PenTool();
-                    pt.Bezig(g, te.Punten[0], te.Punten[1]);
-                    break;
-            }
-        }
+        tem = s.Ophalen;
+        tem.VerwijderElement(p);
+
+        s.Invalidate();
+        Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
     }
 }
