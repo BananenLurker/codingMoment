@@ -64,10 +64,6 @@ public class TekstTool : StartpuntTool
 
 public abstract class TweepuntTool : StartpuntTool
 {
-    public static Ellipse Punten2Ovaal(Point p1, Point p2)
-    {
-        return new Ellipse(p1, p2);
-    }
     public static Rectangle Punten2Rechthoek(Point p1, Point p2)
     {   return new Rectangle( new Point(Math.Min(p1.X,p2.X), Math.Min(p1.Y,p2.Y))
                             , new Size (Math.Abs(p1.X-p2.X), Math.Abs(p1.Y-p2.Y))
@@ -102,26 +98,6 @@ public abstract class TweepuntTool : StartpuntTool
 
     public abstract void Teken(Graphics g, Point p1, Point p2, Brush kwast);
 }
-
-public struct Ellipse
-{
-    private Point StartPunt;
-    private int Breedte;
-    private int Hoogte;
-
-    public Ellipse(Point p1, Point p2)
-    {
-        StartPunt = p1;
-
-        Breedte = p2.X - p1.X;
-        Hoogte = p2.Y - p1.Y;
-    }
-    public Rectangle OvaalOmtrek()
-    {
-        return new Rectangle(StartPunt.X, StartPunt.Y, Breedte, Hoogte);
-    }
-}
-
 
 public class RechthoekTool : TweepuntTool
 {

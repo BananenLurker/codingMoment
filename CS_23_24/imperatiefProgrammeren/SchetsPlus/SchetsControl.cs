@@ -51,6 +51,16 @@ public class SchetsControl : UserControl
         schets.Roteer();
         this.Invalidate();
     }
+    public void Undo(object o, EventArgs ea)
+    {
+        List<TekenElement> tel = Ophalen.LijstOphalen;
+        if (tel.Count > 0)
+        {
+            tel.RemoveAt(tel.Count - 1);
+            this.Invalidate();
+            Schets.Teken(MaakBitmapGraphics(), tel);
+        }
+    }
     public void Opslaan(object o, EventArgs ea)
     {
         foreach (TekenElement te in schets.Ophalen.TekenElementLijst)

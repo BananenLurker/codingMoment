@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 public class SchetsEditor : Form
 {
@@ -59,7 +61,7 @@ public class SchetsEditor : Form
         OpenFileDialog ofd = new OpenFileDialog();
         ofd.InitialDirectory = "c:\\";
         ofd.RestoreDirectory = true;
-        ofd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+        ofd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|xml files (*.xml)|*.xml|All files (*.*)|*.*";
 
         if(ofd.ShowDialog() == DialogResult.OK)
         {
@@ -68,13 +70,39 @@ public class SchetsEditor : Form
     }
     private void lees(string naam)
     {
-        SchetsWin sw = new SchetsWin();
-        Bitmap bmp = new Bitmap(naam);
-        PictureBox pb = new PictureBox();
+        if (naam.EndsWith("xml"))
+        {
+            OpenXml(naam);
+        }
+        else
+        {
+            SchetsWin sw = new SchetsWin();
+            Bitmap bmp = new Bitmap(naam);
+            PictureBox pb = new PictureBox();
 
-        pb.Image = bmp;
-        sw.MdiParent = this;
-        sw.Show();
+            pb.Image = bmp;
+            sw.MdiParent = this;
+            sw.Show();
+        }
+    }
+    private void OpenXml(string naam)
+    {
+        XmlTextReader textReader = new XmlTextReader($"{naam}");
+        textReader.Read();
+        while (textReader.Read())
+        {
+            textReader.MoveToElement();
+            Debug.WriteLine("XmlTextReader properties list");
+            Debug.WriteLine("================================");
+            Debug.WriteLine("Name:" + textReader.Name);
+            Debug.WriteLine("Base URI:" + textReader.BaseURI);
+            Debug.WriteLine("Local Name:" + textReader.LocalName);
+            Debug.WriteLine("Attribute Count:" + textReader.AttributeCount.ToString());
+            Debug.WriteLine("Depth:" + textReader.Depth.ToString());
+            Debug.WriteLine("Line Number:" + textReader.LineNumber.ToString());
+            Debug.WriteLine("Node Type:" + textReader.NodeType.ToString());
+            Debug.WriteLine("Attribute Count:" + textReader.Value.ToString());
+        }
     }
     public void Gewijzigd()
     {

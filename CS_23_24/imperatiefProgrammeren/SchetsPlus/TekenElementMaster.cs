@@ -10,7 +10,7 @@ public class TekenElementMaster
     {
         TekenElementLijst = new List<TekenElement>();
     }
-    public List<TekenElement> Opvragen
+    public List<TekenElement> LijstOphalen
     {
         get { return TekenElementLijst; }
     }
@@ -25,7 +25,6 @@ public class TekenElementMaster
             }
         }
     }
-
     public void Roteer(int width, int height)
     {
         foreach (TekenElement te in TekenElementLijst)
@@ -48,6 +47,7 @@ public class TekenElementMaster
                 {
                     te.Hoek += 90;
                 }
+
             }
         }
     }

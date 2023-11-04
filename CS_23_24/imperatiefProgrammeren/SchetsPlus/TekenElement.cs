@@ -26,18 +26,7 @@ public class TekenElement
         set;
     }
 
-    public void PuntToevoegen(Point p)
-    {
-        Punten.Add(p);
-    }
-
     public string Letters
-    {
-        get;
-        set;
-    }
-
-    public int Rotatie
     {
         get;
         set;

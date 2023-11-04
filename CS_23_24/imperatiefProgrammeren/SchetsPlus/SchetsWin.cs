@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Xml;
 
 public class SchetsWin : Form
 {
@@ -67,22 +68,54 @@ public class SchetsWin : Form
     private void opslaanAls(object obj, EventArgs ea)
     {
         SaveFileDialog sfd = new SaveFileDialog();
-        sfd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
-
+        sfd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|xml files (.xml)|*.xml|All files (*.*)|*.*";
         if (sfd.ShowDialog() == DialogResult.OK)
         {
-            Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
-            schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
-            map.Save(sfd.FileName);
-
-            this.Text = $"{sfd.FileName}";
-            Wijzig = false;
-            if(obj == null)
+            if (sfd.FileName.EndsWith("xml"))
             {
-                this.Close();
+                SchrijfXml(sfd.FileName);
             }
-            return;
+            else
+            {
+                Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
+                schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
+                map.Save(sfd.FileName);
+
+                this.Text = $"{sfd.FileName}";
+                Wijzig = false;
+                if (obj == null)
+                {
+                    this.Close();
+                }
+                return;
+            }
         }
+    }
+    private void SchrijfXml(string naam)
+    {
+        XmlTextWriter textWriter = new XmlTextWriter(naam, null);
+
+        textWriter.WriteStartDocument();
+        foreach (TekenElement te in schetscontrol.Ophalen.TekenElementLijst)
+        {
+            textWriter.WriteStartElement("Element");
+            textWriter.WriteStartElement("Tool", $"{te.Tool}");
+            textWriter.WriteEndElement();
+            textWriter.WriteStartElement("Punten");
+            foreach (Point p in te.Punten)
+            {
+                textWriter.WriteString($"{p.X},{p.Y} ");
+            }
+            textWriter.WriteEndElement();
+            textWriter.WriteString($"{te.Kleur.ToString().Split(" ")[1].Remove(0,1)}");
+            textWriter.WriteString($"{te.Letters}");
+            textWriter.WriteString($"{te.Hoek}");
+            textWriter.WriteEndElement();
+        }
+        textWriter.WriteEndDocument();
+        textWriter.Close();
+        Wijzig = false;
+        return;
     }
     public bool Wijzig
     {
@@ -209,9 +242,14 @@ public class SchetsWin : Form
         rotate.Click += schetscontrol.Roteer;
 
         Button save = new Button(); paneel.Controls.Add(save);
-        save.Text = "save";
+        save.Text = "Save";
         save.Location = new Point(160, 0);
         save.Click += schetscontrol.Opslaan;
+
+        Button undo = new Button(); paneel.Controls.Add(undo);
+        undo.Text = "Undo";
+        undo.Location = new Point(240, 0);
+        undo.Click += schetscontrol.Undo;
 
         Label penkleur = new Label(); paneel.Controls.Add(penkleur);
         penkleur.Text = "Penkleur:"; 
