@@ -57,9 +57,13 @@ public class SchetsControl : UserControl
         if (tel.Count > 0)
         {
             tel.RemoveAt(tel.Count - 1);
-            this.Invalidate();
-            Schets.Teken(MaakBitmapGraphics(), tel);
+            OpnieuwTekenen(tel);
         }
+    }
+    public void OpnieuwTekenen(List<TekenElement> tel)
+    {
+        this.Invalidate();
+        Schets.Teken(MaakBitmapGraphics(), tel);
     }
     public void Opslaan(object o, EventArgs ea)
     {

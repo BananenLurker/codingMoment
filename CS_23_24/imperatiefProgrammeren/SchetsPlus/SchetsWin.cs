@@ -93,27 +93,40 @@ public class SchetsWin : Form
     }
     private void SchrijfXml(string naam)
     {
-        XmlTextWriter textWriter = new XmlTextWriter(naam, null);
+        XmlTextWriter tw = new XmlTextWriter(naam, null);
 
-        textWriter.WriteStartDocument();
+        tw.WriteStartDocument();
+        tw.WriteStartElement("TekenElementen");
         foreach (TekenElement te in schetscontrol.Ophalen.TekenElementLijst)
         {
-            textWriter.WriteStartElement("Element");
-            textWriter.WriteStartElement("Tool", $"{te.Tool}");
-            textWriter.WriteEndElement();
-            textWriter.WriteStartElement("Punten");
+            string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
+
+            tw.WriteStartElement("Element");
+            tw.WriteStartElement("Tool");
+            tw.WriteString($"{te.Tool}");
+            tw.WriteEndElement();
+            tw.WriteStartElement("Punten");
             foreach (Point p in te.Punten)
             {
-                textWriter.WriteString($"{p.X},{p.Y} ");
+                tw.WriteStartElement("Punt");
+                tw.WriteString($"{p.X},{p.Y}");
+                tw.WriteEndElement();
             }
-            textWriter.WriteEndElement();
-            textWriter.WriteString($"{te.Kleur.ToString().Split(" ")[1].Remove(0,1)}");
-            textWriter.WriteString($"{te.Letters}");
-            textWriter.WriteString($"{te.Hoek}");
-            textWriter.WriteEndElement();
+            tw.WriteEndElement();
+            tw.WriteStartElement("Kleur");
+            tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
+            tw.WriteEndElement();
+            tw.WriteStartElement("Letters");
+            tw.WriteString($"{te.Letters}");
+            tw.WriteEndElement();
+            tw.WriteStartElement("Hoek");
+            tw.WriteString($"{te.Hoek}");
+            tw.WriteEndElement();
+            tw.WriteEndElement();
         }
-        textWriter.WriteEndDocument();
-        textWriter.Close();
+        tw.WriteEndElement();
+        tw.WriteEndDocument();
+        tw.Close();
         Wijzig = false;
         return;
     }

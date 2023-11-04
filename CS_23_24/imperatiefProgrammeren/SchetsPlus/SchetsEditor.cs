@@ -87,22 +87,64 @@ public class SchetsEditor : Form
     }
     private void OpenXml(string naam)
     {
-        XmlTextReader textReader = new XmlTextReader($"{naam}");
-        textReader.Read();
-        while (textReader.Read())
+        TekenElementMaster tem = new TekenElementMaster();
+        TekenElement te = new TekenElement();
+        XmlTextReader tr = new XmlTextReader($"{naam}");
+        tr.Read();
+        while (tr.Read())
         {
-            textReader.MoveToElement();
-            Debug.WriteLine("XmlTextReader properties list");
-            Debug.WriteLine("================================");
-            Debug.WriteLine("Name:" + textReader.Name);
-            Debug.WriteLine("Base URI:" + textReader.BaseURI);
-            Debug.WriteLine("Local Name:" + textReader.LocalName);
-            Debug.WriteLine("Attribute Count:" + textReader.AttributeCount.ToString());
-            Debug.WriteLine("Depth:" + textReader.Depth.ToString());
-            Debug.WriteLine("Line Number:" + textReader.LineNumber.ToString());
-            Debug.WriteLine("Node Type:" + textReader.NodeType.ToString());
-            Debug.WriteLine("Attribute Count:" + textReader.Value.ToString());
+            if (tr.IsStartElement())
+            {
+                switch (tr.Name.ToString())
+                {
+                    case "Element":
+                        te = new TekenElement();
+                        tem.TekenElementLijst.Add(te);
+                        break;
+                    case "Tool":
+                        te.Tool = tr.ReadString();
+                        break;
+                    case "Punt":
+                        string[] xy = tr.ReadString().Split(",");
+                        int x = 0; int y = 0;
+                        try
+                        {
+                            x = int.Parse(xy[0]);
+                            y = int.Parse(xy[1]);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        Point p = new Point(x, y);
+                        te.Punten.Add(p);
+                        break;
+                    case "Kleur":
+                        te.Kleur = Color.FromName(tr.ReadString());
+                        break;
+                    case "Letters":
+                        te.Letters = tr.ReadString();
+                        break;
+                    case "Hoek":
+                        try
+                        {
+                            te.Hoek = int.Parse(tr.ReadString());
+                        }
+                        catch
+                        {
+                            MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        break;
+                }
+            }
         }
+        SchetsWin s = new SchetsWin();
+        s.MdiParent = this;
+        s.schetscontrol.schets.temSchrijven(tem);
+        s.schetscontrol.OpnieuwTekenen(tem.TekenElementLijst);
+        s.Wijzig = false;
+        windows.Add(s);
+        s.Show();
     }
     public void Gewijzigd()
     {

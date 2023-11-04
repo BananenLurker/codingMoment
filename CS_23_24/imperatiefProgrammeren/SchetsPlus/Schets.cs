@@ -21,6 +21,10 @@ public class Schets
     {
         get { return tem; }
     }
+    public void temSchrijven(TekenElementMaster temaster)
+    {
+        tem = temaster;
+    }
     public Graphics BitmapGraphics
     {
         get { return Graphics.FromImage(bitmap); }
