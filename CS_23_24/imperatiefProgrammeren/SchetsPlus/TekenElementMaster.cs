@@ -5,14 +5,12 @@ using System.Drawing;
 public class TekenElementMaster
 {
     public List<TekenElement> TekenElementLijst;
+    public List<TekenElement> WeggehaaldLijst;
 
     public TekenElementMaster()
     {
         TekenElementLijst = new List<TekenElement>();
-    }
-    public List<TekenElement> LijstOphalen
-    {
-        get { return TekenElementLijst; }
+        WeggehaaldLijst = new List<TekenElement>();
     }
     public void VerwijderElement(Point p)
     {
@@ -20,6 +18,7 @@ public class TekenElementMaster
         {
             if (geraakt(TekenElementLijst[i], p))
             {
+                WeggehaaldLijst.Add(TekenElementLijst[i]);
                 TekenElementLijst.RemoveAt(i);
                 return;
             }

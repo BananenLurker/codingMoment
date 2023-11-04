@@ -53,10 +53,22 @@ public class SchetsControl : UserControl
     }
     public void Undo(object o, EventArgs ea)
     {
-        List<TekenElement> tel = Ophalen.LijstOphalen;
+        List<TekenElement> tel = Ophalen.TekenElementLijst;
         if (tel.Count > 0)
         {
+            Ophalen.WeggehaaldLijst.Add(tel[tel.Count - 1]);
             tel.RemoveAt(tel.Count - 1);
+            OpnieuwTekenen(tel);
+        }
+    }
+    public void Redo(object o, EventArgs ea)
+    {
+        List<TekenElement> tel = Ophalen.TekenElementLijst;
+        List<TekenElement> weg = Ophalen.WeggehaaldLijst;
+        if (weg.Count > 0)
+        {
+            tel.Add(weg[weg.Count - 1]);
+            weg.RemoveAt(weg.Count - 1);
             OpnieuwTekenen(tel);
         }
     }
