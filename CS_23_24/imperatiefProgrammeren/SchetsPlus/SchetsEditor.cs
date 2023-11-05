@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -61,7 +60,7 @@ public class SchetsEditor : Form
         OpenFileDialog ofd = new OpenFileDialog();
         ofd.InitialDirectory = "c:\\";
         ofd.RestoreDirectory = true;
-        ofd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|xml files (*.xml)|*.xml|All files (*.*)|*.*";
+        ofd.Filter = "xml files (*.xml)|*.xml|png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
 
         if(ofd.ShowDialog() == DialogResult.OK)
         {
@@ -120,7 +119,23 @@ public class SchetsEditor : Form
                         te.Punten.Add(p);
                         break;
                     case "Kleur":
-                        te.Kleur = Color.FromName(tr.ReadString());
+                        string color = tr.ReadString();
+                        if (color.Contains("="))
+                        {
+                            string[] ls = color.Split("=");
+                            try
+                            {
+                                te.Kleur = Color.FromArgb(int.Parse(ls[0]), int.Parse(ls[1]), int.Parse(ls[2]), int.Parse(ls[3]));
+                            }
+                            catch
+                            {
+                                MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                        else
+                        {
+                            te.Kleur = Color.FromName(color);
+                        }
                         break;
                     case "Letters":
                         te.Letters = tr.ReadString();

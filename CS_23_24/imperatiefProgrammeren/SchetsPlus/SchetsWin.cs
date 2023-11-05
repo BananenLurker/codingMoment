@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -68,7 +69,7 @@ public class SchetsWin : Form
     private void opslaanAls(object obj, EventArgs ea)
     {
         SaveFileDialog sfd = new SaveFileDialog();
-        sfd.Filter = "png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|xml files (.xml)|*.xml|All files (*.*)|*.*";
+        sfd.Filter = "xml files (.xml)|*.xml|png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
         if (sfd.ShowDialog() == DialogResult.OK)
         {
             if (sfd.FileName.EndsWith("xml"))
@@ -99,8 +100,6 @@ public class SchetsWin : Form
         tw.WriteStartElement("TekenElementen");
         foreach (TekenElement te in schetscontrol.Ophalen.TekenElementLijst)
         {
-            string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
-
             tw.WriteStartElement("Element");
             tw.WriteStartElement("Tool");
             tw.WriteString($"{te.Tool}");
@@ -114,7 +113,18 @@ public class SchetsWin : Form
             }
             tw.WriteEndElement();
             tw.WriteStartElement("Kleur");
-            tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
+            if (te.Kleur.ToString().Contains("="))
+            {
+                string str = te.Kleur.ToString();
+                str = Regex.Replace(str, "[^0-9=]", "");
+                tw.WriteString($"{str.Remove(0, 1)}");
+            }
+            else
+            {
+                string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
+                tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
+            }
+
             tw.WriteEndElement();
             tw.WriteStartElement("Letters");
             tw.WriteString($"{te.Letters}");
@@ -146,9 +156,8 @@ public class SchetsWin : Form
                                 , new OvaalTool()
                                 , new VolOvaalTool()
                                 };
-        String[] deKleuren = { "Black", "Red", "Green", "Blue", "Yellow", "Magenta", "Cyan" };
 
-        this.ClientSize = new Size(700, 500);
+        this.ClientSize = new Size(700, 510);
         huidigeTool = deTools[0];
 
         schetscontrol = new SchetsControl();
@@ -176,9 +185,9 @@ public class SchetsWin : Form
         this.Controls.Add(menuStrip);
         this.maakFileMenu();
         this.maakToolMenu(deTools);
-        this.maakActieMenu(deKleuren);
+        this.maakActieMenu();
         this.maakToolButtons(deTools);
-        this.maakActieButtons(deKleuren);
+        this.maakActieButtons();
         this.Resize += this.veranderAfmeting;
         this.FormClosing += this.afsluiten;
         this.veranderAfmeting(null, null);
@@ -206,15 +215,12 @@ public class SchetsWin : Form
         menuStrip.Items.Add(menu);
     }
 
-    private void maakActieMenu(String[] kleuren)
+    private void maakActieMenu()
     {   
         ToolStripMenuItem menu = new ToolStripMenuItem("Actie");
         menu.DropDownItems.Add("Clear", null, schetscontrol.Schoon );
         menu.DropDownItems.Add("Roteer", null, schetscontrol.Roteer );
-        ToolStripMenuItem submenu = new ToolStripMenuItem("Kies kleur");
-        foreach (string k in kleuren)
-            submenu.DropDownItems.Add(k, null, schetscontrol.VeranderKleurViaMenu);
-        menu.DropDownItems.Add(submenu);
+        menu.DropDownItems.Add("Kies kleur", null, schetscontrol.VeranderKleur);
         menuStrip.Items.Add(menu);
     }
 
@@ -239,7 +245,7 @@ public class SchetsWin : Form
         }
     }
 
-    private void maakActieButtons(String[] kleuren)
+    private void maakActieButtons()
     {   
         paneel = new Panel(); this.Controls.Add(paneel);
         paneel.Size = new Size(600, 24);
@@ -269,17 +275,9 @@ public class SchetsWin : Form
         redo.Location = new Point(320, 0);
         redo.Click += schetscontrol.Redo;
 
-        Label penkleur = new Label(); paneel.Controls.Add(penkleur);
-        penkleur.Text = "Penkleur:"; 
-        penkleur.Location = new Point(400, 3); 
-        penkleur.AutoSize = true;               
-            
-        ComboBox cbb = new ComboBox(); paneel.Controls.Add(cbb);
-        cbb.Location = new Point(460, 0); 
-        cbb.DropDownStyle = ComboBoxStyle.DropDownList; 
-        cbb.SelectedValueChanged += schetscontrol.VeranderKleur;
-        foreach (string k in kleuren)
-            cbb.Items.Add(k);
-        cbb.SelectedIndex = 0;
+        Button Kleur = new Button(); paneel.Controls.Add(Kleur);
+        Kleur.Text = "Kleur";
+        Kleur.Location = new Point(400, 0);
+        Kleur.Click += schetscontrol.VeranderKleur;
     }
 }

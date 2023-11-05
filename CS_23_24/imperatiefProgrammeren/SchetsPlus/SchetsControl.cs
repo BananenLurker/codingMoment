@@ -8,7 +8,7 @@ using System.Windows.Forms;
 public class SchetsControl : UserControl
 {
     public Schets schets;
-    private Color penkleur;
+    private Color penkleur = Color.Black;
 
     public TekenElementMaster Ophalen
     {
@@ -56,6 +56,7 @@ public class SchetsControl : UserControl
         List<TekenElement> tel = Ophalen.TekenElementLijst;
         if (tel.Count > 0)
         {
+            Program.se.Gewijzigd();
             Ophalen.WeggehaaldLijst.Add(tel[tel.Count - 1]);
             tel.RemoveAt(tel.Count - 1);
             OpnieuwTekenen(tel);
@@ -67,6 +68,7 @@ public class SchetsControl : UserControl
         List<TekenElement> weg = Ophalen.WeggehaaldLijst;
         if (weg.Count > 0)
         {
+            Program.se.Gewijzigd();
             tel.Add(weg[weg.Count - 1]);
             weg.RemoveAt(weg.Count - 1);
             OpnieuwTekenen(tel);
@@ -88,12 +90,17 @@ public class SchetsControl : UserControl
             Debug.WriteLine($"----------------");
         }
     }
-    public void VeranderKleur(object obj, EventArgs ea)
-    {   string kleurNaam = ((ComboBox)obj).Text;
-        penkleur = Color.FromName(kleurNaam);
-    }
-    public void VeranderKleurViaMenu(object obj, EventArgs ea)
-    {   string kleurNaam = ((ToolStripMenuItem)obj).Text;
-        penkleur = Color.FromName(kleurNaam);
+    public void VeranderKleur(Object o, EventArgs ea)
+    {
+        ColorDialog colorDlg = new ColorDialog();
+        colorDlg.AllowFullOpen = true;
+        colorDlg.AnyColor = true;
+        colorDlg.SolidColorOnly = false;
+        colorDlg.Color = Color.Red;
+
+        if (colorDlg.ShowDialog() == DialogResult.OK)
+        {
+            penkleur = colorDlg.Color;
+        }
     }
 }

@@ -18,6 +18,7 @@ public class TekenElementMaster
         {
             if (geraakt(TekenElementLijst[i], p))
             {
+                Program.se.Gewijzigd();
                 WeggehaaldLijst.Add(TekenElementLijst[i]);
                 TekenElementLijst.RemoveAt(i);
                 return;
