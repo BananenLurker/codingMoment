@@ -6,7 +6,7 @@ using System.Xml;
 public class SchetsEditor : Form
 {
     private MenuStrip menuStrip;
-
+    // Nog meer standaard sourcecode methodes, variabelen en andere leuke dingen
     public SchetsEditor()
     {   
         this.ClientSize = new Size(800, 800);
@@ -52,6 +52,7 @@ public class SchetsEditor : Form
     {
         this.Close();
     }
+    // Dan iets leuks: de XML reader
     private void open(object sender, EventArgs e)
     {
         OpenFileDialog ofd = new OpenFileDialog();
@@ -61,6 +62,7 @@ public class SchetsEditor : Form
 
         if(ofd.ShowDialog() == DialogResult.OK)
         {
+            // Check of er een XML bestand geopend wordt
             if (ofd.FileName.EndsWith(".xml"))
                 this.OpenXml(ofd.FileName);
             else
@@ -81,6 +83,10 @@ public class SchetsEditor : Form
                 {
                     switch (xtr.Name.ToString())
                     {
+                        // Lees voor iedere regel wat er precies gebeurd: is er een tool,
+                        // punt, kleur aanwezig? Bij een nieuw element wordt er ook een nieuw
+                        // TekenElement aangemaakt, nadat het oude TekenElement toegevoegd is
+                        // aan een nieuwe TEM lijst
                         case "Element":
                             te = new TekenElement();
                             tem.TekenElementLijst.Add(te);
@@ -89,6 +95,7 @@ public class SchetsEditor : Form
                             te.Tool = xtr.ReadString();
                             break;
                         case "Punt":
+                            // Parse alle coördinaten en zet ze terug in punten
                             string[] xy = xtr.ReadString().Split(",");
                             int x = int.Parse(xy[0]);
                             int y = int.Parse(xy[1]);
@@ -99,10 +106,12 @@ public class SchetsEditor : Form
                             string color = xtr.ReadString();
                             if (color.Contains("="))
                             {
+                                // Als er een '=' aanwezig is, is er sprake van een kleur met ARGB waarde.
+                                // Parse deze en haal de kleur er weer uit
                                 string[] ls = color.Split("=");
                                 te.Kleur = Color.FromArgb(int.Parse(ls[0]), int.Parse(ls[1]), int.Parse(ls[2]), int.Parse(ls[3]));
                             }
-                            else
+                            else // Als er geen sprake is van een ARGB waarde, is er sprake van een naam. 
                                 te.Kleur = Color.FromName(color);
                             break;
                         case "Letters":
@@ -117,6 +126,7 @@ public class SchetsEditor : Form
         }
         catch { MessageBox.Show("This file may be corrupt and can not be read correctly. Image may not be accurate. Please make sure you have selected a SchetsPlus XML file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
 
+        // Sluit de reader, zodat het document overschreven kan worden als dat nodig is
         xtr.Close();
         SchetsWin s = new SchetsWin();
         s.Text = $"{naam}";
@@ -126,6 +136,7 @@ public class SchetsEditor : Form
         s.Wijzig = false;
         s.Show();
     }
+    // De functie die daadwerkelijk de 'wijzig' bool zet
     public void Gewijzigd()
     {
         SchetsWin activeChild = (SchetsWin)this.ActiveMdiChild;

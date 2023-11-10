@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Drawing;
 
+// Het TekenElement is het object dat ieder getekend 'ding' toegewezen krijgt.
+// De properties hiervan worden ingevuld als ze bekend zijn, dus de tool en kleur
+// als de muis voor het eerst wordt vastgehouden en het tweede (of meerdere) punt(en)
+// wanneer deze bekend zijn
 public class TekenElement
 {
     public TekenElement()

@@ -13,10 +13,14 @@ public class Schets
     {
         bitmap = new Bitmap(1, 1);
     }
+    // Een property waarmee de TEM opgehaald kan worden, zodat deze door andere klasses gebruikt kunnen worden
+    // zonder dat daar drie of vier punten aan te pas hoeven te komen
     public TekenElementMaster Ophalen
     {
         get { return tem; }
     }
+    // Een mogelijkheid om de TEM te overschrijven, wanneer er een nieuwe is gemaakt door het openen
+    // van een SchetsPlus XML bestand
     public void TemSchrijven(TekenElementMaster temaster)
     {
         tem = temaster;
@@ -49,16 +53,20 @@ public class Schets
         gr.FillRectangle(Brushes.White, 0, 0, bitmap.Width, bitmap.Height);
         Ophalen.TekenElementLijst.Clear();
     }
+    // Roteren gebeurd in TEM
     public void Roteer()
     {
         tem.Roteer(newWidth, newHeight);
         Teken(BitmapGraphics, tem.TekenElementLijst);
     }
+    // Teken alles opnieuw
     public static void Teken(Graphics gr, List<TekenElement> TekenElement)
     {
+        // Maak eerst alles wit
         gr.FillRectangle(Brushes.White, 0, 0, 2560, 1440);
         gr.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
+        // Teken ieder element opnieuw
         foreach (TekenElement te in TekenElement)
         {
             SolidBrush brush = new SolidBrush(te.Kleur);
@@ -66,12 +74,14 @@ public class Schets
             switch (te.Tool)
             {
                 case "tekst":
+                    // Zet de tekst op een bitmap
                     Font font = new Font("Tahoma", 40);
                     SizeF sz = gr.MeasureString(te.Letters, font);
                     Bitmap tekstMap = new Bitmap((int)sz.Width + 1, (int)sz.Height + 1);
                     Graphics g = Graphics.FromImage(tekstMap);
                     g.DrawString(te.Letters, font, brush, new Point(0, 0), StringFormat.GenericTypographic);
 
+                    // Draai deze bitmap zo ver als nodig is, adhv de opgeslagen hoek
                     if (te.Hoek == 90)
                         tekstMap.RotateFlip(RotateFlipType.Rotate90FlipNone);
                     else if (te.Hoek == 180)
@@ -81,6 +91,8 @@ public class Schets
 
                     gr.DrawImage(tekstMap, te.Punten[0]);
                     break;
+                    // Voor iedere andere tool wordt een nieuwe tool aangemaakt
+                    // met alle benodigde arguments die het TekenElement vervolgens zelf maakt
                 case "kader":
                     new RechthoekTool().Teken(gr, te.Punten[0], te.Punten[1], brush);
                     break;

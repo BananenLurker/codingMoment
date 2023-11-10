@@ -7,6 +7,10 @@ using System.Xml;
 
 public class SchetsWin : Form
 {
+    // Standaardvariabelen en methoden die in de source code staan.
+    // Wel is public bool wijzig toegevoegd, die voor ieder SchetsWin bijhoudt
+    // of er sprake is van een wijziging. Zo ja, zal de Opslaan() methode
+    // hier rekening mee houden
     public bool wijzig;
     MenuStrip menuStrip;
     public SchetsControl schetscontrol;
@@ -33,23 +37,28 @@ public class SchetsWin : Form
 
     private void afsluiten(object sender, FormClosingEventArgs fcea)
     {
+        // Zorg dat this.Close() zijn normale functionaliteit terug krijgt gedurende deze methode
         this.FormClosing -= this.afsluiten;
         if (Wijzig == true)
         {
             DialogResult dr = MessageBox.Show("You have unsaved changes, save before quitting?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
+                // Als er wordt opgeslagen voor het afsluiten, handelt methode Opslaan() dat af
                 Opslaan(null, null);
                 Wijzig = false;
             }
             else if (dr == DialogResult.No)
             {
+                // Als er niet wordt opgeslagen voor het afsluiten, mag het scherm weg
                 this.Close();
             }
             else
             {
                 if(fcea != null)
                 {
+                    // Als er wordt gecancelled, mag het scherm niet weg, maar moet het afsluiten wel stoppen.
+                    // FormClosing krijgt zijn oude EventHandler weer en wordt gecancelled
                     this.FormClosing += this.afsluiten;
                     fcea.Cancel = true;
                     return;
@@ -58,8 +67,10 @@ public class SchetsWin : Form
         }
         else
         {
+            // Als er geen wijzigingen zijn, mag het scherm sowieso dicht
             this.Close();
         }
+        // Voeg de EventHandler weer toe
         this.FormClosing += this.afsluiten;
     }
     private void SluitenButton_Click(object obj, EventArgs ea)
@@ -68,6 +79,8 @@ public class SchetsWin : Form
     }
     private void Opslaan(object obj, EventArgs ea)
     {
+        // Als er nog geen filenaam is, is het een nieuw bestand en mag
+        // OpslaanAls() aangeroepen worden
         string fileNaam = this.Text;
         if(fileNaam == "")
         {
@@ -75,6 +88,8 @@ public class SchetsWin : Form
         }
         else
         {
+            // Als er al wel een naam is, bestaat het bestand al
+            // en hoeft het alleen maar overschreven te worden
             if (fileNaam.EndsWith(".xml"))
                 SchrijfXml(fileNaam);
             else
@@ -89,10 +104,14 @@ public class SchetsWin : Form
         {
             if (sfd.FileName.EndsWith("xml"))
             {
+                // De filenaam eindigt op xml, dus wordt de xml methode aangeroepen
                 SchrijfXml(sfd.FileName);
             }
             else
             {
+                // De filenaam eindigt niet op xml, dus wordt als image
+                // opgeslagen. De bool 'controle' wordt meegegeven om bij te houden
+                // of er afgesloten moet worden na het opslaan van de afbeelding.
                 bool controle = false;
                 if (obj == null)
                     controle = true;
@@ -102,6 +121,7 @@ public class SchetsWin : Form
     }
     private void SchrijfXml(string naam)
     {
+        // De structuur van een xml document opbouwen...
         XmlTextWriter tw = new XmlTextWriter(naam, null);
         tw.WriteStartDocument();
         tw.WriteStartElement("TekenElementen");
@@ -124,12 +144,16 @@ public class SchetsWin : Form
                 tw.WriteStartElement("Kleur");
                 if (te.Kleur.ToString().Contains("="))
                 {
+                    // Als de kleur een ARGB waarde heeft: split hem en haal de kleur er weer uit
                     string str = te.Kleur.ToString();
                     str = Regex.Replace(str, "[^0-9=]", "");
                     tw.WriteString($"{str.Remove(0, 1)}");
                 }
                 else
                 {
+                    // Als de kleur geen ARGB waarde heeft, is er sprake van een naam.
+                    // Haal de overbodige characters weg, zodat dit niet
+                    // allemaal opgeslagen wordt in de file
                     string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
                     tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
                 }
@@ -142,10 +166,14 @@ public class SchetsWin : Form
                 tw.WriteEndElement();
                 tw.WriteEndElement();
             }
+            // en weer afsluiten.
             tw.WriteEndElement();
             tw.WriteEndDocument();
             tw.Close();
             Wijzig = false;
+            // Zet de bestandslocatie als text van het window, zodat dit voor de
+            // gebruiker duidelijk is, maar deze later ook nog gebruikt
+            // kan worden
             this.Text = $"{naam}";
             OpslaanPopup();
         }
@@ -156,10 +184,12 @@ public class SchetsWin : Form
     }
     private void SaveBitmap(string naam, bool controle)
     {
+        // Maak een nieuwe bitmap, sla die op als image
         Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
         schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
         map.Save(naam);
 
+        // Nogmaals het trucje met de window naam
         this.Text = $"{naam}";
         Wijzig = false;
         if (controle)
@@ -170,6 +200,8 @@ public class SchetsWin : Form
     }
     private void OpslaanPopup()
     {
+        // Geef een notificatie als er opgeslagen is. Voornamelijk handig voor
+        // de save button. Spam deze maar eens en open je tray icons, ziet er leuk uit.
         NotifyIcon nf = new NotifyIcon();
         nf.Icon = SystemIcons.Information;
         nf.BalloonTipTitle = "Your Schets was saved!";
@@ -178,11 +210,13 @@ public class SchetsWin : Form
         nf.Visible = true;
         nf.ShowBalloonTip(1000);
     }
+    // De property die bijhoudt of er wijzigingen gedaan zijn
     public bool Wijzig
     {
         get { return wijzig; }
         set { wijzig = value; }
     }
+    // Allemaal methodes zoals ze ook in de source code staan, met wat tools bijgevoegd
     public SchetsWin()
     {
         ISchetsTool[] deTools = { new PenTool()
@@ -302,6 +336,7 @@ public class SchetsWin : Form
         rotate.Location = new Point( 80, 0); 
         rotate.Click += schetscontrol.Roteer;
 
+        // en hier wat buttons toegevoegd
         Button save = new Button(); paneel.Controls.Add(save);
         save.Text = "Save";
         save.Location = new Point(160, 0);

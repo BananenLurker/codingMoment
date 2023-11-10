@@ -9,10 +9,12 @@ public class SchetsControl : UserControl
     public Schets schets;
     private Color penkleur = Color.Black;
 
+    // Een property die de TEM ophaalt bij de Schets die bij deze SchetsControl hoort
     public TekenElementMaster Ophalen
     {
         get { return schets.Ophalen; }
     }
+    // Weinig spannende methoden die vanuit de source code beschikbaar zijn
     public Color PenKleur
     { get { return penkleur; }
     }
@@ -52,34 +54,46 @@ public class SchetsControl : UserControl
     }
     public void Undo(object o, EventArgs ea)
     {
+        // Undo: haal de huidige TekenElementLijst op
         List<TekenElement> tel = Ophalen.TekenElementLijst;
         if (tel.Count > 0)
         {
-            Program.se.Gewijzigd();
+            // Als deze niet leeg is, voeg het laatste element toe aan een lijst met
+            // andere weggehaalde elementen en haal het uit de lijst met op dit moment
+            // zichtbare elementen: teken daarna opnieuw.
             Ophalen.WeggehaaldLijst.Add(tel[tel.Count - 1]);
             tel.RemoveAt(tel.Count - 1);
             OpnieuwTekenen(tel);
+            Program.se.Gewijzigd();
         }
     }
     public void Redo(object o, EventArgs ea)
     {
+        // Haal de huidige lijst en de weggehaalde lijst op
         List<TekenElement> tel = Ophalen.TekenElementLijst;
         List<TekenElement> weg = Ophalen.WeggehaaldLijst;
         if (weg.Count > 0)
         {
-            Program.se.Gewijzigd();
+            // Als er iets in de weggehaalde lijst zit, voeg deze dan weer toe aan de
+            // huidige lijst en haal hem weg uit de weggehaalde lijst.
+            // Hierdoor kunnen elementen nooit twee keer over elkaar heen toegevoegd worden
             tel.Add(weg[weg.Count - 1]);
             weg.RemoveAt(weg.Count - 1);
             OpnieuwTekenen(tel);
+            Program.se.Gewijzigd();
         }
     }
     public void OpnieuwTekenen(List<TekenElement> tel)
     {
+        // Geef de huidige lijst met getekende elementen aan de Teken functie,
+        // die alles opnieuw mooi gaat tekenen
         this.Invalidate();
         Schets.Teken(MaakBitmapGraphics(), tel);
     }
     public void VeranderKleur(Object o, EventArgs ea)
     {
+        // Verander de kleur aan de hand van een kleurdialoog:
+        // dit geeft een ontzettend grote keuze aan verschillende kleuren
         ColorDialog colorDlg = new ColorDialog();
         colorDlg.AllowFullOpen = true;
         colorDlg.AnyColor = true;
