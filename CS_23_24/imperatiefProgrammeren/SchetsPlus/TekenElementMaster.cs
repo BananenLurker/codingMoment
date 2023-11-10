@@ -16,7 +16,7 @@ public class TekenElementMaster
     {
         for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
         {
-            if (geraakt(TekenElementLijst[i], p))
+            if (Geraakt(TekenElementLijst[i], p))
             {
                 Program.se.Gewijzigd();
                 WeggehaaldLijst.Add(TekenElementLijst[i]);
@@ -24,6 +24,46 @@ public class TekenElementMaster
                 return;
             }
         }
+    }
+    public void ElementOmhoog(Point p)
+    {
+        for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
+        {
+            if (Geraakt(TekenElementLijst[i], p))
+            {
+                TekenElement temp = TekenElementLijst[i];
+                TekenElementLijst.RemoveAt(i);
+                TekenElementLijst.Add(temp);
+                Program.se.Gewijzigd();
+                return;
+            }
+        }
+    }
+    public void ElementOmlaag(Point p)
+    {
+        for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
+        {
+            if (Geraakt(TekenElementLijst[i], p))
+            {
+                TekenElement temp = TekenElementLijst[i];
+                TekenElementLijst.RemoveAt(i);
+                TekenElementLijst.Insert(0, temp);
+                Program.se.Gewijzigd();
+                return;
+            }
+        }
+    }
+    public TekenElement ZoekDragElement(Point p)
+    {
+        for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
+        {
+            if (Geraakt(TekenElementLijst[i], p))
+            {
+                Program.se.Gewijzigd();
+                return TekenElementLijst[i];
+            }
+        }
+        return null;
     }
     public void Roteer(int width, int height)
     {
@@ -52,7 +92,7 @@ public class TekenElementMaster
         }
     }
 
-    private bool geraakt(TekenElement te, Point p)
+    private bool Geraakt(TekenElement te, Point p)
     {
         switch (te.Tool)
         {
@@ -122,9 +162,8 @@ public class TekenElementMaster
 
             int deltaX = p.X - x;
             int deltaY = p.Y - y;
-            double afstand = Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
 
-            if (afstand <= 5)
+            if (deltaX * deltaX + deltaY * deltaY <= 25)
             {
                 return true;
             }

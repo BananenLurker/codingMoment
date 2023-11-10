@@ -1,17 +1,15 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 
 public class SchetsEditor : Form
 {
-    public List<SchetsWin> windows = new List<SchetsWin>();
     private MenuStrip menuStrip;
 
     public SchetsEditor()
     {   
-        this.ClientSize = new Size(800, 600);
+        this.ClientSize = new Size(800, 800);
         menuStrip = new MenuStrip();
         this.Controls.Add(menuStrip);
         this.maakFileMenu();
@@ -36,7 +34,7 @@ public class SchetsEditor : Form
     }
     private void about(object o, EventArgs ea)
     {   
-        MessageBox.Show ( "Schets versie 2.0\n(c) UU Informatica 2022"
+        MessageBox.Show ( "Schets++ versie 1.01\n(c) UU Informatica && DVDP Prod. 2023"
                         , "Over \"Schets\""
                         , MessageBoxButtons.OK
                         , MessageBoxIcon.Information
@@ -48,7 +46,6 @@ public class SchetsEditor : Form
         SchetsWin s = new SchetsWin();
         s.MdiParent = this;
         s.Wijzig = false;
-        windows.Add(s);
         s.Show();
     }
     private void afsluiten(object sender, EventArgs e)
@@ -124,10 +121,9 @@ public class SchetsEditor : Form
         SchetsWin s = new SchetsWin();
         s.Text = $"{naam}";
         s.MdiParent = this;
-        s.schetscontrol.schets.temSchrijven(tem);
+        s.schetscontrol.schets.TemSchrijven(tem);
         s.schetscontrol.OpnieuwTekenen(tem.TekenElementLijst);
         s.Wijzig = false;
-        windows.Add(s);
         s.Show();
     }
     public void Gewijzigd()

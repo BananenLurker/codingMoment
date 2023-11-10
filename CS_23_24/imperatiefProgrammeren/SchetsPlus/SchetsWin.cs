@@ -10,7 +10,7 @@ public class SchetsWin : Form
     public bool wijzig;
     MenuStrip menuStrip;
     public SchetsControl schetscontrol;
-    public ISchetsTool huidigeTool;
+    ISchetsTool huidigeTool;
     Panel paneel;
     bool vast;
 
@@ -193,9 +193,12 @@ public class SchetsWin : Form
                                 , new GumTool()
                                 , new OvaalTool()
                                 , new VolOvaalTool()
+                                , new BovenopTool()
+                                , new OnderopTool()
+                                , new MoveTool()
                                 };
 
-        this.ClientSize = new Size(700, 510);
+        this.ClientSize = new Size(700, 700);
         huidigeTool = deTools[0];
 
         schetscontrol = new SchetsControl();

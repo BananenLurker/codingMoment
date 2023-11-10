@@ -13,15 +13,11 @@ public class Schets
     {
         bitmap = new Bitmap(1, 1);
     }
-    public Schets(Bitmap bitmap)
-    {
-        this.bitmap = bitmap;
-    }
     public TekenElementMaster Ophalen
     {
         get { return tem; }
     }
-    public void temSchrijven(TekenElementMaster temaster)
+    public void TemSchrijven(TekenElementMaster temaster)
     {
         tem = temaster;
     }

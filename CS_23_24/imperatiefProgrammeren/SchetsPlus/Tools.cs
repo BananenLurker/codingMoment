@@ -180,7 +180,7 @@ public class PenTool : LijnTool
             g.DrawLine(MaakPen(kwast, 3), points[i - 1], points[i]);
     }
 }
-    public class GumTool : ISchetsTool
+public class GumTool : ISchetsTool
 {
     protected TekenElementMaster tem;
 
@@ -190,7 +190,7 @@ public class PenTool : LijnTool
 
     public override string ToString() { return "gum"; }
 
-    public void MuisVast(SchetsControl s, Point p)
+    public virtual void MuisVast(SchetsControl s, Point p)
     {
         tem = s.Ophalen;
         tem.VerwijderElement(p);
@@ -198,4 +198,63 @@ public class PenTool : LijnTool
         s.Invalidate();
         Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
     }
+}
+public class BovenopTool : GumTool
+{
+    public override string ToString() { return "hoog"; }
+
+    public override void MuisVast(SchetsControl s, Point p)
+    {
+        tem = s.Ophalen;
+        tem.ElementOmhoog(p);
+        s.Invalidate();
+        Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
+    }
+}
+public class OnderopTool : BovenopTool
+{
+    public override string ToString() { return "laag"; }
+
+    public override void MuisVast(SchetsControl s, Point p)
+    {
+        tem = s.Ophalen;
+        tem.ElementOmlaag(p);
+        s.Invalidate();
+        Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
+    }
+}
+public class MoveTool : ISchetsTool
+{
+    protected TekenElementMaster tem;
+    private TekenElement tempte;
+    private Point hier;
+
+    public void Letter(SchetsControl s, char c) { }
+    public virtual void MuisVast(SchetsControl s, Point p)
+    {
+        hier = p;
+        tem = s.Ophalen;
+        tempte = tem.ZoekDragElement(p);
+    }
+
+    public void MuisDrag(SchetsControl s, Point p)
+    {
+        if (tempte != null)
+        {
+            int offsetX = p.X - hier.X;
+            int offsetY = p.Y - hier.Y;
+
+            for (int i = 0; i < tempte.Punten.Count; i++)
+            {
+                tempte.Punten[i] = new Point(tempte.Punten[i].X + offsetX, tempte.Punten[i].Y + offsetY);
+            }
+
+            s.Invalidate();
+            Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
+            hier = p;
+        }
+    }
+    public void MuisLos(SchetsControl s, Point p) { }
+
+    public override string ToString() { return "move"; }
 }
