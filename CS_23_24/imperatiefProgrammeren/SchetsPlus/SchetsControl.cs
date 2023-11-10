@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -78,17 +77,6 @@ public class SchetsControl : UserControl
     {
         this.Invalidate();
         Schets.Teken(MaakBitmapGraphics(), tel);
-    }
-    public void Opslaan(object o, EventArgs ea)
-    {
-        foreach (TekenElement te in schets.Ophalen.TekenElementLijst)
-        {
-            Debug.WriteLine($"{te.Tool}");
-            Debug.WriteLine($"{te.Kleur}");
-            Debug.WriteLine($"{te.Punten[0]}");
-            Debug.WriteLine($"{te.Punten[1]}");
-            Debug.WriteLine($"----------------");
-        }
     }
     public void VeranderKleur(Object o, EventArgs ea)
     {

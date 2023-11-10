@@ -39,7 +39,7 @@ public class SchetsWin : Form
             DialogResult dr = MessageBox.Show("You have unsaved changes, save before quitting?", "Unsaved changes", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning);
             if (dr == DialogResult.Yes)
             {
-                opslaanAls(null, null);
+                Opslaan(null, null);
                 Wijzig = false;
             }
             else if (dr == DialogResult.No)
@@ -52,6 +52,7 @@ public class SchetsWin : Form
                 {
                     this.FormClosing += this.afsluiten;
                     fcea.Cancel = true;
+                    return;
                 }
             }
         }
@@ -65,8 +66,22 @@ public class SchetsWin : Form
     {
         afsluiten(this, null);
     }
-
-    private void opslaanAls(object obj, EventArgs ea)
+    private void Opslaan(object obj, EventArgs ea)
+    {
+        string fileNaam = this.Text;
+        if(fileNaam == "")
+        {
+            OpslaanAls(this, null);
+        }
+        else
+        {
+            if (fileNaam.EndsWith(".xml"))
+                SchrijfXml(fileNaam);
+            else
+                SaveBitmap(fileNaam, false);
+        }
+    }
+    private void OpslaanAls(object obj, EventArgs ea)
     {
         SaveFileDialog sfd = new SaveFileDialog();
         sfd.Filter = "xml files (.xml)|*.xml|png files (*.png)|*.png|jpg files(*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
@@ -78,67 +93,90 @@ public class SchetsWin : Form
             }
             else
             {
-                Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
-                schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
-                map.Save(sfd.FileName);
-
-                this.Text = $"{sfd.FileName}";
-                Wijzig = false;
+                bool controle = false;
                 if (obj == null)
-                {
-                    this.Close();
-                }
-                return;
+                    controle = true;
+                SaveBitmap(sfd.FileName, controle);
             }
         }
     }
     private void SchrijfXml(string naam)
     {
         XmlTextWriter tw = new XmlTextWriter(naam, null);
-
         tw.WriteStartDocument();
         tw.WriteStartElement("TekenElementen");
-        foreach (TekenElement te in schetscontrol.Ophalen.TekenElementLijst)
+        try
         {
-            tw.WriteStartElement("Element");
-            tw.WriteStartElement("Tool");
-            tw.WriteString($"{te.Tool}");
-            tw.WriteEndElement();
-            tw.WriteStartElement("Punten");
-            foreach (Point p in te.Punten)
+            foreach (TekenElement te in schetscontrol.Ophalen.TekenElementLijst)
             {
-                tw.WriteStartElement("Punt");
-                tw.WriteString($"{p.X},{p.Y}");
+                tw.WriteStartElement("Element");
+                tw.WriteStartElement("Tool");
+                tw.WriteString($"{te.Tool}");
+                tw.WriteEndElement();
+                tw.WriteStartElement("Punten");
+                foreach (Point p in te.Punten)
+                {
+                    tw.WriteStartElement("Punt");
+                    tw.WriteString($"{p.X},{p.Y}");
+                    tw.WriteEndElement();
+                }
+                tw.WriteEndElement();
+                tw.WriteStartElement("Kleur");
+                if (te.Kleur.ToString().Contains("="))
+                {
+                    string str = te.Kleur.ToString();
+                    str = Regex.Replace(str, "[^0-9=]", "");
+                    tw.WriteString($"{str.Remove(0, 1)}");
+                }
+                else
+                {
+                    string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
+                    tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
+                }
+                tw.WriteEndElement();
+                tw.WriteStartElement("Letters");
+                tw.WriteString($"{te.Letters}");
+                tw.WriteEndElement();
+                tw.WriteStartElement("Hoek");
+                tw.WriteString($"{te.Hoek}");
+                tw.WriteEndElement();
                 tw.WriteEndElement();
             }
             tw.WriteEndElement();
-            tw.WriteStartElement("Kleur");
-            if (te.Kleur.ToString().Contains("="))
-            {
-                string str = te.Kleur.ToString();
-                str = Regex.Replace(str, "[^0-9=]", "");
-                tw.WriteString($"{str.Remove(0, 1)}");
-            }
-            else
-            {
-                string kleurstring = te.Kleur.ToString().Split(" ")[1].Remove(0, 1);
-                tw.WriteString($"{kleurstring.Remove(kleurstring.Length - 1, 1)}");
-            }
-
-            tw.WriteEndElement();
-            tw.WriteStartElement("Letters");
-            tw.WriteString($"{te.Letters}");
-            tw.WriteEndElement();
-            tw.WriteStartElement("Hoek");
-            tw.WriteString($"{te.Hoek}");
-            tw.WriteEndElement();
-            tw.WriteEndElement();
+            tw.WriteEndDocument();
+            tw.Close();
+            Wijzig = false;
+            this.Text = $"{naam}";
+            OpslaanPopup();
         }
-        tw.WriteEndElement();
-        tw.WriteEndDocument();
-        tw.Close();
+        catch
+        {
+            MessageBox.Show("Error saving the file", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+    private void SaveBitmap(string naam, bool controle)
+    {
+        Bitmap map = new Bitmap(schetscontrol.Size.Width, schetscontrol.Size.Height);
+        schetscontrol.DrawToBitmap(map, new Rectangle(0, 0, schetscontrol.Size.Width, schetscontrol.Size.Height));
+        map.Save(naam);
+
+        this.Text = $"{naam}";
         Wijzig = false;
-        return;
+        if (controle)
+        {
+            this.Close();
+        }
+        OpslaanPopup();
+    }
+    private void OpslaanPopup()
+    {
+        NotifyIcon nf = new NotifyIcon();
+        nf.Icon = SystemIcons.Information;
+        nf.BalloonTipTitle = "Your Schets was saved!";
+        nf.BalloonTipText = " ";
+        nf.BalloonTipIcon = ToolTipIcon.Info;
+        nf.Visible = true;
+        nf.ShowBalloonTip(1000);
     }
     public bool Wijzig
     {
@@ -197,7 +235,8 @@ public class SchetsWin : Form
         ToolStripMenuItem menu = new ToolStripMenuItem("File");
         menu.MergeAction = MergeAction.MatchOnly;
         menu.DropDownItems.Add("Sluiten", null, this.SluitenButton_Click);
-        menu.DropDownItems.Add("Opslaan als...", null, this.opslaanAls);
+        menu.DropDownItems.Add("Opslaan", null, this.Opslaan);
+        menu.DropDownItems.Add("Opslaan als...", null, this.OpslaanAls);
         menuStrip.Items.Add(menu);
     }
 
@@ -263,7 +302,7 @@ public class SchetsWin : Form
         Button save = new Button(); paneel.Controls.Add(save);
         save.Text = "Save";
         save.Location = new Point(160, 0);
-        save.Click += schetscontrol.Opslaan;
+        save.Click += this.Opslaan;
 
         Button undo = new Button(); paneel.Controls.Add(undo);
         undo.Text = "Undo";

@@ -60,100 +60,69 @@ public class SchetsEditor : Form
         OpenFileDialog ofd = new OpenFileDialog();
         ofd.InitialDirectory = "c:\\";
         ofd.RestoreDirectory = true;
-        ofd.Filter = "xml files (*.xml)|*.xml|png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|bmp files (*.bmp)|*.bmp|All files (*.*)|*.*";
+        ofd.Filter = "SchetsPlus XML|*.xml";
 
         if(ofd.ShowDialog() == DialogResult.OK)
         {
-            this.lees(ofd.FileName);
-        }
-    }
-    private void lees(string naam)
-    {
-        if (naam.EndsWith("xml"))
-        {
-            OpenXml(naam);
-        }
-        else
-        {
-            SchetsWin sw = new SchetsWin();
-            Bitmap bmp = new Bitmap(naam);
-            PictureBox pb = new PictureBox();
-
-            pb.Image = bmp;
-            sw.MdiParent = this;
-            sw.Show();
+            if (ofd.FileName.EndsWith(".xml"))
+                this.OpenXml(ofd.FileName);
+            else
+                MessageBox.Show("File could not be read. Please make sure a SchetsPlus XML file was selected.", "Error: File not read", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
     private void OpenXml(string naam)
     {
         TekenElementMaster tem = new TekenElementMaster();
         TekenElement te = new TekenElement();
-        XmlTextReader tr = new XmlTextReader($"{naam}");
-        tr.Read();
-        while (tr.Read())
+        XmlTextReader xtr = new XmlTextReader($"{naam}");
+        try
         {
-            if (tr.IsStartElement())
+            xtr.Read();
+            while (xtr.Read())
             {
-                switch (tr.Name.ToString())
+                if (xtr.IsStartElement())
                 {
-                    case "Element":
-                        te = new TekenElement();
-                        tem.TekenElementLijst.Add(te);
-                        break;
-                    case "Tool":
-                        te.Tool = tr.ReadString();
-                        break;
-                    case "Punt":
-                        string[] xy = tr.ReadString().Split(",");
-                        int x = 0; int y = 0;
-                        try
-                        {
-                            x = int.Parse(xy[0]);
-                            y = int.Parse(xy[1]);
-                        }
-                        catch
-                        {
-                            MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        Point p = new Point(x, y);
-                        te.Punten.Add(p);
-                        break;
-                    case "Kleur":
-                        string color = tr.ReadString();
-                        if (color.Contains("="))
-                        {
-                            string[] ls = color.Split("=");
-                            try
+                    switch (xtr.Name.ToString())
+                    {
+                        case "Element":
+                            te = new TekenElement();
+                            tem.TekenElementLijst.Add(te);
+                            break;
+                        case "Tool":
+                            te.Tool = xtr.ReadString();
+                            break;
+                        case "Punt":
+                            string[] xy = xtr.ReadString().Split(",");
+                            int x = int.Parse(xy[0]);
+                            int y = int.Parse(xy[1]);
+                            Point p = new Point(x, y);
+                            te.Punten.Add(p);
+                            break;
+                        case "Kleur":
+                            string color = xtr.ReadString();
+                            if (color.Contains("="))
                             {
+                                string[] ls = color.Split("=");
                                 te.Kleur = Color.FromArgb(int.Parse(ls[0]), int.Parse(ls[1]), int.Parse(ls[2]), int.Parse(ls[3]));
                             }
-                            catch
-                            {
-                                MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                        else
-                        {
-                            te.Kleur = Color.FromName(color);
-                        }
-                        break;
-                    case "Letters":
-                        te.Letters = tr.ReadString();
-                        break;
-                    case "Hoek":
-                        try
-                        {
-                            te.Hoek = int.Parse(tr.ReadString());
-                        }
-                        catch
-                        {
-                            MessageBox.Show("This file appears to be corrupt. Image may not be accurate.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        break;
+                            else
+                                te.Kleur = Color.FromName(color);
+                            break;
+                        case "Letters":
+                            te.Letters = xtr.ReadString();
+                            break;
+                        case "Hoek":
+                            te.Hoek = int.Parse(xtr.ReadString());
+                            break;
+                    }
                 }
             }
         }
+        catch { MessageBox.Show("This file may be corrupt and can not be read correctly. Image may not be accurate. Please make sure you have selected a SchetsPlus XML file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+
+        xtr.Close();
         SchetsWin s = new SchetsWin();
+        s.Text = $"{naam}";
         s.MdiParent = this;
         s.schetscontrol.schets.temSchrijven(tem);
         s.schetscontrol.OpnieuwTekenen(tem.TekenElementLijst);

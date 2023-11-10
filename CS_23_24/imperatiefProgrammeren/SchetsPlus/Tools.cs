@@ -70,7 +70,7 @@ public abstract class TweepuntTool : StartpuntTool
                             );
     }
     public static Pen MaakPen(Brush b, int dikte)
-    {   Pen pen = new Pen(b, 3);
+    {   Pen pen = new Pen(b, dikte);
         pen.StartCap = LineCap.Round;
         pen.EndCap = LineCap.Round;
         return pen;
