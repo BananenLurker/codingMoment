@@ -231,7 +231,11 @@ public class BovenopTool : GumTool
         // Wederom dingen die zich in TekenElementMaster afspelen, zie
         // die file voor meer details
         tem = s.Ophalen;
-        tem.ElementOmhoog(p);
+        TekenElement te = tem.ElementSelectie(p);
+        if(te != null)
+        {
+            tem.TekenElementLijst.Add(te);
+        }
         s.Invalidate();
         Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
     }
@@ -244,7 +248,11 @@ public class OnderopTool : BovenopTool
     {
         // en nog een keer
         tem = s.Ophalen;
-        tem.ElementOmlaag(p);
+        TekenElement te = tem.ElementSelectie(p);
+        if(te != null)
+        {
+            tem.TekenElementLijst.Insert(0, te);
+        }
         s.Invalidate();
         Schets.Teken(s.MaakBitmapGraphics(), tem.TekenElementLijst);
     }

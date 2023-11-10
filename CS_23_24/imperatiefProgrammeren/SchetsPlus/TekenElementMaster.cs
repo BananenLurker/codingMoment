@@ -27,8 +27,9 @@ public class TekenElementMaster
             }
         }
     }
-    // Gaat van nieuw naar oud door de lijst heen en haalt het nieuwste TekenElement dat geraakt is naar het begin van de lijst.
-    public void ElementOmhoog(Point p)
+    // Gaat van nieuw naar oud door de lijst heen en geeft het nieuwste
+    // TekenElement dat geraakt is terug aan de vorige methode
+    public TekenElement ElementSelectie(Point p)
     {
         for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
         {
@@ -36,26 +37,11 @@ public class TekenElementMaster
             {
                 TekenElement temp = TekenElementLijst[i];
                 TekenElementLijst.RemoveAt(i);
-                TekenElementLijst.Add(temp);
                 Program.se.Gewijzigd();
-                return;
+                return temp;
             }
         }
-    }
-    // Gaat van nieuw naar oud door de lijst heen en haalt het nieuwste TekenElement dat geraakt is naar het einde van de lijst.
-    public void ElementOmlaag(Point p)
-    {
-        for (int i = TekenElementLijst.Count - 1; i >= 0; i--)
-        {
-            if (Geraakt(TekenElementLijst[i], p))
-            {
-                TekenElement temp = TekenElementLijst[i];
-                TekenElementLijst.RemoveAt(i);
-                TekenElementLijst.Insert(0, temp);
-                Program.se.Gewijzigd();
-                return;
-            }
-        }
+        return null;
     }
     // Zoekt het bovenste element dat gesleept wordt door de move tool
     public TekenElement ZoekDragElement(Point p)
