@@ -1,0 +1,167 @@
+:root {
+  --text: #051d0b;
+  --background: #effcf3;
+  --primary: #2fdb64;
+  --secondary: #86eadb;
+  --accent: #61dbe3;
+  --burger: #f09e51;
+}
+
+body {
+  background-color: var(--background);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--background);
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+.font-size--small {
+  font-size: 3rem;
+}
+
+.font-size--medium {
+  font-size: 5rem;
+}
+
+.font-size--large {
+  font-size: 8rem;
+}
+
+.position--sticky {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+a:hover nav {
+  cursor: pointer;
+  background-color: blue;
+}
+
+#header-main {
+  display: flex;
+  width: 100vw;
+  height: 10vh;
+  position: sticky;
+  background: green;
+}
+
+#header-main > img {
+  display: block;
+  height: 80%;
+  width: auto;
+  margin: auto;
+}
+
+#burger-menu {
+  display: flex;
+  flex-direction: column;
+  top: 2.5vh;
+  left: 3vw;
+  cursor: pointer;
+  width: max-content;
+}
+
+#burger-menu::before,
+#burger-menu::after,
+#burger-menu > #toggle {
+  content: "";
+  width: 6rem;
+  height: 0.8rem;
+  border-radius: 1rem;
+  margin: 0.3rem;
+  padding: 0;
+  background-color: black;
+  transition: all 0.2s ease-in-out;
+}
+
+#toggle {
+  appearance: none;
+  outline: none;
+  pointer-events: none;
+}
+
+#nav-sidebar {
+  width: 100vw;
+  max-height: 90vh;
+  transform: translate(-100%, 0%);
+  transition: transform 0.3s ease-in-out;
+  top: 10vh;
+  backdrop-filter: blur(5px);
+}
+
+#nav-sidebar__list {
+  list-style: none;
+}
+
+#nav-sidebar__list > li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22.5vh;
+  max-width: 60vw;
+  pointer-events: none;
+  background-color: var(--accent);
+  box-shadow: 0px 0px 3px black;
+}
+
+#nav-sidebar__list > li:hover {
+  background: linear-gradient(-90deg, blue, var(--accent));
+  background-size: 400%, 100%;
+  animation: moving-background, 3s, ease-in-out, infinite;
+}
+
+#burger-menu:has(#toggle:checked) + #nav-sidebar {
+  transform: translate(0, 0);
+}
+
+#burger-menu:has(#toggle:checked)::before {
+  transform: translate(0, 1.5rem) rotate(45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+#burger-menu:has(#toggle:checked)::after {
+  transform: translate(0, -1.5rem) rotate(-45deg);
+  transition: all 0.2s ease-in-out;
+}
+
+#burger-menu:has(#toggle:checked) > #toggle {
+  transform: scale(0);
+  transition: all 0.2s ease-in-out;
+}
+
+#header-main:has(> #burger-menu > #toggle:checked)
+  + #nav__vertical
+  > #nav-sidebar {
+  transform: translate(0, 0);
+}
+
+main {
+  background: var(--burger);
+  height: 300vh;
+}
+
+@keyframes moving-background {
+  0% {
+    background-position: 0%, 0%;
+  }
+  50% {
+    background-position: 100%, 0%;
+  }
+  100% {
+    background-position: 0%, 0%;
+  }
+}
