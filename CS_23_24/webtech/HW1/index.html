@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <header class="header position--sticky">
+  <header class="header--page position--sticky">
     <label class="header__burger-menu position--sticky">
       <input id="toggle" type="checkbox">
     </label>
@@ -24,7 +24,6 @@
     <aside class="nav__dropdown position--sticky">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
-        <li><a href="#new-releases">New releases</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
@@ -32,11 +31,11 @@
   </nav>
 
   <main class="main">
-    <article class="hero">
+    <header class="hero">
       <h2 class="font-size--large">Uitgeverij enzo</h2>
       <h3 class="font-size--medium">Check out the book <br> of the month below!</h3>
-      <button>Book of the month</button>
-    </article>
+      <a href="book-of-the-month.html"><button>Book of the month</button></a>
+    </header>
 
     <article id="new-releases">
       <header class="new-releases__header">
@@ -45,7 +44,7 @@
 
       <section class="new-releases__table-entry">
         <a href="https://www.debezigebij.nl/boek/vlerk/" target="_blank">
-          <img src="assets/covers/vlerk.webp" alt="">
+          <img class="new-releases__cover-image" src="assets/covers/vlerk.webp" alt="Cover of the book 'Vlerk'">
           <div class="new-releases__book-info">
             <h4 class="font-size--medium">Vlerk</h4>
             <p class="font-size--small">Idwer de la Parra</p>
@@ -55,7 +54,8 @@
 
       <section class="new-releases__table-entry">
         <a href="https://www.debezigebij.nl/boek/dans-dans-revolutie/" target="_blank">
-          <img src="assets/covers/dans_dans_revolutie.png" alt="">
+          <img class="new-releases__cover-image" src="assets/covers/dans_dans_revolutie.png"
+            alt="Cover of the book 'Dans dans revolutie'">
           <div class="new-releases__book-info">
             <h4 class="font-size--medium">Dans dans revolutie</h4>
             <p class="font-size--small">Lisa Weeda</p>
@@ -65,7 +65,8 @@
 
       <section class="new-releases__table-entry">
         <a href="https://www.debezigebij.nl/boek/dieven-van-het-licht/" target="_blank">
-          <img src="assets/covers/dieven_van_het_licht.webp" alt="">
+          <img class="new-releases__cover-image" src="assets/covers/dieven_van_het_licht.webp"
+            alt="Cover of the book 'Dieven van het licht'">
           <div class="new-releases__book-info">
             <h4 class="font-size--medium">Dieven van het Licht</h4>
             <p class="font-size--small">Philipp Blom</p>
@@ -75,7 +76,8 @@
 
       <section class="new-releases__table-entry">
         <a href="https://www.debezigebij.nl/boek/aan-de-rand-van-een-groot-bos/" target="_blank">
-          <img src="assets/covers/aan_de_rand_van_een_groot_bos.webp" alt="">
+          <img class="new-releases__cover-image" src="assets/covers/aan_de_rand_van_een_groot_bos.webp"
+            alt="Cover of the book 'Aan de rand van een groot bos'">
           <div class="new-releases__book-info">
             <h4 class="font-size--medium">Aan de rand van een groot bos</h4>
             <p class="font-size--small">Leo Vardiashvili</p>

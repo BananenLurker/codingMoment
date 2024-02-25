@@ -46,6 +46,15 @@ body {
   height: 10vh;
 }
 
+.section__header {
+  width: 100vw;
+  height: max-content;
+  background: var(--secondary);
+  color: var(--background);
+  padding: 3rem 0;
+  margin-top: 3rem;
+}
+
 /* General styling */
 a,
 a:visited,
@@ -84,7 +93,7 @@ a:hover > nav {
   background-color: blue;
 }
 
-.header {
+.header--page {
   display: flex;
   width: 100vw;
   height: 10vh;
@@ -93,8 +102,8 @@ a:hover > nav {
   z-index: 1;
 }
 
-.header > img,
-.header > a {
+.header--page > img,
+.header--page > a {
   height: 80%;
   width: auto;
   margin: auto;
@@ -156,7 +165,9 @@ a:hover > nav {
   transition: all 0.2s ease-in-out;
 }
 
-.header:has(> .header__burger-menu > #toggle:checked) + .nav > .nav__dropdown {
+.header--page:has(> .header__burger-menu > #toggle:checked)
+  + .nav
+  > .nav__dropdown {
   transform: translate(0, 0);
 }
 
@@ -235,14 +246,81 @@ a:hover > nav {
 .new-releases__table-entry {
   text-align: center;
   flex: 1 1 25rem;
-  min-height: 40vh;
+  min-height: 20vh;
   margin: 2rem 5rem;
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 20px 20px rgba(0, 0, 0, 0.1);
 }
 
-.new-releases__table-entry p,
-.new-releases__table-entry h4 {
+.new-releases__table-entry h4,
+.new-releases__table-entry p {
   padding: 1rem;
+}
+
+.new-releases__table-entry img {
+  max-width: 30vw;
+  transition: transform 0.2s ease-in-out;
+}
+
+.new-releases__table-entry:hover h4,
+.new-releases__table-entry:hover p {
+  text-decoration: underline var(--primary) 3px;
+}
+
+.new-releases__table-entry:hover img {
+  transform: translate(0, -1rem);
+}
+
+/* Book of the month page styling */
+
+.botm__header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: var(--secondary);
+  color: var(--background);
+  padding: 3rem 0;
+}
+
+.botm__cover-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.botm__cover-wrapper a {
+  display: flex;
+  justify-content: center;
+}
+
+.botm__cover-image,
+.botm__cover-text {
+  width: 80%;
+}
+
+.botm__cover-text {
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.botm__why {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.botm p {
+  margin: 3rem;
+}
+
+.botm__what-is-botm {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Footer styling */
