@@ -22,22 +22,84 @@
   </header>
   <nav class="nav">
     <aside class="nav__dropdown position--sticky">
-      <ul class="nav__list font-size--small">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Book of the week</a></li>
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="#new-releases">New releases</a></li>
         <li><a href="#">About</a></li>
         <li><a href="#">Contact</a></li>
       </ul>
     </aside>
   </nav>
 
-  <main class="section-main">
-    <section class="hero">
+  <main class="main">
+    <article class="hero">
       <h2 class="font-size--large">Uitgeverij enzo</h2>
       <h3 class="font-size--medium">Check out the book <br> of the month below!</h3>
       <button>Book of the month</button>
-    </section>
+    </article>
+
+    <article id="new-releases">
+      <header class="new-releases__header">
+        <h2 class="new-releases__title font-size--medium">New releases</h2>
+      </header>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/vlerk/" target="_blank">
+          <img src="assets/covers/vlerk.webp" alt="">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Vlerk</h4>
+            <p class="font-size--small">Idwer de la Parra</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/dans-dans-revolutie/" target="_blank">
+          <img src="assets/covers/dans_dans_revolutie.png" alt="">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Dans dans revolutie</h4>
+            <p class="font-size--small">Lisa Weeda</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/dieven-van-het-licht/" target="_blank">
+          <img src="assets/covers/dieven_van_het_licht.webp" alt="">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Dieven van het Licht</h4>
+            <p class="font-size--small">Philipp Blom</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/aan-de-rand-van-een-groot-bos/" target="_blank">
+          <img src="assets/covers/aan_de_rand_van_een_groot_bos.webp" alt="">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Aan de rand van een groot bos</h4>
+            <p class="font-size--small">Leo Vardiashvili</p>
+          </div>
+        </a>
+      </section>
+
+    </article>
   </main>
+
+  <footer class="footer">
+    <h3 class="footer__title font-size--medium">Uitgeverij &copy;</h3>
+    <div class="footer__logo--wrapper">
+      <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+        <img src="assets/youtube.svg" alt="The YouTube logo">
+      </a>
+      <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
+        <img src="assets/twitterx.svg" alt="The X (formerly known as Twitter) logo">
+      </a>
+      <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
+        <img src="assets/instagram.svg" alt="The Instagram logo">
+      </a>
+    </div>
+  </footer>
 </body>
 
 </html>
