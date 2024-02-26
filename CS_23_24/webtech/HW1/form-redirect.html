@@ -35,17 +35,22 @@
     </nav>
   </header>
 
-  <main class="main--contact">
-    <article class="contact-form-wrapper">
-      <header class="contact-form__header">
-        <h3 class="contact-form__title font-size--medium">Contact us</h3>
+  <main class="main--redirect">
+    <div class="spacing"></div>
+    <article class="redirect">
+      <header class="redirect__header">
+        <h2 class="redirect__title font-size--medium">Your form was succesfully not submitted!</h2>
       </header>
-      <form action="form-redirect.html" class="contact-form">
-        <input type="text" class="contact-form__fullname" placeholder="Name" required>
-        <input type="email" class="contact-form__email" placeholder="Email" required>
-        <textarea name="" cols="30" rows="5" class="contact-form__message" placeholder="Message" required></textarea>
-        <button type="submit" class="contact-form__submit-button">Submit</button>
-      </form>
+      <section class="redirect__text-wrapper">
+        <p class="font-size--small">As this is a static webpage, we have not received your form. Still, thanks for
+          trying to contact us. We think that's pretty cool. Try again when grading HW2, maybe this will have been
+          implemented! In the meantime, enjoy a healthy snack.
+        </p>
+        <a href="index.html">
+          <img src="assets/banana-dance.gif" alt="Dancing banana" class="redirect__banana">
+        </a>
+        <p><em>Click the banana to go back to the homepage</em></p>
+      </section>
     </article>
   </main>
 

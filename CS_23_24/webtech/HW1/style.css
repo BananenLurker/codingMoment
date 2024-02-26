@@ -21,6 +21,7 @@ html {
 
 body {
   font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
 }
 
 a,
@@ -32,12 +33,8 @@ a:active {
   pointer-events: auto;
 }
 
-h1 {
-  margin-left: 5rem;
-  font-size: 10rem;
-  left: 50%;
-  border: 1px solid black;
-  width: max-content;
+h3 {
+  text-decoration: underline var(--primary) 2px;
 }
 
 button {
@@ -47,17 +44,22 @@ button {
   color: var(--background);
   font-size: 1.8rem;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 button:hover {
   background: var(--primary);
 }
 
+textarea {
+  resize: none;
+}
+
 textarea::placeholder,
-input::placeholder {
+input::placeholder,
+textarea,
+input {
   font-family: "Poppins", sans-serif;
-  font-size: 2rem;
 }
 
 /* Styling classes */
@@ -71,6 +73,10 @@ input::placeholder {
 
 .font-size--large {
   font-size: 10vw;
+}
+
+.link--simple {
+  text-decoration: underline var(--primary) 2px;
 }
 
 .position--sticky {
@@ -105,7 +111,7 @@ a:hover > nav {
   height: 10vh;
   min-height: 6rem;
   background: var(--primary);
-  z-index: 1;
+  z-index: 2;
 }
 
 .header--page > img,
@@ -171,17 +177,15 @@ a:hover > nav {
   transition: all 0.2s ease-in-out;
 }
 
-.header--page:has(> .header__burger-menu > #toggle:checked)
-  + .nav--mobile
-  > .nav__dropdown {
+.header--page:has(#toggle:checked) > .nav--mobile {
   transform: translate(0, 0);
 }
 
 /* Nav sidebar styling */
-.nav__dropdown {
+.nav--mobile {
   width: 100vw;
   height: 90vh;
-  transform: translate(0, -100%);
+  transform: translate(0, -120%);
   transition: transform 0.3s ease-in-out;
   top: 10vh;
   backdrop-filter: blur(5px);
@@ -216,15 +220,18 @@ a:hover > nav {
 .hero {
   min-height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), transparent),
-    url("assets/hero-books.jpg");
-  background-repeat: no-repeat;
+    url("assets/hero-books.jpg") center no-repeat;
   background-size: cover;
-  background-position: center;
   color: var(--background);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.hero__button:hover {
+  box-shadow: 10px 10px 10px 5px #343c44aa;
+  transform: translate(-3px, -3px);
 }
 
 /* New releases section styling */
@@ -338,11 +345,15 @@ a:hover > nav {
 /* Contact page styling */
 
 .main--contact {
-  height: 100vh;
+  height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+    url("assets/hero-books.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .contact-form {
@@ -368,6 +379,7 @@ a:hover > nav {
 
 .contact-form input,
 .contact-form textarea {
+  padding: 1rem;
   margin-top: 1rem;
   width: 80%;
 }
@@ -408,7 +420,63 @@ a:hover > nav {
 }
 
 .footer__logo:hover {
-  animation: 0.4s ease-in-out emote forwards;
+  animation: 0.4s ease-in-out animation--scale-twist forwards;
+}
+
+/* About page styling */
+
+.about {
+  text-align: center;
+}
+
+.about__team-table {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.about__team-table tr {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  text-align: center;
+}
+
+.about__table-entry--text,
+.about__table-entry--header {
+  font-size: 3vw;
+  width: 30vw;
+}
+
+.about__table-entry--header {
+  margin-bottom: 1rem;
+}
+
+#about__table-entry--image-header,
+.about__table-entry--image {
+  min-width: 10rem;
+  width: 30vw;
+}
+
+.about__team-table th,
+.about__team-table td {
+  min-width: 20vw;
+}
+
+/* Form- redirect page styling */
+.redirect {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+  text-align: center;
+}
+
+.redirect__banana {
+  margin-top: 2rem;
 }
 
 /* Accessibility styling - tab-index*/
@@ -420,7 +488,7 @@ a:hover > nav {
 }
 
 /* Animations */
-@keyframes emote {
+@keyframes animation--scale-twist {
   25% {
     transform: scale(110%);
   }
@@ -439,7 +507,7 @@ a:hover > nav {
 
 /* Resolution based styling */
 @media only screen and (max-height: 500px) {
-  .nav__dropdown {
+  .nav--mobile {
     top: 6rem;
   }
 
@@ -468,6 +536,10 @@ a:hover > nav {
 
   .font-size--large {
     font-size: 10vh;
+  }
+
+  .nav--mobile {
+    display: none;
   }
 
   .nav__list {
@@ -509,5 +581,11 @@ a:hover > nav {
 
   .contact-form-wrapper {
     width: 60vw;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 2rem;
+    font-size: 2rem;
   }
 }
