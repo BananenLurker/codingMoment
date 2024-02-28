@@ -641,45 +641,8 @@ a:hover > nav {
     font-size: 1.8rem;
   }
 
-  .nav--mobile {
-    display: none;
-  }
-
-  .nav__list {
-    font-size: 3vh;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav__list > li {
-    width: 20vw;
-    text-align: center;
-    font-size: 2rem;
-    background: linear-gradient(var(--primary) 50%, var(--accent) 50%);
-    background-position: top;
-    background-size: 100% 200%;
-    box-shadow: 0 0 0 0;
-  }
-
-  .nav__list > li:hover {
-    color: black;
-    background-position: bottom;
-  }
-
-  .nav--desktop {
-    display: flex;
-  }
-
-  .page-header__burger-menu {
-    display: none;
-  }
-
-  .header--nav > img,
-  .header--nav > a {
-    width: max-content;
-    margin-left: 5%;
-    height: 80%;
+  .main--contact {
+    min-height: 100vh;
   }
 
   .contact-form-wrapper {
@@ -693,7 +656,6 @@ a:hover > nav {
   }
 
   .header--section {
-    font-size: 4rem;
     width: max-content;
     height: max-content;
     font-size: 7rem;
@@ -752,6 +714,31 @@ a:hover > nav {
     max-width: 100%;
   }
 
+  .botm__wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .botm__cover-wrapper {
+    width: 50vw;
+  }
+
+  .botm__cover-image {
+    max-width: 100%;
+  }
+
+  .botm__wrapper .header--section {
+    max-width: 49vw;
+    padding: 0;
+    margin: 0;
+  }
+
+  .botm__wrapper section {
+    max-width: 50vw;
+  }
+
   .review__text--credit {
     margin-bottom: 3rem;
   }
@@ -793,5 +780,47 @@ a:hover > nav {
 
   .about__team-table {
     display: table-row;
+  }
+}
+
+@media only screen and (min-width: 1300px) {
+  .page-header__burger-menu {
+    display: none;
+  }
+
+  .header--nav > img,
+  .header--nav > a {
+    width: max-content;
+    margin-left: 5%;
+    height: 80%;
+  }
+
+  .nav--mobile {
+    display: none;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav__list > li {
+    width: 13vw;
+    font-size: 2rem;
+    text-align: center;
+    background: linear-gradient(var(--primary) 50%, var(--accent) 50%);
+    background-position: top;
+    background-size: 100% 200%;
+    box-shadow: 0 0 0 0;
+  }
+
+  .nav__list > li:hover {
+    color: black;
+    background-position: bottom;
+  }
+
+  .nav--desktop {
+    display: flex;
   }
 }

@@ -2,27 +2,29 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/placeholder.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="assets/placeholder.png" />
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" />
   <title>Document</title>
 </head>
 
 <body>
   <header class="header--nav position--sticky">
     <label class="page-header__burger-menu position--sticky">
-      <input id="toggle" type="checkbox">
+      <input id="toggle" type="checkbox" />
     </label>
     <a href="index.html">
-      <img class="header__logo" src="assets/placeholder.png" alt="A placeholder photo of a default profile picture">
+      <img class="header__logo" src="assets/placeholder.png" alt="A placeholder photo of a default profile picture" />
     </a>
     <nav class="nav--desktop">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
         <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -30,7 +32,9 @@
     <nav class="nav--mobile position--sticky">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
         <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -41,53 +45,65 @@
     <div class="spacing"></div>
     <article class="botm__wrapper">
       <header class="botm__header header--page">
-        <h2 class="botm__title header--page">The book of the month: <br> a classic!</h2>
+        <h2 class="botm__title header--page">
+          The book of the month: <br />
+          a classic!
+        </h2>
       </header>
-      <div class="botm__cover-wrapper">
-        <a class="botm__cover-anchor" href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29" target="_blank">
-          <img class="botm__cover-image" src="assets/covers/The_Shining_1977.jpg"
-            alt="First edition cover of 'The Shining'">
-        </a>
-        <p class="botm__cover-text text--subscript"><em>
-            The first edition cover of 'The Shining' by Stephen
-            King, released in 1977. <br>
-            Source: <a class="link--simple"
-              href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29">Wikipedia.org</a>
-          </em></p>
-      </div>
       <section class="botm__why">
         <header class="botm__why__header">
           <h3 class="header--section">Why 'The Shining'?</h3>
         </header>
-        <p class="font-size--small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur tenetur
-          omnis quam! Praesentium
-          aperiam voluptate voluptates molestias. Tempore possimus qui ducimus adipisci, cupiditate culpa,
-          perspiciatis harum corrupti modi unde rem commodi voluptatem totam delectus explicabo odit excepturi
-          veritatis quas nemo quos, corporis molestiae? Autem optio suscipit quae dicta, doloribus ipsa
-          reiciendis iure error voluptas! Error, dolor nihil minima magnam nesciunt aliquid nisi natus illo,
-          dignissimos neque similique recusandae sint soluta quisquam perspiciatis, voluptate excepturi
-          numquam? Aspernatur perferendis vel sapiente eius consectetur odit beatae, officia hic sit, culpa
-          delectus nihil consequatur repellat velit, maiores harum magnam dignissimos nostrum facilis dolore.
-          Quos.
+        <p class="font-size--small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque ea
+          pariatur eum quidem labore maxime? Repellat iusto, illo asperiores
+          cupiditate blanditiis, odit numquam sapiente sequi dolor pariatur
+          at. Sequi natus corrupti architecto ipsum officiis fugiat quia ex
+          quae. Sed sunt fuga esse nulla! Consectetur consequatur, ipsam animi
+          delectus tempore molestiae facilis dolores deleniti fugit est
+          debitis eaque ipsum asperiores quo aliquam totam voluptatum odit!
+          Minima accusantium doloremque amet nihil numquam veniam maxime nemo
+          magnam quos dignissimos repellat voluptas eos ad odio, ut eligendi
+          sed nam. Perferendis a cupiditate, incidunt facere debitis
+          repellendus, animi illum harum aspernatur ipsa iure iste architecto.
 
-          <br><br>Find out more about the Author of the Month <a href="about-author.html"
-            class="link--animation">Stephen King</a>,
-          or read <a href="review.html" class="link--animation">our initial review of The Shining</a>.
+          <br /><br />Find out more about the Author of the Month
+          <a href="about-author.html" class="link--animation">Stephen King</a>, or read
+          <a href="review.html" class="link--animation">our initial review of The Shining</a>.
         </p>
       </section>
+      <aside class="botm__cover-wrapper">
+        <a class="botm__cover-anchor" href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29" target="_blank">
+          <img class="botm__cover-image" src="assets/covers/The_Shining_1977.jpg"
+            alt="First edition cover of 'The Shining'" />
+        </a>
+        <sub class="botm__cover-text text--subscript">
+          <em>
+            The first edition cover of 'The Shining' by Stephen King, released
+            in 1977. <br />
+            Source:
+            <a class="link--simple" href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29">Wikipedia.org</a>
+          </em>
+        </sub>
+      </aside>
       <section class="botm__what-is-botm">
         <header class="">
           <h3 class="header--section">What is The Book of the Month?</h3>
         </header>
-        <p class="font-size--small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sint id
-          tenetur at velit, fugit
-          veniam deserunt enim eum mollitia totam odio commodi delectus quae tempora fugiat sequi sapiente
-          autem doloremque porro quibusdam repellendus recusandae! Laudantium ipsa explicabo numquam, nulla
-          provident amet ducimus adipisci in ipsam eos velit. Doloremque perspiciatis nobis, illo quasi quos
-          ut odit accusantium culpa minima a, similique nihil pariatur reprehenderit, quod officia ratione
-          quis? Debitis ipsa quisquam libero! Non ipsum suscipit beatae dolorum dolores aliquam modi
-          perferendis magnam facilis? Perspiciatis quos dolorum dolor possimus, laboriosam eveniet corrupti,
-          libero iure consequuntur quam, velit minima unde veniam iste?</p>
+        <p class="font-size--small">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias
+          sint id tenetur at velit, fugit veniam deserunt enim eum mollitia
+          totam odio commodi delectus quae tempora fugiat sequi sapiente autem
+          doloremque porro quibusdam repellendus recusandae! Laudantium ipsa
+          explicabo numquam, nulla provident amet ducimus adipisci in ipsam
+          eos velit. Doloremque perspiciatis nobis, illo quasi quos ut odit
+          accusantium culpa minima a, similique nihil pariatur reprehenderit,
+          quod officia ratione quis? Debitis ipsa quisquam libero! Non ipsum
+          suscipit beatae dolorum dolores aliquam modi perferendis magnam
+          facilis? Perspiciatis quos dolorum dolor possimus, laboriosam
+          eveniet corrupti, libero iure consequuntur quam, velit minima unde
+          veniam iste?
+        </p>
       </section>
     </article>
   </main>
@@ -96,13 +112,13 @@
     <h3 class="footer__title font-size--medium">Uitgeverij &copy;</h3>
     <div class="footer__logo--wrapper">
       <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
-        <img src="assets/youtube.svg" alt="The YouTube logo">
+        <img src="assets/youtube.svg" alt="The YouTube logo" />
       </a>
       <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
-        <img src="assets/twitterx.svg" alt="The X (formerly known as Twitter) logo">
+        <img src="assets/twitterx.svg" alt="The X (formerly known as Twitter) logo" />
       </a>
       <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
-        <img src="assets/instagram.svg" alt="The Instagram logo">
+        <img src="assets/instagram.svg" alt="The Instagram logo" />
       </a>
     </div>
   </footer>

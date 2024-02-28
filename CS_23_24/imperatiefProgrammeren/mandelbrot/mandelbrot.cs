@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 // ----- Start of editable variables -----
 
-int mandelGrootte = 800;
+int mandelGrootte = 500;
 // For better looking image, use either 700 or 800, depending on your screen's resolution.
 // For ~2x faster computing, use 500.
 
