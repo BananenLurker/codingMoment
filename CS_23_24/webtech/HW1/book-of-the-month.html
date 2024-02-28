@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="assets/placeholder.png">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
-    rel="stylesheet" />
+    rel="stylesheet">
   <title>Document</title>
 </head>
 
 <body>
-  <header class="header--page position--sticky">
-    <label class="header__burger-menu position--sticky">
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
       <input id="toggle" type="checkbox">
     </label>
     <a href="index.html">
@@ -22,6 +22,7 @@
     <nav class="nav--desktop">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -29,6 +30,7 @@
     <nav class="nav--mobile position--sticky">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -37,19 +39,25 @@
 
   <main class="main--botm">
     <div class="spacing"></div>
-    <header class="botm__header">
-      <h2 class="botm__title font-size--medium">The book of the month: <br> a classic!</h2>
-    </header>
     <article class="botm__wrapper">
-      <section class="botm__cover-wrapper">
-        <a href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29" target="_blank"><img class="botm__cover-image"
-            src="assets/covers/The_Shining_1977.jpg" alt="First edition cover of 'The Shining'"></a>
-        <p class="botm__cover-text font-size--small"><em>The first edition cover of 'The Shining' by Stephen
-            King, released in 1977.</em></p>
-      </section>
+      <header class="botm__header header--page">
+        <h2 class="botm__title header--page">The book of the month: <br> a classic!</h2>
+      </header>
+      <div class="botm__cover-wrapper">
+        <a class="botm__cover-anchor" href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29" target="_blank">
+          <img class="botm__cover-image" src="assets/covers/The_Shining_1977.jpg"
+            alt="First edition cover of 'The Shining'">
+        </a>
+        <p class="botm__cover-text text--subscript"><em>
+            The first edition cover of 'The Shining' by Stephen
+            King, released in 1977. <br>
+            Source: <a class="link--simple"
+              href="https://en.wikipedia.org/wiki/The_Shining_%28novel%29">Wikipedia.org</a>
+          </em></p>
+      </div>
       <section class="botm__why">
-        <header class="botm__why__header section__header font-size--medium">
-          <h3>Why 'The Shining'?</h3>
+        <header class="botm__why__header">
+          <h3 class="header--section">Why 'The Shining'?</h3>
         </header>
         <p class="font-size--small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur tenetur
           omnis quam! Praesentium
@@ -60,11 +68,16 @@
           dignissimos neque similique recusandae sint soluta quisquam perspiciatis, voluptate excepturi
           numquam? Aspernatur perferendis vel sapiente eius consectetur odit beatae, officia hic sit, culpa
           delectus nihil consequatur repellat velit, maiores harum magnam dignissimos nostrum facilis dolore.
-          Quos.</p>
+          Quos.
+
+          <br><br>Find out more about the Author of the Month <a href="about-author.html"
+            class="link--animation">Stephen King</a>,
+          or read <a href="review.html" class="link--animation">our initial review of The Shining</a>.
+        </p>
       </section>
       <section class="botm__what-is-botm">
-        <header class="botm__what-is-botm__header section__header font-size--medium">
-          <h3>What is The Book of the Month?</h3>
+        <header class="">
+          <h3 class="header--section">What is The Book of the Month?</h3>
         </header>
         <p class="font-size--small">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias sint id
           tenetur at velit, fugit

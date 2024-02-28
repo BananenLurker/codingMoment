@@ -7,13 +7,13 @@
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="assets/placeholder.png">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
-    rel="stylesheet" />
+    rel="stylesheet">
   <title>Document</title>
 </head>
 
 <body>
-  <header class="header--page position--sticky">
-    <label class="header__burger-menu position--sticky">
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
       <input id="toggle" type="checkbox">
     </label>
     <a href="index.html">
@@ -22,6 +22,7 @@
     <nav class="nav--desktop">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -29,6 +30,7 @@
     <nav class="nav--mobile position--sticky">
       <ul class="nav__list font-size--medium">
         <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -39,12 +41,12 @@
     <header class="hero">
       <h1 class="font-size--large">Uitgeverij enzo</h1>
       <h2 class="font-size--medium">Check out the book <br> of the month below!</h2>
-      <a href="book-of-the-month.html"><button class="hero__button">Book of the month</button></a>
+      <a role="button" href="book-of-the-month.html">Book of the month</a>
     </header>
 
     <article id="new-releases">
       <header class="new-releases__header">
-        <h2 class="new-releases__title font-size--large">New releases</h2>
+        <h2 class="new-releases__title header--section font-size--large">New releases</h2>
       </header>
 
       <section class="new-releases__table-entry">

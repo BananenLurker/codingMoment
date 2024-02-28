@@ -1,4 +1,4 @@
-.header__burger-menu {
+.page-header__burger-menu {
     display: flex;
     flex-direction: column;
     top: 2.5vh;
@@ -7,9 +7,9 @@
     width: max-content;
   }
   
-  .header__burger-menu::before,
-  .header__burger-menu::after,
-  .header__burger-menu > #toggle {
+  .page-header__burger-menu::before,
+  .page-header__burger-menu::after,
+  .page-header__burger-menu > #toggle {
     content: "";
     width: 6rem;
     height: 0.8rem;
@@ -27,22 +27,22 @@
     pointer-events: none;
   }
   
-  .header__burger-menu:has(#toggle:checked)::before {
+  .page-header__burger-menu:has(#toggle:checked)::before {
     transform: translate(0, 1.5rem) rotate(45deg);
     transition: all 0.2s ease-in-out;
   }
   
-  .header__burger-menu:has(#toggle:checked)::after {
+  .page-header__burger-menu:has(#toggle:checked)::after {
     transform: translate(0, -1.5rem) rotate(-45deg);
     transition: all 0.2s ease-in-out;
   }
   
-  .header__burger-menu:has(#toggle:checked) > #toggle {
+  .page-header__burger-menu:has(#toggle:checked) > #toggle {
     transform: scale(0);
     transition: all 0.2s ease-in-out;
   }
   
-  .header:has(> .header__burger-menu > #toggle:checked) + .nav > .nav__dropdown {
+  .header:has(> .page-header__burger-menu > #toggle:checked) + .nav > .nav__dropdown {
     transform: translate(0, 0);
   }
   
