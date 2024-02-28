@@ -108,6 +108,7 @@ input {
 
 .header--section {
   font-size: 5vw;
+  text-align: center;
   width: 100vw;
   height: max-content;
   background: var(--accent);
@@ -130,7 +131,7 @@ input {
 
 .nav__current-page {
   background: var(--accent) !important;
-  color: black !important;
+  color: var(--background) !important;
 }
 
 /* Header styling */
@@ -155,7 +156,7 @@ a:hover > nav {
   margin: auto;
 }
 
-.header__logo {
+.page-header__logo {
   height: 100%;
 }
 
@@ -234,7 +235,6 @@ a:hover > nav {
 }
 
 .nav__list > li:hover {
-  color: black;
   background-position: left;
 }
 
@@ -336,6 +336,10 @@ a:hover > nav {
   align-items: center;
   justify-content: center;
   text-align: center;
+}
+
+.botm__credit {
+  margin-top: 1rem;
 }
 
 /* Contact page styling */
@@ -446,7 +450,7 @@ a:hover > nav {
   min-width: 20rem;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
   text-align: center;
 }
 
@@ -462,13 +466,8 @@ a:hover > nav {
 
 #about__table-entry--image-header,
 .about__table-entry--image {
-  min-width: 10rem;
   width: 30vw;
-}
-
-.about__team-table th,
-.about__team-table td {
-  min-width: 20vw;
+  min-width: 10rem;
 }
 
 .about__image-credit {
@@ -498,6 +497,13 @@ a:hover > nav {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.about-author__about-sk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -556,6 +562,14 @@ a:hover > nav {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+}
+
+.review__main-review {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .review__image-wrapper {
@@ -721,12 +735,13 @@ a:hover > nav {
   .botm__wrapper {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
   }
 
   .botm__cover-wrapper {
     width: 50vw;
+    max-width: 40rem;
   }
 
   .botm__cover-image {
@@ -780,24 +795,14 @@ a:hover > nav {
     text-align: center;
   }
 
-  .about__team-table thead,
-  .about__team-table tbody,
-  .about__team-table tr {
-    width: 100%;
-  }
-
   .about__table-entry--image,
   #about__table-entry--image-header {
-    width: 20vw;
+    max-width: 15vw;
   }
 
   .about__table-entry--text,
   .about__table-entry--header {
-    font-size: 4rem;
-  }
-
-  .about__team-table {
-    display: table-row;
+    font-size: 2rem;
   }
 }
 
@@ -834,11 +839,24 @@ a:hover > nav {
   }
 
   .nav__list > li:hover {
-    color: black;
     background-position: bottom;
   }
 
   .nav--desktop {
     display: flex;
+  }
+
+  .about-us__text {
+    max-width: 100rem;
+  }
+
+  .about__table-entry--text,
+  .about__table-entry--header {
+    font-size: 3rem;
+  }
+
+  td,
+  .about__table-entry--header {
+    min-width: 30vw !important;
   }
 }
