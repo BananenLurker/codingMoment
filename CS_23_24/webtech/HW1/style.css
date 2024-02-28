@@ -4,7 +4,7 @@
   --background: #effcf3;
   --primary: #131c27;
   --secondary: #343c44;
-  --accent: #4c6e97;
+  --accent: #395475;
   --burger: #f09e51;
 }
 
@@ -110,10 +110,9 @@ input {
   font-size: 5vw;
   width: 100vw;
   height: max-content;
-  background: var(--secondary);
+  background: var(--accent);
   color: var(--background);
   padding: 3rem 0;
-  margin-top: 3rem;
   margin-bottom: 1rem;
 }
 
@@ -127,6 +126,11 @@ input {
   background: var(--secondary);
   color: var(--background);
   padding: 3rem 0;
+}
+
+.nav__current-page {
+  background: var(--accent) !important;
+  color: black !important;
 }
 
 /* Header styling */
@@ -769,8 +773,22 @@ a:hover > nav {
     text-align: center;
   }
 
-  .about__team img {
-    max-width: 20vw;
+  .about__team-table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about__team-table thead,
+  .about__team-table tbody,
+  .about__team-table tr {
+    width: 100%;
+  }
+
+  .about__table-entry--image,
+  #about__table-entry--image-header {
+    width: 20vw;
   }
 
   .about__table-entry--text,
@@ -807,7 +825,7 @@ a:hover > nav {
 
   .nav__list > li {
     width: 13vw;
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-align: center;
     background: linear-gradient(var(--primary) 50%, var(--accent) 50%);
     background-position: top;
