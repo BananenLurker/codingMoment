@@ -129,11 +129,6 @@ textarea {
   padding: 3rem 0;
 }
 
-.nav__current-page {
-  background: var(--accent) !important;
-  color: var(--background) !important;
-}
-
 /* Page header styling */
 a:hover > nav {
   cursor: pointer;
@@ -232,6 +227,10 @@ a:hover > nav {
   background-position: right;
   background-size: 200% 100%;
   transition: 0.3s ease-in-out;
+}
+
+.nav__current-page {
+  background: var(--accent) !important;
 }
 
 .nav__list > li:hover {
