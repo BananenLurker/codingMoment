@@ -49,15 +49,15 @@ a[role="button"]:hover {
   background: var(--primary);
 }
 
-textarea {
-  resize: none;
+textarea,
+input,
+textarea::placeholder,
+input::placeholder {
+  font-family: "Poppins", sans-serif;
 }
 
-textarea::placeholder,
-input::placeholder,
-textarea,
-input {
-  font-family: "Poppins", sans-serif;
+textarea {
+  resize: none;
 }
 
 /* Styling classes */
@@ -134,7 +134,7 @@ input {
   color: var(--background) !important;
 }
 
-/* Header styling */
+/* Page header styling */
 a:hover > nav {
   cursor: pointer;
   background-color: blue;
@@ -160,7 +160,7 @@ a:hover > nav {
   height: 100%;
 }
 
-/* Burger menu */
+/* Burger menu - creation and styling */
 .page-header__burger-menu {
   display: flex;
   flex-direction: column;
@@ -296,7 +296,7 @@ a:hover > nav {
 
 .new-releases__table-entry:hover h4,
 .new-releases__table-entry:hover p {
-  text-decoration: underline var(--primary) 3px;
+  text-decoration: underline var(--primary) 2px;
 }
 
 .new-releases__table-entry:hover img {
@@ -631,9 +631,9 @@ a:hover > nav {
 }
 
 @media only screen and (min-width: 720px) {
-  .hero__button {
-    font-size: 2.4rem;
-    padding: 3rem 7rem;
+  section,
+  .section--text {
+    max-width: 100rem;
   }
 
   .footer__logo--twitterx,
@@ -659,18 +659,9 @@ a:hover > nav {
     font-size: 1.8rem;
   }
 
-  .main--contact {
-    min-height: 100vh;
-  }
-
-  .contact-form-wrapper {
-    width: 60vw;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    padding: 2rem;
-    font-size: 2rem;
+  .hero__button {
+    font-size: 2.4rem;
+    padding: 3rem 7rem;
   }
 
   .header--section {
@@ -691,25 +682,8 @@ a:hover > nav {
     padding: 3rem 0;
   }
 
-  .about {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
   .about-us__text {
     margin: 0rem 10rem;
-  }
-
-  .botm__cover-image {
-    max-width: 50rem;
-  }
-
-  section,
-  .section--text {
-    max-width: 100rem;
   }
 
   .review {
@@ -719,17 +693,30 @@ a:hover > nav {
     flex-wrap: wrap;
   }
 
-  .about-author__image-wrapper {
-    margin-top: 2rem;
-    width: auto;
-  }
-
   .review__image-wrapper {
     width: 30vw;
   }
 
   .review__image-wrapper img {
     max-width: 100%;
+  }
+
+  .review__text--credit {
+    margin-bottom: 3rem;
+  }
+
+  .main--contact {
+    min-height: 100vh;
+  }
+
+  .contact-form-wrapper {
+    width: 60vw;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 2rem;
+    font-size: 2rem;
   }
 
   .botm__wrapper {
@@ -758,8 +745,12 @@ a:hover > nav {
     max-width: 50vw;
   }
 
-  .review__text--credit {
-    margin-bottom: 3rem;
+  .about {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 
   .about .header--section {
@@ -803,6 +794,11 @@ a:hover > nav {
   .about__table-entry--text,
   .about__table-entry--header {
     font-size: 2rem;
+  }
+
+  .about-author__image-wrapper {
+    margin-top: 2rem;
+    width: auto;
   }
 }
 
