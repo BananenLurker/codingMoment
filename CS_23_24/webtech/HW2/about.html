@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
+      <input id="toggle" type="checkbox">
+    </label>
+    <a href="index.html">
+      <img class="page-header__logo" src="assets/homebrew-logo.png" alt="Homebrew Press logo">
+    </a>
+    <nav class="nav--desktop">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li class="nav__current-page"><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="nav--mobile position--sticky">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li class="nav__current-page"><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main--about">
+    <div class="spacing"></div>
+    <article class="about">
+      <header class="about__header--about-us">
+        <h3 class="about__title--about-us header--page">About us</h3>
+      </header>
+      <section class="about__about-us">
+        <header class="about__header--who-are-we">
+          <h3 class="about__header--who-are-we header--section">
+            Who are we?
+          </h3>
+        </header>
+        <p class="about-us__text font-size--small">
+          We are Homebrew Press, a publishing house based in The Netherlands, forged by our founders
+          Daan van der Putten, Simon de Jong and Yoeri Hoebe. We believe in
+          the power that books hold to see new perspectives, learn about the
+          world around us and offer us an escape of our everyday lives. We are
+          lucky to have a team around us who share the same passions and hold
+          the same believes we do. More about them can be found below! If you
+          have any questions, please feel free to
+          <a href="contact.html" class="link--animation">contact us</a>!
+        </p>
+      </section>
+      <section class="about__team">
+        <header class="about__header--team">
+          <h3 class="about__title--team header--section">Meet the team</h3>
+        </header>
+        <table class="about__team-table">
+          <thead>
+            <tr>
+              <th id="about__table-entry--image-header" class="about__table-entry--header">
+                Image
+              </th>
+              <th class="about__table-entry--header">Name</th>
+              <th class="about__table-entry--header">Role</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/van-der-putten-daan.jpg"
+                  alt="Daan van der Putten">
+              </td>
+              <td class="about__table-entry--text">Daan van der Putten</td>
+              <td class="about__table-entry--text">Founder</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/hoebe-yoeri.jpg" alt="Yoeri Hoebe">
+              </td>
+              <td class="about__table-entry--text">Yoeri Hoebe</td>
+              <td class="about__table-entry--text">Founder</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/de-jong-simon.jpg" alt="Simon de Jong">
+              </td>
+              <td class="about__table-entry--text">Simon de Jong</td>
+              <td class="about__table-entry--text">Founder</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/vincent-rolph.jpg" alt="Rolph Vincent">
+              </td>
+              <td class="about__table-entry--text">Rolph Vincent</td>
+              <td class="about__table-entry--text">CFO / CCO</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/gore-albert.jpg" alt="Albert Gore">
+              </td>
+              <td class="about__table-entry--text">Albert Gore</td>
+              <td class="about__table-entry--text">Reviewer</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/carlisle-dina.jpg" alt="Dina Carlisle">
+              </td>
+              <td class="about__table-entry--text">Dina Carlisle</td>
+              <td class="about__table-entry--text">Reviewer</td>
+            </tr>
+            <tr>
+              <td>
+                <img class="about__table-entry--image" src="assets/team-images/marnie-lexi.jpg" alt="Lexi Marnie">
+              </td>
+              <td class="about__table-entry--text">Lexi Marnie</td>
+              <td class="about__table-entry--text">Writer</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="about__image-credit text--subscript">
+          <em>The last 4 images were generated using
+            <a class="link--simple" href="https://thispersondoesnotexist.com/">thispersondoesnotexist.com</a>.
+          </em>
+        </p>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
+    <div class="footer__logo--wrapper">
+      <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+        <img src="assets/youtube.svg" alt="YouTube logo">
+      </a>
+      <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
+        <img src="assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
+      </a>
+      <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
+        <img src="assets/instagram.svg" alt="Instagram logo">
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>

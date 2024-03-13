@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
+      <input id="toggle" type="checkbox">
+    </label>
+    <a href="index.html">
+      <img class="page-header__logo" src="assets/homebrew-logo.png" alt="Homebrew Press logo">
+    </a>
+    <nav class="nav--desktop">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__current-page"><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="nav--mobile position--sticky">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav__current-page"><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main--contact">
+    <div class="spacing"></div>
+    <article class="contact-form-wrapper">
+      <header class="contact-form__header">
+        <h3 class="contact-form__title font-size--medium">Contact us</h3>
+      </header>
+      <form action="form-redirect.html" class="contact-form">
+        <input type="text" class="contact-form__fullname" placeholder="Name" required>
+        <input type="email" class="contact-form__email" placeholder="Email" required>
+        <textarea name="message" cols="30" rows="5" class="contact-form__message" placeholder="Message"
+          required></textarea>
+        <button type="submit" class="contact-form__submit-button">
+          Submit
+        </button>
+      </form>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
+    <div class="footer__logo--wrapper">
+      <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+        <img src="assets/youtube.svg" alt="YouTube logo">
+      </a>
+      <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
+        <img src="assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
+      </a>
+      <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
+        <img src="assets/instagram.svg" alt="Instagram logo">
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>

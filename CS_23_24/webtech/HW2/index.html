@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+  <title>Document</title>
+</head>
+
+<body>
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
+      <input id="toggle" type="checkbox">
+    </label>
+    <a href="index.html">
+      <img class="page-header__logo" src="assets/homebrew-logo.png" alt="Homebrew Press logo">
+    </a>
+    <nav class="nav--desktop">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="nav--mobile position--sticky">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month.html">Book of the month</a></li>
+        <li><a href="review.html">Review</a></li>
+        <li><a href="about-author.html">Stephen King</a></li>
+        <li><a href="king-books.html">Other books</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main--index">
+    <header class="hero">
+      <h1 class="font-size--large">Homebrew Press</h1>
+      <h2 class="font-size--medium">
+        Check out the book <br>
+        of the month below!
+      </h2>
+      <a role="button" class="hero__button" href="book-of-the-month.html">Book of the month</a>
+    </header>
+
+    <article id="new-releases">
+      <header class="new-releases__header">
+        <h3 class="new-releases__title header--section font-size--large">
+          New releases
+        </h3>
+      </header>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/vlerk/" target="_blank">
+          <img class="new-releases__cover-image" src="assets/covers/vlerk.webp" alt="Cover of the book 'Vlerk'">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Vlerk</h4>
+            <p class="font-size--small">Idwer de la Parra</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/dans-dans-revolutie/" target="_blank">
+          <img class="new-releases__cover-image" src="assets/covers/dans_dans_revolutie.png"
+            alt="Cover of the book 'Dans dans revolutie'">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Dans dans revolutie</h4>
+            <p class="font-size--small">Lisa Weeda</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/dieven-van-het-licht/" target="_blank">
+          <img class="new-releases__cover-image" src="assets/covers/dieven_van_het_licht.webp"
+            alt="Cover of the book 'Dieven van het licht'">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Dieven van het Licht</h4>
+            <p class="font-size--small">Philipp Blom</p>
+          </div>
+        </a>
+      </section>
+
+      <section class="new-releases__table-entry">
+        <a href="https://www.debezigebij.nl/boek/aan-de-rand-van-een-groot-bos/" target="_blank">
+          <img class="new-releases__cover-image" src="assets/covers/aan_de_rand_van_een_groot_bos.webp"
+            alt="Cover of the book 'Aan de rand van een groot bos'">
+          <div class="new-releases__book-info">
+            <h4 class="font-size--medium">Aan de rand van een groot bos</h4>
+            <p class="font-size--small">Leo Vardiashvili</p>
+          </div>
+        </a>
+      </section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
+    <div class="footer__logo--wrapper">
+      <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+        <img src="assets/youtube.svg" alt="YouTube logo">
+      </a>
+      <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
+        <img src="assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
+      </a>
+      <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
+        <img src="assets/instagram.svg" alt="Instagram logo">
+      </a>
+    </div>
+  </footer>
+</body>
+
+</html>
