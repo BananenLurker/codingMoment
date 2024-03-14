@@ -56,6 +56,10 @@ input::placeholder {
   font-family: "Poppins", sans-serif;
 }
 
+figcaption {
+  font-style: italic;
+}
+
 textarea {
   resize: none;
 }
@@ -283,7 +287,7 @@ a:hover > nav {
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 20px 20px rgba(0, 0, 0, 0.1);
 }
 
-.new-releases__table-entry h4,
+.new-releases__table-entry h2,
 .new-releases__table-entry p {
   padding: 1rem;
 }
@@ -293,7 +297,7 @@ a:hover > nav {
   transition: transform 0.2s ease-in-out;
 }
 
-.new-releases__table-entry:hover h4,
+.new-releases__table-entry:hover h2,
 .new-releases__table-entry:hover p {
   text-decoration: underline var(--primary) 2px;
 }
@@ -541,7 +545,7 @@ a:hover > nav {
   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1), 0px 20px 20px rgba(0, 0, 0, 0.1);
 }
 
-.king-books__table-entry h4,
+.king-books__table-entry h2,
 .king-books__table-entry p {
   padding: 1rem;
 }
@@ -685,7 +689,7 @@ a:hover > nav {
   .header--section {
     width: max-content;
     height: max-content;
-    font-size: 7rem;
+    font-size: 3rem;
     background: var(--background);
     color: var(--primary);
     padding: 3rem 0;
@@ -696,7 +700,7 @@ a:hover > nav {
   .header--page {
     width: 100vw;
     text-decoration: none;
-    font-size: 5rem;
+    font-size: 4rem;
     padding: 3rem 0;
   }
 
