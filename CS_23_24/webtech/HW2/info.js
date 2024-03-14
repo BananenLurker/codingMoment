@@ -1,5 +1,9 @@
 // Creating classes
 
+// PLEASE NOTE: private variables are used in this context for information
+// that is non-volatile and should never be changed during
+// the lifespan of the object, such as (relative) links.
+ 
 class Person{
   constructor(name, yearOfBirth){
     this.name = name;
@@ -9,16 +13,21 @@ class Person{
 
 class Author extends Person{
   #wikipedia
-  constructor(name, yearOfBirth, writtenTitles, personWikipedia){
+  #portrait
+  constructor(name, yearOfBirth, writtenTitles, personWikipedia, portrait){
     super(name, yearOfBirth);
     this.writtenTitles = writtenTitles;
     this.#wikipedia = personWikipedia;
+    this.#portrait = portrait;
   }
   set titles(titles){
     this.writtenTitles = titles;
   }
   get wikipedia(){
     return this.#wikipedia;
+  }
+  get portrait(){
+    return this.#portrait;
   }
 }
 
@@ -65,22 +74,36 @@ class Publisher extends Company{
 // Initiating objects
 
 const stephenKingBooks = ["It", "The Shining", "The Green Mile", "Carrie", "Salem's Lot"];
-const stephenKing = new Author("Stephen King", 1947, stephenKingBooks, "https://en.wikipedia.org/wiki/Stephen_King");
+const stephenKing = new Author("Stephen King", 1947, stephenKingBooks, "https://en.wikipedia.org/wiki/Stephen_King", "assets/stephen-king.jpg");
 
 const doubledayTitles = [];
 const doubleday = new Publisher("Doubleday", "https://en.wikipedia.org/wiki/Doubleday_(publisher)", doubledayTitles);
 
-const theShiningPlot = "";
+const theShiningPlot = "Dikke vette huts";
 const theShining = new Book(stephenKing, 1977, "The Shining", "Horror", doubleday, "assets/covers/The_Shining_1977.jpg", theShiningPlot);
+
+// Constants used in generating page content
+
+const d = document;
+const dq = (x) => document.querySelector(x);
+const dc = (x) => document.createElement(x);
+
+const body = dq("body");
+const main = dq(".main--info");
+const pageHeader = dq(".header--nav");
+const navDesktop = dq(".nav--desktop");
+const navMobile = dq(".nav--mobile");
+const authorCard = dq(".book-info__card--author");
+
+const hrefs = ["contact", "about", "king-books", "about-author", "review", "book-of-the-month"];
+const pageNames = ["Contact", "About", "Other books", "Stephen King", "Review", "Book of the month"];
 
 // Functions used in generating page content
 
 function appendNavLi(x){
-  const hrefs = ["book-of-the-month", "review", "about-author", "king-books", "about", "contact"];
-  const pageNames = ["Book of the month", "Review", "Stephen King", "Other books", "About", "Contact"]
   let navUl = dc("ul");
   navUl.classList.add("nav__list", "font-size--medium");
-  for(i = 0; i < hrefs.length; i++){
+  for(i = hrefs.length; i--;){
     let navLi = dc("li");
     let navA = dc("a");
     navA.textContent = pageNames[i];
@@ -91,15 +114,10 @@ function appendNavLi(x){
   x.appendChild(navUl);
 }
 
-// Constants used in generating page content
-
-const d = document;
-const dq = (x) => document.querySelector(x);
-const dc = (x) => document.createElement(x);
-
-const pageHeader = dq(".header--nav");
-const navDesktop = dq(".nav--desktop");
-const navMobile = dq(".nav--mobile");
+function isInViewport(x){
+  var t = x.getBoundingClientRect();
+  return(t.top >= 100 && t.bottom < window.innerHeight);
+}
 
 // Generating header with nav
 
@@ -129,27 +147,80 @@ appendNavLi(navMobile);
 
 // Generating main content
 
-const testing = dq("#testing").children[0];
-testing.src = theShining.cover;
+const infoArticle = dq(".book-info");
+const infoHeader = dq(".book-info__header");
+
+const infoHeaderTitle = dc("h1");
+infoHeaderTitle.textContent = "Info about The Book of the Month";
+
+infoHeader.appendChild(infoHeaderTitle);
+
+const bookInfoTitle = dc("h2");
+bookInfoTitle.textContent = theShining.title;
+bookInfoTitle.classList.add("font-size--large");
+dq(".book-info__card--title").appendChild(bookInfoTitle);
+
+dq(".book-info__cover-image").src = theShining.cover;
+dq(".book-info__cover-caption").textContent = "Cover of The Shining";
+
+const genreText = dc("h2");
+genreText.textContent = "Genre: " + theShining.genre;
+genreText.classList.add("font-size--medium");
+dq(".book-info__card--genre").appendChild(genreText);
+
+const yearText = dc("h2");
+yearText.textContent = "Year of publication: " + theShining.yearOfCreation;
+yearText.classList.add("font-size--medium");
+dq(".book-info__card--year").appendChild(yearText);
+
+dq(".book-info__author-image").src = stephenKing.portrait;
+dq(".book-info__author-caption").textContent = stephenKing.name;
+
+const publisherText = dc("h2");
+publisherText.textContent = "Publisher: " + theShining.publisher.name;
+publisherText.classList.add("font-size--medium", "link--simple");
+dq(".book-info__card--publisher").appendChild(publisherText);
+
+const plotHeader = dc("h2");
+plotHeader.textContent = "Summary of the plot:";
+plotHeader.classList.add("book-info__card-plot-header", "font-size--medium");
+const plotText = dc("p");
+plotText.textContent = theShining.plot;
+plotText.classList.add("font-size--small");
+
+dq(".book-info__card--plot").appendChild(plotHeader);
+dq(".book-info__card--plot").appendChild(plotText);
 
 // Adding event listeners
 
-dq("body").addEventListener("click", (e) =>{
-  console.log("body geklikt")
-})
+const tooltip = d.querySelectorAll(".tooltip");
 
-dq("button").addEventListener("click", (e) =>{
-  console.log("button geklikt")
-})
+d.addEventListener("mousemove", showToolTip, false);
 
-testing.addEventListener("click", (e) =>{
-  console.log("plaatje geklikt")
-})
-
-window.addEventListener("scroll", (e) =>{
-  const t = document.body.getBoundingClientRect().top;
-  console.log(t);
-  if(t < -500){
-    testing.classList.add("animation--loading")
+function showToolTip(e){
+  var mouseX = e.clientX - authorCard.getBoundingClientRect().left;
+  var mouseY = e.clientY - authorCard.getBoundingClientRect().top
+  for (var i=tooltip.length; i--;) {
+    if(mouseX > window.innerWidth - 200){
+      tooltip[i].style.left = mouseX - 200 + "px";
+      tooltip[i].style.top = mouseY + "px";
+    }
+    else{
+      tooltip[i].style.left = mouseX + "px";
+      tooltip[i].style.top = mouseY + "px";
+    }
   }
-})
+}
+
+window.addEventListener("scroll", loadOnScroll);
+
+function loadOnScroll(){
+  const cards = d.querySelectorAll(".book-info__card");
+  for(i = cards.length; i--;){
+    if(isInViewport(cards[i])){
+      cards[i].classList.add("animation--generation");
+    }
+  }
+}
+
+loadOnScroll();
