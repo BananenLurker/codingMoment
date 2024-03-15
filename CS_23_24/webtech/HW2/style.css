@@ -614,6 +614,7 @@ a:hover > nav {
 
 .book-info__card img {
   max-width: 80%;
+  max-height: 500px;
   padding: 1rem 0;
 }
 
@@ -625,18 +626,21 @@ a:hover > nav {
   min-width: 100%;
 }
 
-.book-info__card--author:hover .tooltip {
+.book-info__card--author:hover + .book-info__author-tooltip,
+.book-info__author-tooltip:hover,
+.book-info__card--publisher:hover ~ .book-info__publisher-tooltip,
+.book-info__publisher-tooltip:hover {
   display: block;
 }
 
-.tooltip {
+.book-info__author-tooltip,
+.book-info__publisher-tooltip {
   position: absolute;
   display: none;
   background: #c8c8c8;
   position: absolute;
   z-index: 1000;
-  width: 200px;
-  height: 100px;
+  width: 300px;
 }
 
 /* Accessibility styling - tab-index*/

@@ -20,14 +20,17 @@ class Author extends Person{
     this.#wikipedia = personWikipedia;
     this.#portrait = portrait;
   }
-  set titles(titles){
-    this.writtenTitles = titles;
-  }
   get wikipedia(){
-    return this.#wikipedia;
+    if(this.#wikipedia.includes("wikipedia"))
+      return this.#wikipedia;
+    else
+      return "undefined";
   }
   get portrait(){
-    return this.#portrait;
+    if(this.#portrait.includes("assets"))
+      return this.#portrait;
+    else
+      return "assets/img-not-found.jpg";
   }
 }
 
@@ -49,7 +52,10 @@ class Book extends CreativeWork{
     this.#cover = cover;
   }
   get cover(){
-    return this.#cover;
+    if(this.#cover && this.#cover.includes("assets"))
+      return this.#cover;
+    else
+      return "assets/img-not-found.jpg";
   }
 }
 
@@ -60,7 +66,10 @@ class Company{
     this.#wikipedia = companyWikipedia;
   }
   get wikipedia(){
-    return this.#wikipedia;
+    if(this.#wikipedia.includes("wikipedia"))
+      return this.#wikipedia;
+    else
+      return "undefined";
   }
 }
 
@@ -76,10 +85,10 @@ class Publisher extends Company{
 const stephenKingBooks = ["It", "The Shining", "The Green Mile", "Carrie", "Salem's Lot"];
 const stephenKing = new Author("Stephen King", 1947, stephenKingBooks, "https://en.wikipedia.org/wiki/Stephen_King", "assets/stephen-king.jpg");
 
-const doubledayTitles = [];
+const doubledayTitles = ["The Shining", "The Da Vinci Code", "Clockwork", "Bill - the Galactic Hero", "A Concise Chinese-English Dictionary for Lovers"];
 const doubleday = new Publisher("Doubleday", "https://en.wikipedia.org/wiki/Doubleday_(publisher)", doubledayTitles);
 
-const theShiningPlot = "Dikke vette huts";
+const theShiningPlot = "The Shining follows Jack Torrance, a struggling writer and recovering alcoholic, who takes a job as the winter caretaker of the isolated Overlook Hotel in Colorado. He moves in with his wife, Wendy, and their young son, Danny, who possesses psychic abilities known as the shining. As the winter sets in, the hotel's malevolent spirits begin to manipulate Jack's weaknesses, driving him to madness and violence. Danny's psychic abilities allow him to see the hotel's horrific past and communicate with the hotel's cook, Dick Hallorann, who shares the same gift. As Jack descends into insanity, Danny and Wendy must confront the supernatural forces within the hotel to survive. The novel explores themes of addiction, family dynamics, and the nature of evil, culminating in a terrifying showdown between the Torrance family and the malevolent forces of the Overlook Hotel.";
 const theShining = new Book(stephenKing, 1977, "The Shining", "Horror", doubleday, "assets/covers/The_Shining_1977.jpg", theShiningPlot);
 
 // Constants used in generating page content
@@ -87,6 +96,7 @@ const theShining = new Book(stephenKing, 1977, "The Shining", "Horror", doubleda
 const d = document;
 const dq = (x) => document.querySelector(x);
 const dc = (x) => document.createElement(x);
+const dt = (x) => document.createTextNode(x);
 
 const body = dq("body");
 const main = dq(".main--info");
@@ -94,6 +104,7 @@ const pageHeader = dq(".header--nav");
 const navDesktop = dq(".nav--desktop");
 const navMobile = dq(".nav--mobile");
 const authorCard = dq(".book-info__card--author");
+const publisherCard = dq(".book-info__card--publisher");
 
 const hrefs = ["contact", "about", "king-books", "about-author", "review", "book-of-the-month"];
 const pageNames = ["Contact", "About", "Other books", "Stephen King", "Review", "Book of the month"];
@@ -106,7 +117,7 @@ function appendNavLi(x){
   for(i = hrefs.length; i--;){
     let navLi = dc("li");
     let navA = dc("a");
-    navA.textContent = pageNames[i];
+    navA.appendChild(dt(pageNames[i]));
     navA.href = hrefs[i] + ".html";
     navLi.appendChild(navA);
     navUl.appendChild(navLi);
@@ -114,9 +125,65 @@ function appendNavLi(x){
   x.appendChild(navUl);
 }
 
-function isInViewport(x){
-  var t = x.getBoundingClientRect();
-  return(t.top >= 100 && t.bottom < window.innerHeight);
+function generateTooltipAttributes(tooltip, entity){
+  const attributes = Object.values(entity).concat(Object.values(Object.getPrototypeOf(entity))).concat(entity.wikipedia);
+  const attributeNames = Object.getOwnPropertyNames(entity).concat(Object.values(Object.getPrototypeOf(entity))).concat("wikipedia");
+
+  if(attributes.length !== attributeNames.length){
+    throw new Error("Tooltip entity does not contain all required attributes for a tooltip!")
+  }
+  if(entity.wikipedia){
+    attributes.concat(entity.wikipedia);
+    attributeNames.concat("wikipedia");
+  }
+
+  addToolTipInfo(tooltip, attributes, attributeNames)
+}
+
+function addToolTipInfo(tooltip, attributes, attributeNames){
+  for(i = 0; i < attributes.length; i++){
+    if(attributes[i] == "constructor" || attributes[i] == "portrait"){ break; }
+    else{
+      if(i !== 0){
+        tooltip.appendChild(dc("br"));
+      }
+
+      var attributeTextWrapper = dc("span");
+      attributeTextWrapper.classList.add("font-size--small");
+
+      var attributeNameTextWrapper = dc("span");
+      attributeNameTextWrapper.style.fontWeight = "bold";
+
+      switch(attributeNames[i]){
+        case("name"):
+          var attributeNameText = dt("Name: ")
+          break;
+        case("yearOfBirth"):
+          var attributeNameText = dt("Year of birth: ");
+          break;
+        case("writtenTitles"):
+          var attributeNameText = dt("Written titles: ");
+          attributes[i] = attributes[i].map(i => " " + i);
+          break;
+        case("wikipedia"):
+          var attributeNameText = dt("Wikipedia: ");
+          break;
+        case("publishedTitles"):
+        var attributeNameText = dt("Published titles: ");
+        attributes[i] = attributes[i].map(i => " " + i);
+        default:
+          break;
+      }
+
+      attributeNameTextWrapper.appendChild(attributeNameText);
+      attributeTextWrapper.appendChild(attributeNameTextWrapper);
+
+      var attributeText = dt(attributes[i]);
+      attributeTextWrapper.appendChild(attributeText);
+      
+      tooltip.appendChild(attributeTextWrapper);
+    }
+  }
 }
 
 // Generating header with nav
@@ -151,76 +218,83 @@ const infoArticle = dq(".book-info");
 const infoHeader = dq(".book-info__header");
 
 const infoHeaderTitle = dc("h1");
-infoHeaderTitle.textContent = "Info about The Book of the Month";
+infoHeaderTitle.appendChild(dt("Info about The Book of the Month"));
 
 infoHeader.appendChild(infoHeaderTitle);
 
 const bookInfoTitle = dc("h2");
-bookInfoTitle.textContent = theShining.title;
 bookInfoTitle.classList.add("font-size--large");
+bookInfoTitle.appendChild(dt(theShining.title))
 dq(".book-info__card--title").appendChild(bookInfoTitle);
 
 dq(".book-info__cover-image").src = theShining.cover;
-dq(".book-info__cover-caption").textContent = "Cover of The Shining";
+dq(".book-info__cover-caption").appendChild(dt("Cover of The Shining"));
 
 const genreText = dc("h2");
-genreText.textContent = "Genre: " + theShining.genre;
 genreText.classList.add("font-size--medium");
+genreText.appendChild(dt("Genre: " + theShining.genre));
 dq(".book-info__card--genre").appendChild(genreText);
 
 const yearText = dc("h2");
-yearText.textContent = "Year of publication: " + theShining.yearOfCreation;
 yearText.classList.add("font-size--medium");
+yearText.appendChild(dt("Year of publication: " + theShining.yearOfCreation));
 dq(".book-info__card--year").appendChild(yearText);
 
 dq(".book-info__author-image").src = stephenKing.portrait;
-dq(".book-info__author-caption").textContent = stephenKing.name;
+dq(".book-info__author-caption").appendChild(dt("Author: " + stephenKing.name));
 
 const publisherText = dc("h2");
-publisherText.textContent = "Publisher: " + theShining.publisher.name;
 publisherText.classList.add("font-size--medium", "link--simple");
+publisherText.appendChild(dt("Publisher: " + theShining.publisher.name));
 dq(".book-info__card--publisher").appendChild(publisherText);
 
 const plotHeader = dc("h2");
-plotHeader.textContent = "Summary of the plot:";
+plotHeader.appendChild(dt("Summary of the plot:"));
 plotHeader.classList.add("book-info__card-plot-header", "font-size--medium");
 const plotText = dc("p");
-plotText.textContent = theShining.plot;
+plotText.appendChild(dt(theShining.plot));
 plotText.classList.add("font-size--small");
 
 dq(".book-info__card--plot").appendChild(plotHeader);
 dq(".book-info__card--plot").appendChild(plotText);
 
+const tooltipArray = [d.querySelectorAll(".book-info__author-tooltip"), 
+                      d.querySelectorAll(".book-info__publisher-tooltip")];
+generateTooltipAttributes(tooltipArray[0][0], stephenKing);
+generateTooltipAttributes(tooltipArray[1][0], doubleday);
+
 // Adding event listeners
 
-const tooltip = d.querySelectorAll(".tooltip");
-
-d.addEventListener("mousemove", showToolTip, false);
+window.addEventListener("mousemove", showToolTip, false);
 
 function showToolTip(e){
-  var mouseX = e.clientX - authorCard.getBoundingClientRect().left;
-  var mouseY = e.clientY - authorCard.getBoundingClientRect().top
-  for (var i=tooltip.length; i--;) {
-    if(mouseX > window.innerWidth - 200){
-      tooltip[i].style.left = mouseX - 200 + "px";
-      tooltip[i].style.top = mouseY + "px";
+  var mouseX = e.pageX;
+  var mouseY = e.pageY;
+  for (var i = tooltipArray.length; i--;) {
+    if(mouseX >= window.innerWidth - 300){
+      tooltipArray[i][0].style.left = window.innerWidth - 300 + "px";
     }
     else{
-      tooltip[i].style.left = mouseX + "px";
-      tooltip[i].style.top = mouseY + "px";
+      tooltipArray[i][0].style.left = mouseX + "px";
     }
+    tooltipArray[i][0].style.top = mouseY + "px";
   }
 }
 
 window.addEventListener("scroll", loadOnScroll);
 
 function loadOnScroll(){
-  const cards = d.querySelectorAll(".book-info__card");
+  var cards = d.querySelectorAll(".book-info__card");
   for(i = cards.length; i--;){
     if(isInViewport(cards[i])){
       cards[i].classList.add("animation--generation");
     }
   }
+}
+
+function isInViewport(x){
+  var t = x.getBoundingClientRect();
+  return(t.top >= 100 && t.bottom < window.innerHeight);
 }
 
 loadOnScroll();
