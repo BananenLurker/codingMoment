@@ -11,15 +11,17 @@ class elementMenu {
 
     this.setId(elements);
 
+    // Setting the properties of each option
     elements.forEach(element => {
       let option = document.createElement('option');
       option.value = element.id;
       option.textContent = element.tagName.toLowerCase();
-      option.dataset.elementId = element.classList[0];
       dropdown.appendChild(option);
     });
   }
 
+  // Gives each element an ID based on the tag name and
+  // an increasing number, to later differentiate elements
   setId(elements){
     for(var i = elements.length; i--;){
       elements[i].id = elements[i].tagName + i;
@@ -40,10 +42,14 @@ class appearanceMenu {
     if (selectedOption === 'font-size') {
       const newSize = prompt('Enter new font size:');
       if (newSize) {
+        // Getting an array of a NodeList and the parent element, so both can be changed.
+        // Only setting the parent element is less visually appealing.
         var sizeChildren = [document.getElementById(selectedElement).getElementsByTagName("*"), document.getElementById(selectedElement)];
         for(var i = 0; i < sizeChildren[0].length; i++){
+          // Children[0] gets the NodeList which needs to be iterated over
           sizeChildren[0][i].style.fontSize = newSize + "px";
         }
+        // Children[1] gets the parent element and does not have a second index
         sizeChildren[1].style.fontSize = newSize + "px";
       }
     }

@@ -398,6 +398,8 @@ function showToolTip(e){
   var mouseX = e.pageX;
   var mouseY = e.pageY;
   for (var i = tooltipArray.length; i--;) {
+    // A tooltip width will always be 300px, offsetting it by
+    // 300 will make it 'stick' to the right side of the screen
     if(mouseX >= window.innerWidth - 300){
       tooltipArray[i][0].style.left = window.innerWidth - 300 + "px";
     }
@@ -411,6 +413,7 @@ function showToolTip(e){
 function loadOnScroll(){
   var cards = d.querySelectorAll(".book-info__card");
   for(i = cards.length; i--;){
+    // Only load a section when it is in the viewport.
     if(isInViewport(cards[i])){
       cards[i].classList.add("animation--generation");
     }
@@ -419,6 +422,9 @@ function loadOnScroll(){
 
 function isInViewport(x){
   var t = x.getBoundingClientRect();
+  // We count an element as being 'in the viewport' when the top is at least 100 pixels 
+  // higher than the bottom of the viewport and the distance to the bottom of the element is less
+  // than the window height. This is done to give the same effect on smaller devices.
   return(t.top >= 100 && t.bottom < window.innerHeight);
 }
 
