@@ -101,10 +101,13 @@ const dt = (x) => document.createTextNode(x);
 const body = dq("body");
 const main = dq(".main--info");
 const pageHeader = dq(".header--nav");
+
 const navDesktop = dq(".nav--desktop");
 const navMobile = dq(".nav--mobile");
+
 const authorCard = dq(".book-info__card--author");
 const publisherCard = dq(".book-info__card--publisher");
+const plotCard = dq(".book-info__card--plot");
 
 const hrefs = ["contact", "about", "king-books", "about-author", "info", "review", "book-of-the-month"];
 const pageNames = ["Contact", "About", "Other books", "Stephen King", "Info", "Review", "Book of the month"];
@@ -130,9 +133,6 @@ function generateFigure(parentElement, imageAlt, imageType, imageSrc){
   var img = dc("img");
   var figcaption = dc("figcaption");
 
-  console.log(imageAlt);
-  console.log(imageType);
-
   img.alt = imageAlt;
   img.src = imageSrc;
   var imgClass = "book-info__" + imageType + "-image";
@@ -151,7 +151,7 @@ function generateTooltipAttributes(tooltip, entity){
   const attributeNames = Object.getOwnPropertyNames(entity).concat(Object.values(Object.getPrototypeOf(entity))).concat("wikipedia");
 
   if(attributes.length !== attributeNames.length){
-    throw new Error("Tooltip entity does not contain all required attributes for a tooltip!")
+    throw("Tooltip entity does not contain all required attributes for a tooltip!")
   }
   if(entity.wikipedia){
     attributes.concat(entity.wikipedia);
@@ -363,8 +363,6 @@ plotHeader.classList.add("book-info__card-plot-header", "font-size--medium");
 const plotText = dc("p");
 plotText.appendChild(dt(theShining.plot));
 plotText.classList.add("font-size--small");
-
-const plotCard = dq(".book-info__card--plot");
 
 plotCard.appendChild(plotHeader);
 plotCard.appendChild(plotText);
