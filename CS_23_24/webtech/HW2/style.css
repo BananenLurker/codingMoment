@@ -600,6 +600,7 @@ a:hover > nav {
 /* Info page styling */
 
 .book-info__card {
+  min-width: 90vw;
   text-align: center;
   flex: 1 1 25rem;
   display: flex;
