@@ -23,26 +23,27 @@
     <div class="spacing"></div>
     <article class="book-info">
       <header class="book-info__header header--page"></header>
-      <!-- as none of these 'sections' have headers, they are,
-           semantically speaking, not sections, but divs, even though
-           we think this looks extremely obnoxious 
-      -->
-      <div class="book-info__card book-info__card--title"></div>
-      <div class="book-info__card book-info__card--cover"></div>
-      <div class="book-info__card--author-wrapper">
+      <section class="book-info__card book-info__card--title"></section>
+      <section class="book-info__card book-info__card--cover"></section>
+      <section class="book-info__card--author-wrapper">
         <div class="book-info__card book-info__card--author"></div>
         <span class="book-info__author-tooltip"></span>
-      </div>
-      <div class="book-info__card--publisher-wrapper">
+      </section>
+      <section class="book-info__card--publisher-wrapper">
         <div class="book-info__card book-info__card--publisher"></div>
         <span class="book-info__publisher-tooltip"></span>
-      </div>
-      <div class="book-info__card book-info__card--genre"></div>
-      <div class="book-info__card book-info__card--year"></div>
-      <div class="book-info__card book-info__card--plot"></div>
+      </section>
+      <section class="book-info__card book-info__card--genre"></section>
+      <section class="book-info__card book-info__card--year"></section>
+      <section class="book-info__card book-info__card--plot"></section>
     </article>
   </main>
+
+  <footer class="footer">
+    <div class="footer__logo--wrapper"></div>
+  </footer>
+  <script src="info.js"></script>
+  <script src="appearance.js"></script>
 </body>
 
 </html>
-<script src="info.js"></script>
