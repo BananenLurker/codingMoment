@@ -6,7 +6,7 @@ class elementMenu {
     this.populateDropdown();
   }
   populateDropdown() {
-    const elements = document.querySelectorAll('body, main, header, footer, aside, article, section');
+    const elements = document.querySelectorAll('body, header, footer, aside, article, section');
     const dropdown = this.element;
 
     this.setId(elements);
