@@ -40,20 +40,22 @@ class AppearanceMenu {
     if (selectedOption === 'font-size') {
       const newSize = prompt('Enter new font size:');
       if (newSize) {
-        var sizeChildren = document.getElementById(selectedElement).getElementsByTagName("*");
-        for(var i = 0; i < sizeChildren.length; i++){
-          sizeChildren[i].style.fontSize = newSize + 'px';
+        var sizeChildren = [document.getElementById(selectedElement).getElementsByTagName("*"), document.getElementById(selectedElement)];
+        for(var i = 0; i < sizeChildren[0].length; i++){
+          sizeChildren[0][i].style.fontSize = newSize + "px";
         }
+        sizeChildren[1].style.fontSize = newSize + "px";
       }
     }
 
     else if (selectedOption === 'color') {
       const newColor = prompt('Enter new color (e.g., red, #00ff00):');
       if (newColor) {
-        var colorChildren = document.getElementById(selectedElement).getElementsByTagName("*");
-        for(var i = 0; i < colorChildren.length; i++){
-          colorChildren[i].style.color = newColor;
+        var colorChildren = [document.getElementById(selectedElement).getElementsByTagName("*"), document.getElementById(selectedElement)];
+        for(var i = 0; i < colorChildren[0].length; i++){
+          colorChildren[0][i].style.color = newColor;
         }
+        colorChildren[1].style.color = newColor;
       }
     }
 
