@@ -600,11 +600,9 @@ a:hover > nav {
 /* Info page styling */
 
 .book-info__card {
-  min-width: 90vw;
+  max-width: 90vw;
   text-align: center;
   flex: 1 1 25rem;
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   min-height: 10vh;
@@ -702,6 +700,10 @@ a:hover > nav {
   section,
   .section--text {
     max-width: 100rem;
+  }
+
+  .book-info__card {
+    width: 100vw;
   }
 
   .footer__logo--twitterx,

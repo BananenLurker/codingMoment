@@ -428,6 +428,9 @@ function isInViewport(x){
   // We count an element as being 'in the viewport' when the top is at least 100 pixels 
   // higher than the bottom of the viewport and the distance to the bottom of the element is less
   // than the window height. This is done to give the same effect on smaller devices.
+  if(window.innerHeight < 1000){
+    return true;
+  }
   return(t.top >= 100 && t.bottom < window.innerHeight);
 }
 
