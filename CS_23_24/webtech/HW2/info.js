@@ -91,7 +91,7 @@ const doubleday = new Publisher("Doubleday", "https://en.wikipedia.org/wiki/Doub
 const theShiningPlot = "The Shining follows Jack Torrance, a struggling writer and recovering alcoholic, who takes a job as the winter caretaker of the isolated Overlook Hotel in Colorado. He moves in with his wife, Wendy, and their young son, Danny, who possesses psychic abilities known as the shining. As the winter sets in, the hotel's malevolent spirits begin to manipulate Jack's weaknesses, driving him to madness and violence. Danny's psychic abilities allow him to see the hotel's horrific past and communicate with the hotel's cook, Dick Hallorann, who shares the same gift. As Jack descends into insanity, Danny and Wendy must confront the supernatural forces within the hotel to survive. The novel explores themes of addiction, family dynamics, and the nature of evil, culminating in a terrifying showdown between the Torrance family and the malevolent forces of the Overlook Hotel.";
 const theShining = new Book(stephenKing, 1977, "The Shining", "Horror", doubleday, "assets/covers/The_Shining_1977.jpg", theShiningPlot);
 
-// Constants used in generating page content
+// Constant variables used in generating page content
 
 const d = document;
 const dq = (x) => document.querySelector(x);
@@ -106,8 +106,8 @@ const navMobile = dq(".nav--mobile");
 const authorCard = dq(".book-info__card--author");
 const publisherCard = dq(".book-info__card--publisher");
 
-const hrefs = ["contact", "about", "king-books", "about-author", "review", "book-of-the-month"];
-const pageNames = ["Contact", "About", "Other books", "Stephen King", "Review", "Book of the month"];
+const hrefs = ["contact", "about", "king-books", "about-author", "info", "review", "book-of-the-month"];
+const pageNames = ["Contact", "About", "Other books", "Stephen King", "Info", "Review", "Book of the month"];
 
 // Functions used in generating page content
 
@@ -123,6 +123,27 @@ function appendNavLi(x){
     navUl.appendChild(navLi);
   }
   x.appendChild(navUl);
+}
+
+function generateFigure(parentElement, imageAlt, imageType, imageSrc){
+  var figure = dc("figure");
+  var img = dc("img");
+  var figcaption = dc("figcaption");
+
+  console.log(imageAlt);
+  console.log(imageType);
+
+  img.alt = imageAlt;
+  img.src = imageSrc;
+  var imgClass = "book-info__" + imageType + "-image";
+  img.classList.add(imgClass);
+
+  var captionClass = "book-info__" + imageType + "-caption";
+  figcaption.classList.add(captionClass, "font-size--small");
+
+  figure.appendChild(img);
+  figure.appendChild(figcaption);
+  parentElement.appendChild(figure);
 }
 
 function generateTooltipAttributes(tooltip, entity){
@@ -227,8 +248,13 @@ bookInfoTitle.classList.add("font-size--large");
 bookInfoTitle.appendChild(dt(theShining.title))
 dq(".book-info__card--title").appendChild(bookInfoTitle);
 
-dq(".book-info__cover-image").src = theShining.cover;
-dq(".book-info__cover-caption").appendChild(dt("Cover of The Shining"));
+generateFigure(dq(".book-info__card--cover"), "Cover of the book The Shining", "cover", theShining.cover);
+const coverCaption = dq(".book-info__cover-caption");
+coverCaption.appendChild(dt("Cover of The Shining"));
+coverCaption.appendChild(dc("br"));
+coverCaption.appendChild(dt("Click the image to go to the image source"));
+coverCaption.appendChild(dc("br"));
+coverCaption.appendChild(dt("Click anywhere else in the box to read our review of The Shining"));
 
 const genreText = dc("h2");
 genreText.classList.add("font-size--medium");
@@ -240,6 +266,7 @@ yearText.classList.add("font-size--medium");
 yearText.appendChild(dt("Year of publication: " + theShining.yearOfCreation));
 dq(".book-info__card--year").appendChild(yearText);
 
+generateFigure(dq(".book-info__card--author"), "Stephen King", "author", stephenKing.portrait);
 dq(".book-info__author-image").src = stephenKing.portrait;
 dq(".book-info__author-caption").appendChild(dt("Author: " + stephenKing.name));
 
@@ -265,7 +292,11 @@ generateTooltipAttributes(tooltipArray[1][0], doubleday);
 
 // Adding event listeners
 
-window.addEventListener("mousemove", showToolTip, false);
+dq(".book-info__card--cover").addEventListener("click", () => { location.href = "review.html" }, true ); // Event propagation: setting the event to capturing instead of bubbling
+dq(".book-info__cover-image").addEventListener("click", () => { location.href = "https://en.wikipedia.org/wiki/The_Shining_(novel)"} );
+
+window.addEventListener("mousemove", showToolTip);
+window.addEventListener("scroll", loadOnScroll);
 
 function showToolTip(e){
   var mouseX = e.pageX;
@@ -280,8 +311,6 @@ function showToolTip(e){
     tooltipArray[i][0].style.top = mouseY + "px";
   }
 }
-
-window.addEventListener("scroll", loadOnScroll);
 
 function loadOnScroll(){
   var cards = d.querySelectorAll(".book-info__card");

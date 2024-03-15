@@ -618,6 +618,10 @@ a:hover > nav {
   padding: 1rem 0;
 }
 
+.book-info__card--cover:hover {
+  cursor: pointer;
+}
+
 .book-info__card figcaption {
   padding: 0 0 1rem 0;
 }
