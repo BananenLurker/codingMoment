@@ -269,7 +269,7 @@ a:hover > nav {
 
 /* New releases section styling */
 
-#new-releases {
+.new-releases {
   display: flex;
   min-height: 100vh;
   flex-wrap: wrap;
