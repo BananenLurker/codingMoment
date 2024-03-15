@@ -364,8 +364,24 @@ const plotText = dc("p");
 plotText.appendChild(dt(theShining.plot));
 plotText.classList.add("font-size--small");
 
-dq(".book-info__card--plot").appendChild(plotHeader);
-dq(".book-info__card--plot").appendChild(plotText);
+const plotCard = dq(".book-info__card--plot");
+
+plotCard.appendChild(plotHeader);
+plotCard.appendChild(plotText);
+plotCard.appendChild(dc("br"));
+
+var plotSource = dc("p");
+plotSource.style.fontStyle = "italic";
+plotSource.classList.add("font-size--small");
+
+var plotSourceLink = dc("a");
+plotSourceLink.appendChild(dt("ChatGPT."));
+plotSourceLink.href = "https://chat.openai.com/";
+plotSourceLink.classList.add("link--simple");
+
+plotSource.appendChild(dt("This text was generated using "));
+plotSource.appendChild(plotSourceLink);
+plotCard.appendChild(plotSource);
 
 const tooltipArray = [d.querySelectorAll(".book-info__author-tooltip"), 
                       d.querySelectorAll(".book-info__publisher-tooltip")];
