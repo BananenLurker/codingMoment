@@ -4,14 +4,14 @@
 // that is non-volatile and should never be changed during
 // the lifespan of the object, such as (relative) links.
  
-class Person{
+class person{
   constructor(name, yearOfBirth){
     this.name = name;
     this.yearOfBirth = yearOfBirth;
   }
 }
 
-class Author extends Person{
+class author extends person{
   #wikipedia
   #portrait
   constructor(name, yearOfBirth, writtenTitles, personWikipedia, portrait){
@@ -34,7 +34,7 @@ class Author extends Person{
   }
 }
 
-class CreativeWork{
+class creativeWork{
   constructor(authors, yearOfCreation, title){
     this.authors = authors;
     this.yearOfCreation = yearOfCreation;
@@ -42,7 +42,7 @@ class CreativeWork{
   }
 }
 
-class Book extends CreativeWork{
+class book extends creativeWork{
   #cover
   constructor(authors, yearOfCreation, title, genre, publisher, cover, plot){
     super(authors, yearOfCreation, title)
@@ -59,7 +59,7 @@ class Book extends CreativeWork{
   }
 }
 
-class Company{
+class company{
   #wikipedia
   constructor(name, companyWikipedia){
     this.name = name;
@@ -73,7 +73,7 @@ class Company{
   }
 }
 
-class Publisher extends Company{
+class publisher extends company{
   constructor(name, companyWikipedia, publishedTitles){
     super(name, companyWikipedia);
     this.publishedTitles = publishedTitles;
@@ -83,13 +83,13 @@ class Publisher extends Company{
 // Initiating objects
 
 const stephenKingBooks = ["It", "The Shining", "The Green Mile", "Carrie", "Salem's Lot"];
-const stephenKing = new Author("Stephen King", 1947, stephenKingBooks, "https://en.wikipedia.org/wiki/Stephen_King", "assets/stephen-king.jpg");
+const stephenKing = new author("Stephen King", 1947, stephenKingBooks, "https://en.wikipedia.org/wiki/Stephen_King", "assets/stephen-king.jpg");
 
 const doubledayTitles = ["The Shining", "The Da Vinci Code", "Clockwork", "Bill - the Galactic Hero", "A Concise Chinese-English Dictionary for Lovers"];
-const doubleday = new Publisher("Doubleday", "https://en.wikipedia.org/wiki/Doubleday_(publisher)", doubledayTitles);
+const doubleday = new publisher("Doubleday", "https://en.wikipedia.org/wiki/Doubleday_(publisher)", doubledayTitles);
 
 const theShiningPlot = "The Shining follows Jack Torrance, a struggling writer and recovering alcoholic, who takes a job as the winter caretaker of the isolated Overlook Hotel in Colorado. He moves in with his wife, Wendy, and their young son, Danny, who possesses psychic abilities known as the shining. As the winter sets in, the hotel's malevolent spirits begin to manipulate Jack's weaknesses, driving him to madness and violence. Danny's psychic abilities allow him to see the hotel's horrific past and communicate with the hotel's cook, Dick Hallorann, who shares the same gift. As Jack descends into insanity, Danny and Wendy must confront the supernatural forces within the hotel to survive. The novel explores themes of addiction, family dynamics, and the nature of evil, culminating in a terrifying showdown between the Torrance family and the malevolent forces of the Overlook Hotel.";
-const theShining = new Book(stephenKing, 1977, "The Shining", "Horror", doubleday, "assets/covers/The_Shining_1977.jpg", theShiningPlot);
+const theShining = new book(stephenKing, 1977, "The Shining", "Horror", doubleday, "assets/covers/The_Shining_1977.jpg", theShiningPlot);
 
 // Constant variables used in generating page content
 

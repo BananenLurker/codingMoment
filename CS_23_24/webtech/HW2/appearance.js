@@ -1,6 +1,6 @@
 const selectorMenu = document.querySelector('#element-menu');
 
-class ElementMenu {
+class elementMenu {
   constructor(selector) {
     this.element = document.querySelector(selector);
     this.populateDropdown();
@@ -27,7 +27,7 @@ class ElementMenu {
   }
 }
 
-class AppearanceMenu {
+class appearanceMenu {
   constructor(selector) {
     this.element = document.querySelector(selector);
     this.element.addEventListener('change', this.handleChange.bind(this));
@@ -73,5 +73,5 @@ class AppearanceMenu {
   }
 }
 
-const elementMenu = new ElementMenu('#element-menu');
-const appearanceMenu = new AppearanceMenu('#appearance-menu');
+const em = new elementMenu('#element-menu');
+const am = new appearanceMenu('#appearance-menu');
