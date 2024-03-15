@@ -123,6 +123,9 @@ function appendNavLi(x){
     navA.appendChild(dt(pageNames[i]));
     navA.href = hrefs[i] + ".html";
     navLi.appendChild(navA);
+    if(hrefs[i] === "info"){
+      navLi.classList.add("nav__current-page");
+    }
     navUl.appendChild(navLi);
   }
   x.appendChild(navUl);
