@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
+  <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet">
+  <title>Book info - Homebrew</title>
+</head>
+
+<body>
+  <header class="header--nav position--sticky">
+    <nav class="nav--desktop">
+    </nav>
+    <nav class="nav--mobile position--sticky">
+    </nav>
+  </header>
+
+  <main class="main--info">
+    <div class="spacing"></div>
+    <article class="book-info">
+      <header class="book-info__header header--page"></header>
+      <section class="book-info__card book-info__card--title"></section>
+      <section class="book-info__card book-info__card--cover"></section>
+      <section class="book-info__card--author-wrapper">
+        <div class="book-info__card book-info__card--author"></div>
+        <span class="book-info__author-tooltip"></span>
+      </section>
+      <section class="book-info__card--publisher-wrapper">
+        <div class="book-info__card book-info__card--publisher"></div>
+        <span class="book-info__publisher-tooltip"></span>
+      </section>
+      <section class="book-info__card book-info__card--genre"></section>
+      <section class="book-info__card book-info__card--year"></section>
+      <section class="book-info__card book-info__card--plot"></section>
+    </article>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__logo--wrapper"></div>
+  </footer>
+  <script src="scripts/info.js"></script>
+  <script src="scripts/appearance.js"></script>
+</body>
+
+</html>
