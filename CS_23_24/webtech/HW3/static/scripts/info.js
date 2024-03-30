@@ -121,7 +121,7 @@ function appendNavLi(x){
     let navLi = dc("li");
     let navA = dc("a");
     navA.appendChild(dt(pageNames[i]));
-    navA.href = hrefs[i] + ".html";
+    navA.href = hrefs[i] + "";
     navLi.appendChild(navA);
     if(hrefs[i] === "info"){
       navLi.classList.add("nav__current-page");
@@ -291,7 +291,7 @@ burgerLabel.appendChild(burgerInput);
 pageHeader.insertBefore(burgerLabel, navDesktop);
 
 const logoAnchor = dc("a");
-logoAnchor.href = "index.html";
+logoAnchor.href = "index";
 
 const logoImg = dc("img");
 logoImg.classList.add("page-header__logo");
@@ -377,7 +377,7 @@ generateTooltipAttributes(tooltipArray[1][0], doubleday);
 
 // Adding event listeners
 
-dq(".book-info__card--cover").addEventListener("click", () => { location.href = "review.html" }, true ); // Event propagation: setting the event to capturing instead of bubbling
+dq(".book-info__card--cover").addEventListener("click", () => { location.href = "review" }, true ); // Event propagation: setting the event to capturing instead of bubbling
 dq(".book-info__cover-image").addEventListener("click", () => { location.href = "https://en.wikipedia.org/wiki/The_Shining_(novel)"} );
 
 window.addEventListener("mousemove", showToolTip);
