@@ -131,6 +131,8 @@ function appendNavLi(x){
   x.appendChild(navUl);
 }
 
+// test
+
 function generateFigure(parentElement, imageAlt, imageType, imageSrc){
   var figure = dc("figure");
   var img = dc("img");
