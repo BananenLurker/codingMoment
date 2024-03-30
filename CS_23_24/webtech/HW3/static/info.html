@@ -4,40 +4,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/homebrew-logo.png">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/assets/homebrew-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
     rel="stylesheet">
-  <title>Book info - Homebrew</title>
+  <title>Homebrew</title>
 </head>
 
 <body>
   <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
+      <input id="toggle" type="checkbox">
+    </label>
+    <a href="index">
+      <img class="page-header__logo" src="/assets/homebrew-logo.png" alt="Homebrew Press logo">
+    </a>
     <nav class="nav--desktop">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month">Book of the month</a></li>
+        <li><a href="review">Review</a></li>
+        <li><a href="info">Info</a></li>
+        <li><a href="about-author">Stephen King</a></li>
+        <li><a href="king-books">Other books</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="contact">Contact</a></li>
+      </ul>
     </nav>
     <nav class="nav--mobile position--sticky">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month">Book of the month</a></li>
+        <li><a href="review">Review</a></li>
+        <li><a href="info">Info</a></li>
+        <li><a href="about-author">Stephen King</a></li>
+        <li><a href="king-books">Other books</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="contact">Contact</a></li>
+      </ul>
     </nav>
   </header>
-
-  <main class="main--info">
-    <div class="spacing"></div>
-    <article class="book-info">
-      <header class="book-info__header header--page"></header>
-      <section class="book-info__card book-info__card--title"></section>
-      <section class="book-info__card book-info__card--cover"></section>
-      <section class="book-info__card--author-wrapper">
-        <div class="book-info__card book-info__card--author"></div>
-        <span class="book-info__author-tooltip"></span>
-      </section>
-      <section class="book-info__card--publisher-wrapper">
-        <div class="book-info__card book-info__card--publisher"></div>
-        <span class="book-info__publisher-tooltip"></span>
-      </section>
-      <section class="book-info__card book-info__card--genre"></section>
-      <section class="book-info__card book-info__card--year"></section>
-      <section class="book-info__card book-info__card--plot"></section>
-    </article>
-  </main>
 
   <footer class="footer">
     <div class="footer__logo--wrapper"></div>

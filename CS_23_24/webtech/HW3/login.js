@@ -13,15 +13,21 @@ app.use(session({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(__dirname + '/static', {
+  extensions: ['html']
+}));
 
 app.get('/', function(request, response) {
-	response.sendFile(path.join(__dirname + '/static/html/signup.html'));
+	response.sendFile(path.join(__dirname + '/static/signup.html'));
 });
 
 app.get('/login.css', (request, responseC) => {
   responseC.sendFile(path.join(__dirname, "/static/css/login.css"))
 });
+
+app.get('/login', (request, response) => {
+  response.redirect('/login.html');
+})
 
 app.post('/signup', function(request, response) {
   let db = openDatabase();

@@ -252,7 +252,7 @@ a:hover > nav {
 .hero {
   min-height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.5), transparent),
-    url("assets/hero-books.jpg") center no-repeat;
+    url("/assets/hero-books.jpg") center no-repeat;
   background-size: cover;
   color: var(--background);
   display: flex;
@@ -357,7 +357,7 @@ a:hover > nav {
   justify-content: center;
   flex-wrap: wrap;
   background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
-    url("assets/hero-books.jpg") center no-repeat;
+    url("/assets/hero-books.jpg") center no-repeat;
   background-size: cover;
 }
 
