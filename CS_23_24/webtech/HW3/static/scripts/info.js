@@ -263,20 +263,6 @@ function generateFooter(){
   logoWrapper.appendChild(anchorYoutube);
   logoWrapper.appendChild(anchorTwitterx);
   logoWrapper.appendChild(anchorInstagram);
-
-
-  // END OF ANCHOR TAGS
-
-
-  var elementSelector = dc("select");
-  elementSelector.id = "element-menu";
-  footer.appendChild(elementSelector);
-
-  var appearanceSelector = dc("select");
-  appearanceSelector.id = "appearance-menu";
-  addSelectOptions(appearanceSelector);
-
-  footer.appendChild(appearanceSelector);
 }
 
 function addSelectOptions(parentElement){
