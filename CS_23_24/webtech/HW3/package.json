@@ -9,6 +9,7 @@
   "author": "Daan van der Putten",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "sqlite3": "^5.1.7"

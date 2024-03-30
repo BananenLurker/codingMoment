@@ -2,6 +2,8 @@ const sqlite = require('sqlite3');
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
+const cheerio = require('cheerio');
+const fs = require('fs');
 
 const app = express();
 
@@ -24,10 +26,6 @@ app.get('/', function(request, response) {
 app.get('/login.css', (request, responseC) => {
   responseC.sendFile(path.join(__dirname, "/static/css/login.css"))
 });
-
-app.get('/login', (request, response) => {
-  response.redirect('/login.html');
-})
 
 app.post('/signup', function(request, response) {
   let db = openDatabase();
@@ -64,51 +62,55 @@ app.post('/signup', function(request, response) {
   response.end();
 });
 
-app.post('/auth', function(request, response) {
+app.post('/profile', function(request, response) {
   let db = openDatabase();
 
-	let user = request.body.username;
-	let passw = request.body.password;
-	if (user && passw) {
+  let user = request.body.username;
+  let passw = request.body.password;
 
+  if (user && passw) {
     let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
     let username = user;
     let password = passw;
 
     db.get(sql, [username, password], (err, row) => {
-      if(err){
-        return console.error(err.message);
+      if (err) {
+        console.error(err.message);
+        response.status(500).send('Internal Server Error');
+        return;
       }
+
       if (row) {
-        console.log(row.ID, row.username);
-      } 
-      else {
+        request.session.loggedin = true;
+        request.session.username = username;
+
+        // Serve profile page if logged in
+        const filePath = path.join(__dirname, 'static', 'profile.html');
+        fs.readFile(filePath, 'utf8', (err, data) => {
+          if (err) {
+            console.error('Error reading file:', err);
+            response.status(500).send('Internal Server Error');
+            return;
+          }
+
+          const $ = cheerio.load(data);
+          $('.profile-info__username').append(row.username);
+          $('.profile-info__email').append(row.email);
+          $('.profile-info__country').append(row.country);
+          $('.profile-info__city').append(row.city);
+          $('.profile-info__zip').append(row.zip);
+
+          response.send($.html());
+        });
+      } else {
         console.log('login failed!');
+        response.redirect('/login');
       }
     });
-
-    response.redirect('/');
-    response.end();
-
-	// 	connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
-	// 		if (error) throw error;
-
-	// 		if (results.length > 0) {
-	// 			request.session.loggedin = true;
-	// 			request.session.username = username;
-	// 			response.redirect('/home');
-	// 		} 
-  //     else {
-	// 			response.send('Incorrect Username and/or Password!');
-	// 		}
-	// 		response.end();
-	// 	});
-	// } 
-  // else {
-	// 	response.send('Please enter Username and Password!');
-	// 	response.end();
-	// }
+  } else {
+    response.redirect('/login');
   }
+
   closeDatabase(db);
 });
 
@@ -121,6 +123,35 @@ app.get('/home', function(request, response) {
 		response.send('Please login to view this page!');
 	}
 	response.end();
+});
+
+app.get('/profile', function(request, response) {
+  // console.log('profile got');
+  // if(request.session.loggedin){
+  //   console.log(request.session.username)
+  //   const filePath = path.join(__dirname, 'profile.html');
+  //   fs.readFile(filePath, 'utf8', (err, data) => {
+  //     if(err){
+  //       console.error('Error reading file:', err);
+  //       response.status(500).send('Internal Server Error');
+  //       return;
+  //     }
+
+  //     console.log(filePath);
+
+  //     const $ = cheerio.load(data);
+  //     console.log('Loaded HTML:', $.html()); // Log loaded HTML content
+  //     $('.profile-info__username').append('<p>Username stuff</p>');
+  //     console.log('Modified HTML:', $.html()); // Log modified HTML content
+
+  //     response.send($.html());
+  //     response.end();
+  //   })
+  // }
+  // else{
+  //   response.redirect('/login');
+  //   response.end();
+  // }
 });
 
 function openDatabase(){

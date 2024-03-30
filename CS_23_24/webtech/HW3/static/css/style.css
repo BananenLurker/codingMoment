@@ -646,6 +646,19 @@ a:hover > nav {
   width: 300px;
 }
 
+/* profile section */
+
+.profile-info {
+  display: flex;
+  justify-content: center;
+}
+
+.temp {
+  width: 80vw;
+  height: 80vh;
+  background: lightblue;
+}
+
 /* Accessibility styling - tab-index*/
 .page-header__burger-menu:has(> input:focus-visible)::before,
 .page-header__burger-menu:has(> input:focus-visible)::after,
