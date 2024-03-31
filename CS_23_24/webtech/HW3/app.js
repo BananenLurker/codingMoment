@@ -15,7 +15,12 @@ app.use(session({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(__dirname + '/static', {
+app.use((request, response, next) => {
+  // INSERT CODE FOR A PROFILE NAVBAR
+  console.log('Page loaded:', request.url);
+  next();
+});
+app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
 }));
 
@@ -31,18 +36,25 @@ app.post('/signup', function(request, response) {
   let db = openDatabase();
   let userinfo = [request.body.username, request.body.password, request.body.email, request.body.country, request.body.city, request.body.zip];
   let sql = 'INSERT INTO user(username, password, email, country, city, zip) VALUES(?,?,?,?,?,?)';
+  const filePath = path.join(__dirname, 'static', 'signup.html');
 
   checkExistance("username", request.body.username, function(usernameExists) {
     if (usernameExists) {
+      closeDatabase(db);
+      userNotification(response, filePath, "Username already exists!");
       return;
     } 
     else {
       checkExistance("email", request.body.email, function(emailExists) {
         if (emailExists) {
+          closeDatabase(db);
+          userNotification(response, filePath, "Email already exists!");
           return;
         } 
         else {
           if(checkCharacters(request.body.username, request.body.email)){
+            closeDatabase(db);
+            userNotification(response, filePath, "Username or email contains excluded characters!");
             return;
           }
           else{
@@ -51,18 +63,19 @@ app.post('/signup', function(request, response) {
                 return console.log(err.message);
               }
               console.log(`A user has been created with ID ${this.lastID}.`);
+              request.session.username = request.body.username;
+              request.session.password = request.body.password;
+              closeDatabase(db);
+              response.redirect(302, '/profile');
             });
           }
         }
       });
     }
   });
-  closeDatabase(db);
-  response.redirect('/');
-  response.end();
 });
 
-app.post('/profile', function(request, response) {
+app.post('/login', function(request, response) {
   let db = openDatabase();
 
   let user = request.body.username;
@@ -83,76 +96,74 @@ app.post('/profile', function(request, response) {
       if (row) {
         request.session.loggedin = true;
         request.session.username = username;
+        request.session.email = row.email;
+        request.session.country = row.country;
+        request.session.city = row.city;
+        request.session.zip = row.zip;
 
-        // Serve profile page if logged in
-        const filePath = path.join(__dirname, 'static', 'profile.html');
-        fs.readFile(filePath, 'utf8', (err, data) => {
-          if (err) {
-            console.error('Error reading file:', err);
-            response.status(500).send('Internal Server Error');
-            return;
-          }
-
-          const $ = cheerio.load(data);
-          $('.profile-info__username').append(row.username);
-          $('.profile-info__email').append(row.email);
-          $('.profile-info__country').append(row.country);
-          $('.profile-info__city').append(row.city);
-          $('.profile-info__zip').append(row.zip);
-
-          response.send($.html());
-        });
-      } else {
+        response.redirect('/profile');
+      }
+      else {
         console.log('login failed!');
         response.redirect('/login');
       }
     });
-  } else {
+  } 
+  else {
+    console.log('jup');
     response.redirect('/login');
   }
 
   closeDatabase(db);
 });
 
-
-app.get('/home', function(request, response) {
-	if (request.session.loggedin) {
-		response.send('Welcome back, ' + request.session.username + '!');
-	} 
-  else {
-		response.send('Please login to view this page!');
-	}
-	response.end();
-});
-
 app.get('/profile', function(request, response) {
-  // console.log('profile got');
-  // if(request.session.loggedin){
-  //   console.log(request.session.username)
-  //   const filePath = path.join(__dirname, 'profile.html');
-  //   fs.readFile(filePath, 'utf8', (err, data) => {
-  //     if(err){
-  //       console.error('Error reading file:', err);
-  //       response.status(500).send('Internal Server Error');
-  //       return;
-  //     }
+  const filePath = path.join(__dirname, 'static', 'profile-template.html');
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      response.status(500).send('Internal Server Error');
+      return;
+    }
 
-  //     console.log(filePath);
+    const $ = cheerio.load(data);
 
-  //     const $ = cheerio.load(data);
-  //     console.log('Loaded HTML:', $.html()); // Log loaded HTML content
-  //     $('.profile-info__username').append('<p>Username stuff</p>');
-  //     console.log('Modified HTML:', $.html()); // Log modified HTML content
+    if(request.session.loggedin){
+      $('.profile-info__username').append(request.session.username);
+      $('.profile-info__email').append(request.session.email);
+      $('.profile-info__country').append(request.session.country);
+      $('.profile-info__city').append(request.session.city);
+      $('.profile-info__zip').append(request.session.zip);
+    }
+    else{
+      $('.temp').append('<p>Please log in <a href="login" class="link--simple">here</a>!</p>');
+    }
 
-  //     response.send($.html());
-  //     response.end();
-  //   })
-  // }
-  // else{
-  //   response.redirect('/login');
-  //   response.end();
-  // }
+    response.send($.html());
+  });
 });
+
+app.get('/profile-template', function(request, response) {
+  response.redirect('/');
+})
+
+app.use((request, response) => {
+  response.status(404).sendFile(path.join(__dirname, 'static', '404.html'));
+});
+
+function userNotification(response, filePath, errorType){
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      response.status(500).send('Internal Server Error');
+      return;
+    }
+
+    const $ = cheerio.load(data);
+    $('.user-notification').append(errorType);
+    response.send($.html());
+  })
+}
 
 function openDatabase(){
   return db = new sqlite.Database('./users.db', sqlite.OPEN_READWRITE, (err) => {
