@@ -20,6 +20,11 @@ app.use((request, response, next) => {
   console.log('Page loaded:', request.url);
   next();
 });
+
+app.get('/profile-template', function(request, response) {
+  response.redirect('/404');
+})
+
 app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
 }));
@@ -75,7 +80,7 @@ app.post('/signup', function(request, response) {
   });
 });
 
-app.post('/login', function(request, response) {
+app.post('/auth', function(request, response) {
   let db = openDatabase();
 
   let user = request.body.username;
@@ -142,10 +147,6 @@ app.get('/profile', function(request, response) {
     response.send($.html());
   });
 });
-
-app.get('/profile-template', function(request, response) {
-  response.redirect('/');
-})
 
 app.use((request, response) => {
   response.status(404).sendFile(path.join(__dirname, 'static', '404.html'));
