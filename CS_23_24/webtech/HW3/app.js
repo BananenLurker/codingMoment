@@ -9,32 +9,33 @@ const rfs = require('rotating-file-stream');
 
 const app = express();
 
-// Use padding to fill up day and month entries if they are single digits
-const logNamePadding = num => (num > 9 ? "" : "0") + num;
-// Construct the log name in the format YYYYMMDD-hhmm__[index]
-const logName = (time, index) => {
-  if (!time) return "file.log";
+// // Use padding to fill up day and month entries if they are single digits
+// const logNamePadding = num => (num > 9 ? "" : "0") + num;
+// // Construct the log name in the format YYYYMMDD-hhmm__[index]
+// const logName = (time, index) => {
+//   if (!time) return "file.log";
 
-  var year = time.getFullYear();
-  var month = logNamePadding(time.getMonth());
-  var day = logNamePadding(time.getDate());
-  var hour = logNamePadding(time.getHours());
-  var minute = logNamePadding(time.getMinutes());
+//   var year = time.getFullYear();
+//   var month = logNamePadding(time.getMonth());
+//   var day = logNamePadding(time.getDate());
+//   var hour = logNamePadding(time.getHours());
+//   var minute = logNamePadding(time.getMinutes());
 
-  return `${year}${month}${day}-${hour}${minute}__${index}-file.log`;
-};
+//   return `${year}${month}${day}-${hour}${minute}__${index}-file.log`;
+// };
 
-// For the log name: get the current date/time object and use the amount of stored logs as an index
-var accessLogStream = rfs.createStream(logName(new Date(), fs.readdirSync('./log').length), {
-  interval: '1d',
-  size: '100M',
-  path: path.join(__dirname, 'log')
-});
+// // For the log name: get the current date/time object and use the amount of stored logs as an index
+// var accessLogStream = rfs.createStream(logName(new Date(), fs.readdirSync('./log').length), {
+//   interval: '1d',
+//   size: '100M',
+//   path: path.join(__dirname, 'log')
+// });
 
-// If res.statusCode => 400, an error has occurred and a dev log entry will be made
-// If there are no errors, logging will be done with less detail to save on storage space
-app.use(morgan('dev'), {skip: function(req, res) {return res.statusCode < 400}});
-app.use(morgan('common', { stream: accessLogStream }));
+// // If res.statusCode => 400, an error has occurred and this will be sent to console
+// // If there are no errors, logging will be done with less detail to save on storage space
+
+// app.use(morgan('dev', {skip: function(req, res) { return res.statusCode < 400 }}));
+// app.use(morgan('common', { stream: accessLogStream }));
 
 app.use(session({
 	secret: 'secret',
@@ -45,17 +46,25 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  // INSERT CODE FOR A PROFILE NAVBAR
-  console.log('Page loaded:', req.url);
+  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('scripts')){
+    // INSERT CODE FOR A PROFILE NAVBAR
+    console.log('Page loaded:', req.url);
+  }
   next();
 });
 
-app.get('/log', function(req, res) {
-  console.log(index);
-})
-
 app.get('/profile-template', function(req, res) {
-  res.redirect('/404');
+    fs.readFile(path.join(__dirname, 'static', '404.html'), 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error reading file:', err);
+      res.status(500).send('Internal Server Error');
+      return;
+    }
+
+    const $ = cheerio.load(data);
+
+    res.send($.html());
+  })
 })
 
 app.get('/profile-template.html', function(req, res) {
@@ -111,13 +120,15 @@ app.post('/signup', function(req, res) {
                   return console.log(err.message);
                 }
                 console.log(`A user has been created with ID ${this.lastID}.`);
+                req.session.loggedin = true;
                 req.session.username = req.body.username;
                 req.session.password = req.body.password;
                 req.session.email = req.body.email;
                 req.session.country = req.body.country;
+                req.session.city = req.body.city;
                 req.session.zip = req.body.zip;
                 closeDatabase(db);
-                res.redirect(302, '/profile');
+                res.redirect('/profile');
               });
             }
           }
@@ -130,13 +141,11 @@ app.post('/signup', function(req, res) {
 app.post('/auth', function(req, res) {
   let db = openDatabase();
 
-  let user = req.body.username;
-  let passw = req.body.password;
+  let username = req.body.username;
+  let password = req.body.password;
 
-  if (user && passw) {
+  if (username && password) {
     let sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-    let username = user;
-    let password = passw;
 
     db.get(sql, [username, password], (err, row) => {
       if (err) {
@@ -148,6 +157,7 @@ app.post('/auth', function(req, res) {
       if (row) {
         req.session.loggedin = true;
         req.session.username = username;
+        req.session.password = password;
         req.session.email = row.email;
         req.session.country = row.country;
         req.session.city = row.city;
@@ -182,6 +192,7 @@ app.get('/profile', function(req, res) {
 
     if(req.session.loggedin){
       $('.profile-info__username').append(req.session.username);
+      $('.profile-info__password').append(req.session.password);
       $('.profile-info__email').append(req.session.email);
       $('.profile-info__country').append(req.session.country);
       $('.profile-info__city').append(req.session.city);
