@@ -12,6 +12,8 @@
     "cheerio": "^1.0.0-rc.12",
     "express": "^4.19.2",
     "express-session": "^1.18.0",
+    "morgan": "^1.10.0",
+    "rotating-file-stream": "^3.2.1",
     "sqlite3": "^5.1.7"
   }
 }
