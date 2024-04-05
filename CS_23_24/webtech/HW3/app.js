@@ -80,20 +80,13 @@ app.use((req, res, next) => {
 
 app.get('/', (req, res) => {
   console.log('rendering template');
-  res.render('index.ejs', { username: req.session.username });
+  res.render('index.ejs', { session: req.session });
 });
 
-app.get('/:page', (req, res) => {
-  const page = req.params.page;
-  console.log(`Rendering ${page} template`);
-  try{
-    res.render(page, { session: req.session });
-  }
-  catch{
-    redirect.notFound(req, res);
-  }
+app.get('/profile', (req, res) => {
+  console.log('rendering template');
+  res.render('profile.ejs', { session: req.session });
 });
-
 
 app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
@@ -107,8 +100,19 @@ app.post('/auth', function(req, res) {
   login.authorise(req, res);
 });
 
-app.use((req, res) => {
+app.get('*', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'static', '404.html'));
+});
+
+app.get('/:page', (req, res) => {
+  try {
+    const page = req.params.page;
+    console.log(`Rendering ${page} template`);
+    res.render(page, { session: req.session });
+  } catch (error) {
+    console.error('Error rendering page:', error);
+    redirect.notFound(req, res);
+  }
 });
 
 //// END MIDDLEWARE
