@@ -8,53 +8,53 @@ const rfs = require('rotating-file-stream');
 const database = require('./static/scripts/modules/database.js');
 const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
-const profile = require('./static/scripts/modules/profile-page.js');
+const profile = require('./static/scripts/modules/profile.js');
 const redirect = require('./static/scripts/modules/redirect.js');
 
 const app = express();
 
-//// START LOGGING
+// //// START LOGGING
 
-// <DEV NOTE>
-// Due to the nature of interactive file naming using RFS and Morgan, logging
-// can not be moved to a different module file and has to stay top-level.
+// // <DEV NOTE>
+// // Due to the nature of interactive file naming using RFS and Morgan, logging
+// // can not be moved to a different module file and has to stay top-level.
 
-// Use padding to fill up day and month entries if they are single digits
-const logNamePadding = num => (num > 9 ? "" : "0") + num;
-// Construct the log name in the format YYYYMMDD-hhmm__[index]
-const logPath = path.join(__dirname, 'log');
-function logName(time, index) {
-  // On first startup, there will be no time or index available. However, we don't want to
-  // override any log files. Thus, we append the amount of log files, using a ~ to represent
-  // startup logs. If, for whatever reason, the current time is not accessible, we append the current
-  // index, which will always be available after startup and will never loop, making sure log files
-  // are never lost.
-  if (!time && !index) return `${fs.readdirSync(logPath).length}~access.log`;
-  if (!time) return `${index}-access.log`;
+// // Use padding to fill up day and month entries if they are single digits
+// const logNamePadding = num => (num > 9 ? "" : "0") + num;
+// // Construct the log name in the format YYYYMMDD-hhmm__[index]
+// const logPath = path.join(__dirname, 'log');
+// function logName(time, index) {
+//   // On first startup, there will be no time or index available. However, we don't want to
+//   // override any log files. Thus, we append the amount of log files, using a ~ to represent
+//   // startup logs. If, for whatever reason, the current time is not accessible, we append the current
+//   // index, which will always be available after startup and will never loop, making sure log files
+//   // are never lost.
+//   if (!time && !index) return `${fs.readdirSync(logPath).length}~access.log`;
+//   if (!time) return `${index}-access.log`;
 
-  var year = time.getFullYear();
-  var month = logNamePadding(time.getMonth() + 1); // Months are zero-indexed
-  var day = logNamePadding(time.getDate());
-  var hour = logNamePadding(time.getHours());
-  var minute = logNamePadding(time.getMinutes());
+//   var year = time.getFullYear();
+//   var month = logNamePadding(time.getMonth() + 1); // Months are zero-indexed
+//   var day = logNamePadding(time.getDate());
+//   var hour = logNamePadding(time.getHours());
+//   var minute = logNamePadding(time.getMinutes());
 
-  return `${year}${month}${day}-${hour}${minute}__${index}-access.log`;
-};
+//   return `${year}${month}${day}-${hour}${minute}__${index}-access.log`;
+// };
 
-// For the log name: get the current date/time object and use the amount of stored logs as an index
-const logStream = rfs.createStream(logName, {
-  interval: '10s',
-  size: '100M',
-  path: logPath
-});
+// // For the log name: get the current date/time object and use the amount of stored logs as an index
+// const logStream = rfs.createStream(logName, {
+//   interval: '1d',
+//   size: '100M',
+//   path: logPath
+// });
 
-// If res.statusCode => 400, an error has occurred and this will be sent to console
-// If there are no errors, logging will be done with less detail to save on storage space
+// // If res.statusCode => 400, an error has occurred and this will be sent to console
+// // If there are no errors, logging will be done with less detail to save on storage space
 
-app.use(morgan('dev', {skip: function(req, res) { return res.statusCode < 400 }}));
-app.use(morgan('common', { stream: logStream }));
+// app.use(morgan('dev', {skip: function(req, res) { return res.statusCode < 400 }}));
+// app.use(morgan('common', { stream: logStream }));
 
-//// END LOGGING
+// //// END LOGGING
 
 //// START MIDDLEWARE
 
@@ -67,9 +67,10 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
-  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('scripts')){
-    // INSERT CODE FOR A PROFILE NAVBAR
+  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('scripts') && req.method === 'GET'){
+    if(req.url.includes('.html')) { redirect.notFound(req, res); return; }
     console.log('Page loaded:', req.url);
+    profile.setNavUsername(req, res);
   }
   next();
 });
@@ -78,21 +79,9 @@ app.get('/profile-template', function(req, res) {
   redirect.notFound(req, res);
 })
 
-app.get('/profile-template.html', function(req, res) {
-  redirect.notFound(req, res);
-})
-
 app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
 }));
-
-app.get('/', function(req, res) {
-	res.sendFile(path.join(__dirname + '/static/signup.html'));
-});
-
-app.get('/login.css', (req, responseC) => {
-  responseC.sendFile(path.join(__dirname, "/static/css/login.css"))
-});
 
 app.post('/signup', function(req, res) {
   signup.newUser(req, res);

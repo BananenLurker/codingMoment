@@ -118,7 +118,7 @@ textarea {
 
 .spacing {
   width: 100vw;
-  height: 10vh;
+  height: 14vh;
 }
 
 .header--section {
@@ -161,6 +161,7 @@ a:hover > nav {
   min-height: 6rem;
   background: var(--primary);
   z-index: 2;
+  top: 4vh;
 }
 
 .header--nav > img,
@@ -168,6 +169,17 @@ a:hover > nav {
   height: 80%;
   width: auto;
   margin: auto;
+}
+
+.header--profile {
+  height: 4vh;
+  background: var(--accent);
+}
+
+.header--profile > a {
+  position: absolute;
+  right: 3vw;
+  top: 0.5rem;
 }
 
 .page-header__logo {
@@ -178,7 +190,7 @@ a:hover > nav {
 .page-header__burger-menu {
   display: flex;
   flex-direction: column;
-  top: 2.5vh;
+  top: 6.5vh;
   left: 3vw;
   cursor: pointer;
   width: max-content;
@@ -223,13 +235,13 @@ a:hover > nav {
   transform: translate(0, 0);
 }
 
-/* Nav sidebar styling */
+/* Nav dropdown styling */
 .nav--mobile {
   width: 100vw;
   height: 90vh;
   transform: translate(0, -120%);
   transition: transform 0.3s ease-in-out;
-  top: 10vh;
+  top: 14vh;
   backdrop-filter: blur(5px);
 }
 

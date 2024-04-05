@@ -39,7 +39,6 @@ loginFunctions.authorise = function(req, res){
     });
   } 
   else {
-    console.log('jup');
     res.redirect('/login');
   }
 
