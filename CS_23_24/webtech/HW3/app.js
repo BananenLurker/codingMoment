@@ -58,6 +58,11 @@ const app = express();
 
 //// START MIDDLEWARE
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'static', 'views'));
+
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
 app.use(session({
 	secret: 'secret',
 	resave: true,
@@ -66,22 +71,35 @@ app.use(session({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use((req, res, next) => {
-  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('scripts') && req.method === 'GET'){
-    if(req.url.includes('.html')) { redirect.notFound(req, res); return; }
-    console.log('Page loaded:', req.url);
-    profile.setNavUsername(req, res);
+  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('profile') && !req.url.includes('scripts') && req.method === 'GET'){
+    console.log('page got: ' + req.url);
   }
   next();
 });
 
-app.get('/profile-template', function(req, res) {
-  redirect.notFound(req, res);
-})
+app.get('/', (req, res) => {
+  console.log('rendering template');
+  res.render('index.ejs', { username: req.session.username });
+});
+
+app.get('/:page', (req, res) => {
+  const page = req.params.page;
+  if(page !== 'profile') {
+      console.log(`Rendering ${page} template`);
+      res.render(page, { username: req.session.username });
+  }
+});
+
 
 app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
 }));
+
+app.get('/profile-template', function(req, res) {
+  redirect.notFound(req, res);
+})
 
 app.post('/signup', function(req, res) {
   signup.newUser(req, res);

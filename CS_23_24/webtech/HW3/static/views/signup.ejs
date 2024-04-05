@@ -11,7 +11,14 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <a class="header--profile__login font-size--small link--simple" href="login">Login</a>
+    <% if (username) { %>
+      <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
+        <%= username %>
+      </a>
+      <% } else { %>
+        <a onclick="window.location.href='/login'"
+          class="header--profile__login font-size--small link--simple">Login</a>
+        <% } %>
   </header>
   <div class="login">
     <h1>Sign up</h1>

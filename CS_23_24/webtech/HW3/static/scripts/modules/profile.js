@@ -8,7 +8,7 @@ const profileFunctions = {};
 
 profileFunctions.getProfilePage = function(req, res){
   const filePath = path.join(__dirname, '..', '..', 'profile-template.html');
-  fs.readFileSync(filePath, 'utf8', (err, data) => {
+  fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading file:', err);
       res.status(500).send('Internal Server Error');
@@ -36,42 +36,5 @@ profileFunctions.getProfilePage = function(req, res){
     res.send($.html());
   });
 }
-
-profileFunctions.setNavUsername = function(req, res) {
-  console.log("HELP ME IM BEING CALLED!!!")
-  if (req.url.includes('auth') || req.url.includes('profile')) {
-      return;
-  }
-
-  var filePath = '';
-  if (req.url === '/') {
-    filePath = path.join('static', 'index.html');
-  } 
-  else {
-    filePath = path.join('static', req.url) + '.html';
-  }
-
-  fs.readFileSync(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-  }
-
-  const $ = cheerio.load(data);
-
-  if (req.session.loggedin) {
-    console.log('username set');
-    $('.header--profile__login').text(req.session.username);
-    $('.header--profile__login').attr('onclick', 'location.href="profile"');
-  } 
-  else {
-    console.log('login');
-    $('.header--profile__login').text('Login');
-    $('.header--profile__login').attr('href', 'login');
-  }
-  res.send($.html());
-  });
-};
 
 module.exports = profileFunctions;

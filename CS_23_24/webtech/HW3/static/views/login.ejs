@@ -4,19 +4,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,minimum-scale=1">
-  <title>Sign up</title>
+  <title>Login</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
   <link href="./css/login.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
   <header class="header--profile position--sticky">
-    <a class="header--profile__login font-size--small link--simple" href="login">Login</a>
+    <% if (username) { %>
+      <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
+        <%= username %>
+      </a>
+      <% } else { %>
+        <a onclick="window.location.href='/login'"
+          class="header--profile__login font-size--small link--simple">Login</a>
+        <% } %>
   </header>
   <div class="login">
-    <h1>Sign up</h1>
-    <h2 class="user-notification"></h2>
-    <form action="/signup" method="post">
+    <h1>Login</h1>
+    <form action="/auth" method="post">
       <label for="username">
         <i class="fas fa-user"></i>
       </label>
@@ -25,11 +31,7 @@
         <i class="fas fa-lock"></i>
       </label>
       <input type="password" name="password" placeholder="Password" id="password" required>
-      <input type="email" name="email" placeholder="Email" id="email" required>
-      <input type="country" name="country" placeholder="Country" id="country" required>
-      <input type="city" name="city" placeholder="City" id="city" required>
-      <input type="zip" name="zip" placeholder="zip code" id="zip" required>
-      <input type="submit" value="Sign up">
+      <input type="submit" value="Login">
     </form>
   </div>
 </body>
