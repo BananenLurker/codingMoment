@@ -78,6 +78,7 @@ textarea {
 
 .link--simple {
   text-decoration: underline var(--primary) 1px;
+  cursor: pointer;
 }
 
 .link--animation {
@@ -174,6 +175,7 @@ a:hover > nav {
 .header--profile {
   height: 4vh;
   background: var(--accent);
+  z-index: 2;
 }
 
 .header--profile > a {

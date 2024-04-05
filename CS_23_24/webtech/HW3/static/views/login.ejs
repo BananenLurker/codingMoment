@@ -11,9 +11,9 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (username) { %>
+    <% if (session.loggedin) { %>
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
-        <%= username %>
+        <%= session.username %>
       </a>
       <% } else { %>
         <a onclick="window.location.href='/login'"

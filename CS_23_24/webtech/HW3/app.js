@@ -8,7 +8,6 @@ const rfs = require('rotating-file-stream');
 const database = require('./static/scripts/modules/database.js');
 const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
-const profile = require('./static/scripts/modules/profile.js');
 const redirect = require('./static/scripts/modules/redirect.js');
 
 const app = express();
@@ -86,9 +85,12 @@ app.get('/', (req, res) => {
 
 app.get('/:page', (req, res) => {
   const page = req.params.page;
-  if(page !== 'profile') {
-      console.log(`Rendering ${page} template`);
-      res.render(page, { username: req.session.username });
+  console.log(`Rendering ${page} template`);
+  try{
+    res.render(page, { session: req.session });
+  }
+  catch{
+    redirect.notFound(req, res);
   }
 });
 
@@ -97,20 +99,12 @@ app.use(express.static(path.join(__dirname, 'static'), {
   extensions: ['html']
 }));
 
-app.get('/profile-template', function(req, res) {
-  redirect.notFound(req, res);
-})
-
 app.post('/signup', function(req, res) {
   signup.newUser(req, res);
 });
 
 app.post('/auth', function(req, res) {
   login.authorise(req, res);
-});
-
-app.get('/profile', function(req, res) {
-  profile.getProfilePage(req, res);
 });
 
 app.use((req, res) => {
