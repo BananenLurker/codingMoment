@@ -59,7 +59,6 @@ signupFunctions.newUser = function(req, res){
 }
 
 function hasUppercase(str){
-  console.log(str);
   return /[A-Z]/.test(str);
 }
 

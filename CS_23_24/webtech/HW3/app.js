@@ -2,10 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const fs = require('fs');
-const cheerio = require('cheerio');
 const morgan = require('morgan');
 const rfs = require('rotating-file-stream');
-const database = require('./static/scripts/modules/database.js');
 const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
 const redirect = require('./static/scripts/modules/redirect.js');
@@ -71,15 +69,13 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use((req, res, next) => {
-  if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('profile') && !req.url.includes('scripts') && req.method === 'GET'){
-    console.log('page got: ' + req.url);
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('profile') && !req.url.includes('scripts') && req.method === 'GET'){
+//   }
+//   next();
+// });
 
 app.get('/', (req, res) => {
-  console.log('rendering template');
   res.render('index.ejs', { session: req.session });
 });
 
@@ -91,11 +87,9 @@ app.get('/:page', (req, res) => {
       return redirect.notFound(req, res);
     }
     else if(page.includes('login') || page.includes('signup')){
-      console.log(`Rendering ${page} template`);
       res.render(page, { session: req.session, problem: null });
     }
     else{
-      console.log(`Rendering ${page} template`);
       res.render(page, { session: req.session });
     }
   });

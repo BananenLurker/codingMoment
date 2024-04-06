@@ -19,7 +19,6 @@ dbFunctions.close = function(db){
       console.error(err.message);
     }
     console.log('Closed the database connection.');
-    console.log('--------------------------------');
   });
 }
 
