@@ -7,6 +7,7 @@ const rfs = require('rotating-file-stream');
 const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
 const redirect = require('./static/scripts/modules/redirect.js');
+const reservations = require('./static/scripts/modules/reservations.js');
 
 const app = express();
 
@@ -88,6 +89,9 @@ app.get('/:page', (req, res) => {
     }
     else if(page.includes('login') || page.includes('signup')){
       res.render(page, { session: req.session, problem: null });
+    }
+    else if(page.includes('reservation-history')){
+      reservations.get(req, res);
     }
     else{
       res.render(page, { session: req.session });

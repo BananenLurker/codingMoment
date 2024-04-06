@@ -11,6 +11,7 @@ function revealPassword(){
       pw.innerHTML = password;
       pw.classList.remove('cursor--pointer');
       pw.classList.add('cursor--text');
+      console.log('ik ben geklikt!');
     });
   }
 }
