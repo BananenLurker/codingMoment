@@ -83,9 +83,18 @@ app.get('/', (req, res) => {
   res.render('index.ejs', { session: req.session });
 });
 
-app.get('/profile', (req, res) => {
-  console.log('rendering template');
-  res.render('profile.ejs', { session: req.session });
+app.get('/:page', (req, res) => {
+  const page = req.params.page;
+  fs.access(`./static/views/${page}.ejs`, fs.F_OK, (err) => {
+    if (err) {
+      console.error(err);
+      return redirect.notFound(req, res);
+    }
+    else{
+      console.log(`Rendering ${page} template`);
+      res.render(page, { session: req.session });
+    }
+  });
 });
 
 app.use(express.static(path.join(__dirname, 'static'), {
@@ -101,18 +110,7 @@ app.post('/auth', function(req, res) {
 });
 
 app.get('*', (req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'static', '404.html'));
-});
-
-app.get('/:page', (req, res) => {
-  try {
-    const page = req.params.page;
-    console.log(`Rendering ${page} template`);
-    res.render(page, { session: req.session });
-  } catch (error) {
-    console.error('Error rendering page:', error);
-    redirect.notFound(req, res);
-  }
+  redirect.notFound(req, res);
 });
 
 //// END MIDDLEWARE

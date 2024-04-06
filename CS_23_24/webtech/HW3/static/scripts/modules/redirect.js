@@ -5,7 +5,7 @@ const path = require('path');
 const redirectFunctions = {};
 
 redirectFunctions.notFound = function(req, res){
-  fs.readFileSync(path.join(__dirname, '..', '..', '404.html'), 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, '..', '..', '404.html'), 'utf8', (err, data) => {
     if (err) {
       console.error('Error reading file:', err);
       res.status(500).send('Internal Server Error');
