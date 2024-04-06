@@ -90,6 +90,10 @@ app.get('/:page', (req, res) => {
       console.error(err);
       return redirect.notFound(req, res);
     }
+    else if(page.includes('login') || page.includes('signup')){
+      console.log(`Rendering ${page} template`);
+      res.render(page, { session: req.session, problem: null });
+    }
     else{
       console.log(`Rendering ${page} template`);
       res.render(page, { session: req.session });

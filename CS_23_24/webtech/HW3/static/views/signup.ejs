@@ -22,7 +22,12 @@
   </header>
   <div class="login">
     <h1>Sign up</h1>
-    <h2 class="user-notification"></h2>
+    <h2 class="user-notification">
+      <% if (problem) { %>
+        <%=problem%>
+          <% } else { %>
+            <% } %>
+    </h2>
     <form action="/signup" method="post">
       <label for="username">
         <i class="fas fa-user"></i>

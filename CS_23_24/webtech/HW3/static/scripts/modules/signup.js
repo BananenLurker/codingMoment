@@ -1,9 +1,7 @@
 // Signup operations are handled in this file
 
 const database = require('./database');
-const cheerio = require('cheerio');
 const path = require('path');
-const fs = require('fs');
 
 const signupFunctions = {};
 
@@ -11,30 +9,30 @@ signupFunctions.newUser = function(req, res){
   let db = database.open();
   let userinfo = [req.body.username, req.body.password, req.body.email, req.body.country, req.body.city, req.body.zip];
   let sql = 'INSERT INTO user(username, password, email, country, city, zip) VALUES(?,?,?,?,?,?)';
-  const filePath = path.join(__dirname, '..', '..', 'signup.html');
+  const filePath = path.join(__dirname, '..', '..', 'views', 'signup.ejs');
 
   checkExistance("username", req.body.username, function(usernameExists) {
     if (usernameExists) {
       database.close(db);
-      userNotification(res, filePath, "Username already exists!");
+      res.render(filePath, {session: req.session, problem: "Username already exists!"});
       return;
     } 
     else {
       checkExistance("email", req.body.email, function(emailExists) {
         if (emailExists) {
           database.close(db);
-          userNotification(res, filePath, "Email already exists!");
+          res.render(filePath, {session: req.session, problem: "Email already exists!"});
           return;
         } 
         else {
           if(checkCharacters(req.body.username, req.body.email)){
             database.close(db);
-            userNotification(res, filePath, "Username or email contains excluded characters!");
+            res.render(filePath, {session: req.session, problem: "Username or email contains excluded characters!"});
             return;
           }
           else if(hasUppercase(req.body.username)){
+            res.render(filePath, {session: req.session, problem: "Username cannot contain uppercase letters!"});
             database.close(db);
-            userNotification(res, filePath, "Username cannot contain uppercase letters!");
             return;
           }
           else{
@@ -60,22 +58,9 @@ signupFunctions.newUser = function(req, res){
   });
 }
 
-function userNotification(res, filePath, errorType){
-  fs.readFile(filePath, 'utf8', (err, data) => {
-    if (err) {
-      console.error('Error reading file:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    const $ = cheerio.load(data);
-    $('.user-notification').append(errorType);
-    res.send($.html());
-  })
-}
-
 function hasUppercase(str){
-  return /^[A-Z]/.test(str);
+  console.log(str);
+  return /[A-Z]/.test(str);
 }
 
 function checkExistance(rowname, value, callback) {
