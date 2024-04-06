@@ -53,36 +53,19 @@
     </nav>
   </header>
 
-  <main class="main--profile">
+  <main class="main--reservation-history">
     <div class="spacing"></div>
-    <article class="profile-info">
-      <section class="profile-info__data font-size--medium">
-        <% if (session.loggedin) { %>
-          <p class="profile-info__username">
-            <%= session.username %>
-          </p>
-          <p class="profile-info__password cursor--pointer">
-            <%= session.password %>
-          </p>
-          <p class="profile-info__email">
-            <%= session.email %>
-          </p>
-          <p class="profile-info__country">
-            <%= session.country %>
-          </p>
-          <p class="profile-info__city">
-            <%= session.city %>
-          </p>
-          <p class="profile-info__zip">
-            <%= session.zip %>
-          </p>
-          <a role="button" href="reservation-history" class="reservation-history-button">Reservation history</a>
-          <% } else { %>
-            <p>Please log in <a href="login" class="link--simple">here</a>!</p>
-            <% } %>
-      </section>
+    <article class="reservations">
+      <% if (session.loggedin) { %>
+        <section class="reservations__entries"></section>
+        <% } else { %>
+          <p class="font-size--medium">Please log in <a href="login" class="link--simple">here</a> to see your
+            reservation
+            history!</p>
+          <% } %>
     </article>
   </main>
+
   <footer class="footer">
     <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
     <div class="footer__logo--wrapper">
@@ -98,6 +81,6 @@
     </div>
   </footer>
 </body>
-<script src="scripts/reveal-password.js"></script>
+<script src="scripts/reservations.js"></script>
 
 </html>
