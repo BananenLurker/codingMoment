@@ -59,7 +59,9 @@
       <% if (session.loggedin) { %>
         <section class="reservations__entries">
           <ul>
-            <li>Title: Lend date:</li>
+            <li>
+              <p class="font-size--medium">Title: Lend date:</p>
+            </li>
             <% history.forEach(function(entry){ %>
               <li>
                 <p class="font-size--medium">

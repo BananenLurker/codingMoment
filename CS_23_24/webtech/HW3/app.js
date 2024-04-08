@@ -80,6 +80,10 @@ app.get('/', (req, res) => {
   res.render('index.ejs', { session: req.session });
 });
 
+app.get('/reserve', (req, res) => {
+  reservations.make(req, res, 1);
+});
+
 app.get('/:page', (req, res) => {
   const page = req.params.page;
   fs.access(`./static/views/${page}.ejs`, fs.F_OK, (err) => {
@@ -99,9 +103,11 @@ app.get('/:page', (req, res) => {
   });
 });
 
-app.use(express.static(path.join(__dirname, 'static'), {
-  extensions: ['html']
-}));
+app.use(express.static(path.join(__dirname, 'static')));
+
+// app.use(express.static(path.join(__dirname, 'static'), {
+//   extensions: ['html']
+// }));
 
 app.post('/signup', function(req, res) {
   signup.newUser(req, res);

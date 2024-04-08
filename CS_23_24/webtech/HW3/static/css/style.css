@@ -687,7 +687,7 @@ a:hover > nav {
 
 /* reservation history page */
 .reservations {
-  height: 71vh;
+  min-height: 71vh;
 }
 
 /* Accessibility styling - tab-index*/
