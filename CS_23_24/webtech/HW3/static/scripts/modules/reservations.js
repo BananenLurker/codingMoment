@@ -101,6 +101,7 @@ reservFunctions.available = function(res, db, bookID, callback) {
       callback(row.amount);
     } 
     else {
+      database.close(db);
       console.error('BookID not found!');
       res.status(500).send('Internal Server Error');
       return;
