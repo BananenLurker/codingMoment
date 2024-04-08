@@ -80,8 +80,8 @@ app.get('/', (req, res) => {
   res.render('index.ejs', { session: req.session });
 });
 
-app.get('/reserve', (req, res) => {
-  reservations.make(req, res, 1);
+app.get('/getdata.js', function (req, res) {
+  reservations.make(req, res, req.query.bookID);
 });
 
 app.get('/:page', (req, res) => {
@@ -95,7 +95,7 @@ app.get('/:page', (req, res) => {
       res.render(page, { session: req.session, problem: null });
     }
     else if(page.includes('reservation-history')){
-      reservations.get(req, res);
+      reservations.load(req, res);
     }
     else{
       res.render(page, { session: req.session });
