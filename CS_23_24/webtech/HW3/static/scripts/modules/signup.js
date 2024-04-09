@@ -52,7 +52,7 @@ signupFunctions.newUser = function(req, res){
 }
 
 function checkCharacters(str){
-  return /^[A-Za-z0-9]*$/.test(str);
+  return /^[a-z0-9]*$/.test(str);
 }
 
 function checkExistance(rowname, value, callback) {
