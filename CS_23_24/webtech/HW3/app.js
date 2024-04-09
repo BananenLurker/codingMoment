@@ -70,18 +70,16 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use((req, res, next) => {
-//   if(!req.url.includes('assets') && !req.url.includes('css') && !req.url.includes('profile') && !req.url.includes('scripts') && req.method === 'GET'){
-//   }
-//   next();
-// });
-
 app.get('/', (req, res) => {
   res.render('index.ejs', { session: req.session });
 });
 
-app.get('/getdata.js', function (req, res) {
+app.get('/reservebook', function (req, res) {
   reservations.make(req, res, req.query.bookID);
+});
+
+app.get('/returnbook', function (req, res) {
+  reservations.return(req, res, req.query.bookID);
 });
 
 app.get('/:page', (req, res) => {

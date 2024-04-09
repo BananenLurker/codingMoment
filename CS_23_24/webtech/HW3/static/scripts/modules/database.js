@@ -22,4 +22,11 @@ dbFunctions.close = function(db){
   });
 }
 
+dbFunctions.problem = function(db, err){
+  dbFunctions.close(db);
+  console.error(err.message);
+  res.status(500).send('Internal Server Error');
+  return;
+}
+
 module.exports = dbFunctions;
