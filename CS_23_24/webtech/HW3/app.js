@@ -87,7 +87,7 @@ app.get('/:page', (req, res) => {
   fs.access(`./static/views/${page}.ejs`, fs.F_OK, (err) => {
     if (err) {
       console.error(err);
-      return redirect.notFound(req, res);
+      redirect.notFound(req, res);
     }
     else if(page.includes('login') || page.includes('signup')){
       res.render(page, { session: req.session, problem: null });
