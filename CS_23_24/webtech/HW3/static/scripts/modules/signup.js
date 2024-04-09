@@ -24,42 +24,35 @@ signupFunctions.newUser = function(req, res){
           res.render(filePath, {session: req.session, problem: "Email already exists!"});
           return;
         } 
-        else {
-          if(checkCharacters(req.body.username, req.body.email)){
-            database.close(db);
-            res.render(filePath, {session: req.session, problem: "Username or email contains excluded characters!"});
-            return;
-          }
-          else if(hasUppercase(req.body.username)){
-            res.render(filePath, {session: req.session, problem: "Username cannot contain uppercase letters!"});
-            database.close(db);
-            return;
-          }
-          else{
-            db.run(sql, userinfo, function(err) {
-              if (err) {
-                return console.log(err.message);
-              }
-              console.log(`A user has been created with ID ${this.lastID}.`);
-              req.session.loggedin = true;
-              req.session.username = req.body.username;
-              req.session.password = req.body.password;
-              req.session.email = req.body.email;
-              req.session.country = req.body.country;
-              req.session.city = req.body.city;
-              req.session.zip = req.body.zip;
-              database.close(db);
-              res.redirect('/profile');
-            });
-          }
+        else if(!checkCharacters(req.body.username, req.body.email)){
+          database.close(db);
+          res.render(filePath, {session: req.session, problem: "Username or email contains excluded characters!"});
+          return;
         }
+        else{
+          db.run(sql, userinfo, function(err) {
+            if (err) {
+              return console.log(err.message);
+            }
+            console.log(`A user has been created with ID ${this.lastID}.`);
+            req.session.loggedin = true;
+            req.session.username = req.body.username;
+            req.session.password = req.body.password;
+            req.session.email = req.body.email;
+            req.session.country = req.body.country;
+            req.session.city = req.body.city;
+            req.session.zip = req.body.zip;
+            database.close(db);
+            res.redirect('/profile');
+          });
+      }
       });
     }
   });
 }
 
-function hasUppercase(str){
-  return /[A-Z]/.test(str);
+function checkCharacters(str){
+  return /^[A-Za-z0-9]*$/.test(str);
 }
 
 function checkExistance(rowname, value, callback) {
@@ -78,16 +71,6 @@ function checkExistance(rowname, value, callback) {
       callback(false);
     }
   });
-}
-
-function checkCharacters(username, email){
-  if(username.includes(" ", ";", "~", "/", ",", "?", "!", "^")){
-    console.log("Username or email contains invalid characters");
-    return true;
-  }
-  else{
-    return false;
-  }
 }
 
 module.exports = signupFunctions;
