@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1">
   <title>Sign up</title>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-  <link href="./css/login.css" rel="stylesheet" type="text/css">
+  <link href="./css/style.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
@@ -20,30 +20,71 @@
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
   </header>
-  <div class="login">
-    <h1>Sign up</h1>
-    <h2 class="user-notification">
-      <% if (problem) { %>
-        <%=problem%>
-          <% } else { %>
-            <% } %>
-    </h2>
-    <form action="/signup" method="post">
-      <label for="username">
-        <i class="fas fa-user"></i>
-      </label>
-      <input type="text" name="username" placeholder="Username" id="username" required>
-      <label for="password">
-        <i class="fas fa-lock"></i>
-      </label>
-      <input type="password" name="password" placeholder="Password" id="password" required>
-      <input type="email" name="email" placeholder="Email" id="email" required>
-      <input type="country" name="country" placeholder="Country" id="country" required>
-      <input type="city" name="city" placeholder="City" id="city" required>
-      <input type="zip" name="zip" placeholder="zip code" id="zip" required>
-      <input type="submit" value="Sign up">
-    </form>
-  </div>
+  <header class="header--nav position--sticky">
+    <label class="page-header__burger-menu position--sticky">
+      <input id="toggle" type="checkbox">
+    </label>
+    <a href="/">
+      <img class="page-header__logo" src="/assets/homebrew-logo.png" alt="Homebrew Press logo">
+    </a>
+    <nav class="nav--desktop">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month">Book of the month</a></li>
+        <li><a href="review">Review</a></li>
+        <li><a href="info">Info</a></li>
+        <li><a href="about-author">Stephen King</a></li>
+        <li><a href="king-books">Other books</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="contact">Contact</a></li>
+      </ul>
+    </nav>
+    <nav class="nav--mobile position--sticky">
+      <ul class="nav__list font-size--medium">
+        <li><a href="book-of-the-month">Book of the month</a></li>
+        <li><a href="review">Review</a></li>
+        <li><a href="info">Info</a></li>
+        <li><a href="about-author">Stephen King</a></li>
+        <li><a href="king-books">Other books</a></li>
+        <li><a href="about">About</a></li>
+        <li><a href="contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="main--signup">
+    <article class="signup-form-wrapper">
+        <h1 class="signup-form__title font-size--medium">Sign up</h1>
+        <h2 class="user-notification">
+          <% if (problem) { %>
+            <%=problem%>
+              <% } else { %>
+                <% } %>
+        </h2>
+        <form action="/signup" method="post" class="signup-form">
+          <input type="text" name="username" placeholder="Username" id="username" required>
+          <input type="password" name="password" placeholder="Password" id="password" required>
+          <input type="email" name="email" placeholder="Email" id="email" required>
+          <input type="country" name="country" placeholder="Country" id="country" required>
+          <input type="city" name="city" placeholder="City" id="city" required>
+          <input type="zip" name="zip" placeholder="zip code" id="zip" required>
+          <button type="submit" value="Sign up" class="signup-form__submit-button">
+            Sign up
+          </button>
+        </form>
+    </article>
+  </main>
 </body>
-
+<footer class="footer">
+  <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
+  <div class="footer__logo--wrapper">
+    <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
+      <img src="/assets/youtube.svg" alt="YouTube logo">
+    </a>
+    <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
+      <img src="/assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
+    </a>
+    <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
+      <img src="/assets/instagram.svg" alt="Instagram logo">
+    </a>
+  </div>
+</footer>
 </html>

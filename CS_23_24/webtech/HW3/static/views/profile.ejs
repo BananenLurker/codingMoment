@@ -56,17 +56,25 @@
   <main class="main--profile">
     <div class="spacing"></div>
     <article class="profile-info">
-      <section class="profile-info__data font-size--medium">
+      <section class="profile-info__data font-size--small">
         <% if (session.loggedin) { %>
+          <p class ="profile-info__title font-size--medium">
+            Credentials
+          </p>
           <p class="profile-info__username">
             <%= session.username %>
-          </p>
-          <p class="profile-info__password cursor--pointer">
-            <%= session.password %>
           </p>
           <p class="profile-info__email">
             <%= session.email %>
           </p>
+          <p class="profile-info__password cursor--pointer">
+            <%= session.password %>
+          </p>
+      </section>
+      <section class="profile-info__data font-size--small">
+        <p class ="profile-info__title font-size--medium">
+          Personal Info
+        </p>
           <p class="profile-info__country">
             <%= session.country %>
           </p>
@@ -76,11 +84,11 @@
           <p class="profile-info__zip">
             <%= session.zip %>
           </p>
+      </section>
           <a role="button" href="reservation-history" class="reservation-history-button">Reservation history</a>
           <% } else { %>
             <p>Please log in <a href="login" class="link--simple">here</a>!</p>
             <% } %>
-      </section>
     </article>
   </main>
   <footer class="footer">

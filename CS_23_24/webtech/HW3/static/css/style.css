@@ -178,6 +178,10 @@ a:hover > nav {
   z-index: 2;
 }
 
+.header--profile__login {
+  height: 2vh;
+}
+
 .header--profile > a {
   position: absolute;
   right: 3vw;
@@ -417,6 +421,116 @@ a:hover > nav {
 }
 
 .contact-form__submit-button {
+  margin-top: 3rem;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Login page styling */
+
+.main--login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+    url("/assets/hero-books.jpg") center no-repeat;
+  background-size: cover;
+}
+
+.login-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.login-form-wrapper {
+  text-align: center;
+  background: rgba(19, 28, 39, 0.6);
+  width: 80vw;
+  color: white;
+  border-radius: 20px;
+}
+
+.login-form__title {
+  width: 100%;
+  margin: auto;
+  padding-top: 1rem;
+}
+
+.login-form input,
+.login-form textarea {
+  padding: 2rem;
+  margin-top: 0.8rem;
+  width: 80%;
+}
+
+.login-form label {
+  padding: 1rem;
+  margin-top: 0.8rem;
+  width: 80%;
+}
+
+.login-form__submit-button {
+  margin-top: 3rem;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* Signup page styling */
+
+.main--signup {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+    url("/assets/hero-books.jpg") center no-repeat;
+  background-size: cover;
+}
+
+.signup-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.signup-form-wrapper {
+  text-align: center;
+  background: rgba(19, 28, 39, 0.6);
+  width: 80vw;
+  color: white;
+  border-radius: 20px;
+}
+
+.signup-form__title {
+  width: 100%;
+  margin: auto;
+  padding-top: 1rem;
+}
+
+.signup-form input,
+.signup-form textarea {
+  padding: 2rem;
+  margin-top: 1.1rem;
+  width: 80%;
+}
+
+.signup-form label {
+  padding: 1rem;
+  margin-top: 0.8rem;
+  width: 80%;
+}
+
+.signup-form__submit-button {
   margin-top: 3rem;
   width: 100%;
   border-bottom-left-radius: 10px;
@@ -673,21 +787,76 @@ a:hover > nav {
 }
 
 /* profile section */
+.main--profile {
+  height: 95vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+    url("/assets/hero-books.jpg") center no-repeat;
+  background-size: cover;
+}
 
 .profile-info {
   display: flex;
   justify-content: center;
+  text-align: center;
+  background: rgba(19, 28, 39, 0.6);
+  width: 60%;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  flex-direction: column;
 }
 
 .profile-info__data {
-  width: 80vw;
-  height: 80vh;
-  background: lightblue;
+  align-self: center;
+  width: 80%;
+  height: auto;
+  border-radius: 20px;
+  background: #131c27;
+  margin: 1.5rem;
+}
+
+.profile-info__title {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 /* reservation history page */
-.reservations {
-  min-height: 71vh;
+
+.main--reservation-history {
+  align-items: center;
+  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+    url("/assets/hero-books.jpg") center no-repeat;
+  background-size: cover;
+}
+
+.reservations__entries {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-width: 100%;
+}
+
+.reservations__entries ul {
+  text-align: center;
+  background: rgba(19, 28, 39, 0.6);
+  width: 70%;
+  height: max-content;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  list-style: none;
+}
+
+.reservations__entries ul li {
+  background: #131c27;
+  width: 80%;
+  color: rgb(255, 255, 255);
+  border-radius: 20px;
+  margin: 1rem auto;
+  height: auto;
+  padding: 1.2rem;
 }
 
 /* Accessibility styling - tab-index*/
@@ -820,6 +989,14 @@ a:hover > nav {
   }
 
   .main--contact {
+    min-height: 100vh;
+  }
+
+  .main--login {
+    min-height: 100vh;
+  }
+
+  .main--signup {
     min-height: 100vh;
   }
 

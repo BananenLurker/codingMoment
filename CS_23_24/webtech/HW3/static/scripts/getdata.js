@@ -1,6 +1,6 @@
 function reserveBook(e) {
   var bookID = document.getElementById("reserveid").value;
-  var url = "reservebook?bookID="+bookID;
+  var url = `reservebook?bookID=`+bookID;
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
   req.onreadystatechange = function () {
@@ -16,7 +16,7 @@ document.getElementById("reserve").addEventListener("submit", reserveBook);
 
 function returnBook(e) {
   var bookID = document.getElementById("returnid").value;
-  var url = "returnbook?bookID="+bookID;
+  var url = `returnbook?bookID=`+bookID;
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
   req.onreadystatechange = function () {
