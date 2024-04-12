@@ -8,6 +8,8 @@ const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
 const redirect = require('./static/scripts/modules/redirect.js');
 const reservations = require('./static/scripts/modules/reservations.js');
+const bookDetails = require('./static/scripts/book-details.js');
+const database = require('./static/scripts/modules/database');
 
 const app = express();
 
@@ -71,15 +73,39 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
-  res.render('index.ejs', { session: req.session });
+  res.render('catalogue.ejs', { session: req.session });
 });
 
-app.get('/reservebook', function (req, res) {
+app.use((req, res, next) => {
+  // Remove trailing slash if present
+  if (req.path !== '/' && req.path.endsWith('/')) {
+    const newPath = req.path.slice(0, -1);
+    // Redirect to the new path without the trailing slash
+    return res.redirect(301, newPath + req.url.slice(req.path.length));
+  }
+  // If there's no trailing slash, proceed to the next middleware
+  next();
+});
+
+app.get('/book/reservebook', function (req, res) {
   reservations.make(req, res, req.query.bookID);
 });
 
-app.get('/returnbook', function (req, res) {
+app.get('/book/returnbook', function (req, res) {
   reservations.return(req, res, req.query.bookID);
+});
+
+app.get('/book/:bookId', async (req, res) => {
+  const bookId = req.params.bookId;
+  const bookInfo = await bookDetails.getBookDetails(bookId);
+  console.log(req.params);
+
+  if (bookInfo) {
+    res.render('book', { session: req.session, book: bookInfo });
+  } 
+  else {
+    redirect.notFound(req, res);
+  }
 });
 
 app.get('/:page', (req, res) => {
@@ -95,6 +121,9 @@ app.get('/:page', (req, res) => {
     else if(page.includes('reservation-history')){
       reservations.load(req, res);
     }
+    else if(page === 'book'){
+      redirect.notFound(req, res);
+    }
     else{
       res.render(page, { session: req.session });
     }
@@ -106,6 +135,31 @@ app.use(express.static(path.join(__dirname, 'static')));
 // app.use(express.static(path.join(__dirname, 'static'), {
 //   extensions: ['html']
 // }));
+
+app.get('/catalogue/books', async (req, res) => {
+  const limit = 20;
+  const page = req.query.page ? parseInt(req.query.page) : 1;
+  const offset = (page - 1) * limit;
+
+  const db = database.open();
+  db.all("SELECT * FROM book ORDER BY ID LIMIT ? OFFSET ?", [limit, offset], (err, rows) => {
+      database.close(db);
+      if (err) {
+          console.error('Error fetching books:', err);
+          res.status(500).json({error: 'Internal server error'});
+      }
+      else {
+        const books = rows.map(row => ({
+          bookId: row.ID,
+          title: row.title,
+          author: row.author,
+          coverImageUrl: row.cover,
+          copiesLeft: row.amount
+        }));
+        res.json(books);
+      }
+  });
+});
 
 app.post('/signup', function(req, res) {
   signup.newUser(req, res);

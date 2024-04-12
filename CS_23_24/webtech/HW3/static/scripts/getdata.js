@@ -1,5 +1,5 @@
 function reserveBook(e) {
-  var bookID = document.getElementById("reserveid").value;
+  var bookID = window.location.href.split('/')[4];
   var url = `reservebook?bookID=`+bookID;
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
@@ -12,7 +12,7 @@ function reserveBook(e) {
   e.preventDefault();
 }
 
-document.getElementById("reserve").addEventListener("submit", reserveBook);
+document.getElementById("reserve").addEventListener("click", reserveBook);
 
 function returnBook(e) {
   var bookID = document.getElementById("returnid").value;
@@ -28,4 +28,4 @@ function returnBook(e) {
   e.preventDefault();
 }
 
-document.getElementById('return').addEventListener("submit", returnBook);
+// document.getElementById('return').addEventListener("click", returnBook);

@@ -859,6 +859,49 @@ a:hover > nav {
   padding: 1.2rem;
 }
 
+/* catalogue and book styling */
+
+#book-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.book {
+  flex: 1 0 22%;
+  border: 2px strong #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.book img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.copies {
+  font-weight: bold;
+}
+
+.green {
+  color: green;
+}
+
+.orange {
+  color: orange;
+}
+
+.red {
+  color: red;
+}
+
 /* Accessibility styling - tab-index*/
 .page-header__burger-menu:has(> input:focus-visible)::before,
 .page-header__burger-menu:has(> input:focus-visible)::after,
