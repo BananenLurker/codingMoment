@@ -68,6 +68,9 @@
                   <p class="font-size--small">
                     <%= entry.title %>:
                       <%= entry.LendDate%>
+                        <% if (entry.Returned==='false' ) { %>
+                          <br><a data-book-id="<%= entry.BookID %>" class="link--simple-white return">return</a>
+                          <% } %>
                   </p>
                 </li>
                 <% }) %>
@@ -102,6 +105,6 @@
     </div>
   </footer>
 </body>
-<script src="scripts/reservations.js"></script>
+<script src="../scripts/return-books.js"></script>
 
 </html>

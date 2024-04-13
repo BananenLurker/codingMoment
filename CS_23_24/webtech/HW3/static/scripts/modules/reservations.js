@@ -6,7 +6,7 @@ const reservFunctions = {};
 reservFunctions.load = function(req, res){
   if(req.session.loggedin){
     const db = database.open();
-    let sql = "SELECT book.title, reservation.LendDate FROM book JOIN reservation ON reservation.BookID = book.ID JOIN user ON user.ID = reservation.UserID WHERE username=? AND password=? AND reservation.Returned = 'true'";
+    let sql = 'SELECT book.title, reservation.LendDate, reservation.returned, reservation.bookID FROM book JOIN reservation ON reservation.BookID = book.ID JOIN user ON user.ID = reservation.UserID WHERE username=? AND password=? ORDER BY Returned';
 
     const username = req.session.username;
     const password = req.session.password;
@@ -35,14 +35,20 @@ reservFunctions.make = function(req, res, bookID) {
       database.problem(db, err);
       return;
     }
-    if (row) {
+    if (!row) {
+      database.close(db);
+      res.send('Please log in first!');
+    }
+    else {
       userID = row.ID;
-
-      reservFunctions.available(res, db, bookID, (bookAvailable) => {
-        reservFunctions.inPosession(res, db, bookID, userID, (userHasBook) => {
-          console.log(userHasBook);
-          if(!userHasBook){
-            if (bookAvailable > 0) {
+      reservFunctions.inPosession(res, db, bookID, userID, (userHasBook) => {
+        if(userHasBook){
+          database.close(db);
+          res.send('You have this book already ):');
+        }
+        else{
+          reservFunctions.available(res, db, bookID, (bookAvailable) => {
+            if(bookAvailable > 0){
               let today = new Date().toISOString().replace(/T.+/, '');
               let sqlInsert = "INSERT INTO reservation(BookID, UserID, LendDate, Returned) VALUES (?,?,?,'false')";
               db.run(sqlInsert, [bookID, userID, today], (err) => {
@@ -58,27 +64,18 @@ reservFunctions.make = function(req, res, bookID) {
                       return;
                     }
                     database.close(db);
-                    console.log('Reservation successful!');
-                    res.send('You have lent book ' + bookID);
+                    res.send('Success!');
                   });
                 }
               });
-            } 
+            }
             else {
               database.close(db);
-              res.send('There are no books available!');
+              res.send('Book is not available ):');
             }
-          }
-          else{
-            database.close(db);
-            res.send('You already have this book!');
-          }
-        })
+        });
+      }  
       });
-    } 
-    else {
-      database.close(db);
-      res.send('Please log in!');
     }
   });
 }

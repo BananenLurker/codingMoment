@@ -87,12 +87,12 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get('/book/reservebook', function (req, res) {
-  reservations.make(req, res, req.query.bookID);
+app.get('/returnbook', function (req, res) {
+  reservations.return(req, res, req.query.bookID);
 });
 
-app.get('/book/returnbook', function (req, res) {
-  reservations.return(req, res, req.query.bookID);
+app.get('/book/reservebook', function (req, res) {
+  reservations.make(req, res, req.query.bookID);
 });
 
 app.get('/book/:bookId', async (req, res) => {

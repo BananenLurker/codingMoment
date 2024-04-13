@@ -55,12 +55,11 @@
 
   <main>
     <div class="spacing"></div>
-    <h1>Book Details</h1>
-    <div class="book">
+    <h1 class="book-title font-size--medium">
+      <%= book.title %>
+    </h1>
+    <section class="book-information font-size--small">
       <img src="<%= book.coverImageUrl %>" alt="Book Cover">
-      <h2>
-        <%= book.title %>
-      </h2>
       <p><strong>Author:</strong>
         <%= book.author %>
       </p>
@@ -76,10 +75,12 @@
             <%= book.summary %>
           </p>
           <p><strong>Copies Left:</strong>
-            <%= book.copiesLeft %>
+            <span class="book-information__amount-left">
+              <%= book.copiesLeft %>
+            </span>
           </p>
           <button id="reserve">Reserve</button>
-    </div>
+          </div>
   </main>
 
   <footer class="footer">
@@ -96,7 +97,7 @@
       </a>
     </div>
   </footer>
-  <script src="../scripts/getdata.js"></script>
+  <script src="../scripts/reserve-books.js"></script>
 </body>
 
 </html>

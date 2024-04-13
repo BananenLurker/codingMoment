@@ -23,6 +23,10 @@ body {
   box-sizing: border-box;
 }
 
+main {
+  min-height: 85vh;
+}
+
 a,
 a:visited,
 a:hover,
@@ -78,6 +82,11 @@ textarea {
 
 .link--simple {
   text-decoration: underline var(--primary) 1px;
+  cursor: pointer;
+}
+
+.link--simple-white {
+  text-decoration: underline var(--background) 1px;
   cursor: pointer;
 }
 
@@ -859,13 +868,18 @@ a:hover > nav {
   padding: 1.2rem;
 }
 
-/* catalogue and book styling */
-
+/* book page styling */
 #book-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   padding: 20px;
+}
+
+.book-title {
+  margin: auto;
+  width: 75%;
+  text-align: center;
 }
 
 .book {
@@ -878,14 +892,42 @@ a:hover > nav {
   text-align: center;
 }
 
-.book img {
+.book-information {
+  border: 2px strong #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.book img,
+.book-information img {
   width: 100%;
-  max-width: 200px;
+  max-width: 300px;
   height: auto;
   display: block;
   margin: 0 auto 10px;
 }
 
+.button--reserved {
+  background: rgb(0, 174, 0);
+}
+
+.button--reserved:hover {
+  background: rgb(0, 174, 0);
+  cursor: default;
+}
+
+.button--error {
+  background: rgb(139, 3, 3);
+}
+
+.button--error:hover {
+  background: rgb(139, 3, 3);
+  cursor: default;
+}
+
+/* catalogue styling */
 .copies {
   font-weight: bold;
 }
@@ -1133,6 +1175,12 @@ a:hover > nav {
   .about-author__image-wrapper {
     margin-top: 2rem;
     width: auto;
+  }
+
+  .book-information {
+    margin: auto;
+    width: 50%;
+    text-align: center;
   }
 }
 
