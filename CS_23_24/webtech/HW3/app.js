@@ -141,28 +141,33 @@ app.use(express.static(path.join(__dirname, 'static')));
 // }));
 
 app.get('/catalogue/books', async (req, res) => {
-  const limit = 20;
-  const page = req.query.page ? parseInt(req.query.page) : 1;
-  const offset = (page - 1) * limit;
-
-  const db = database.open();
-  db.all("SELECT * FROM book ORDER BY ID LIMIT ? OFFSET ?", [limit, offset], (err, rows) => {
-      database.close(db);
-      if (err) {
-          console.error('Error fetching books:', err);
-          res.status(500).json({error: 'Internal server error'});
-      }
-      else {
-        const books = rows.map(row => ({
-          bookId: row.ID,
-          title: row.title,
-          author: row.author,
-          coverImageUrl: row.cover,
-          copiesLeft: row.amount
-        }));
-        res.json(books);
-      }
-  });
+  try{
+    const limit = 20;
+    const page = req.query.page ? parseInt(req.query.page) : 1;
+    const offset = (page - 1) * limit;
+  
+    const db = database.open();
+    db.all("SELECT * FROM book ORDER BY ID LIMIT ? OFFSET ?", [limit, offset], (err, rows) => {
+        database.close(db);
+        if (err) {
+            console.error('Error fetching books:', err);
+            res.status(500).json({error: 'Internal server error'});
+        }
+        else {
+          const books = rows.map(row => ({
+            bookId: row.ID,
+            title: row.title,
+            author: row.author,
+            coverImageUrl: row.cover,
+            copiesLeft: row.amount
+          }));
+          res.json(books);
+        }
+    });
+  }
+  catch(err){
+    next(err);
+  }
 });
 
 app.post('/signup', function(req, res) {
@@ -175,6 +180,24 @@ app.post('/auth', function(req, res) {
 
 app.get('*', (req, res) => {
   redirect.notFound(req, res);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  if(req.xhr){
+    res.status(500).send('AJAX error!');
+  }
+  else{
+    next(err);
+  }
+});
+
+app.use((err, req, res, next) => {
+  console.error('An error occurred: ', err);
 });
 
 //// END MIDDLEWARE
