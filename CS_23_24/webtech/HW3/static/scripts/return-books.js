@@ -1,8 +1,6 @@
 function returnBook(e) {
   var bookID = e.target.dataset.bookId;
-  var url = `returnbook?bookID=`+bookID;
-  console.log(bookID);
-  console.log(url);
+  var url = `returnbook?bookID=${bookID}&rnd=` + Math.random();
   var req = new XMLHttpRequest();
   req.open("GET", url, true);
   req.onreadystatechange = function () {
