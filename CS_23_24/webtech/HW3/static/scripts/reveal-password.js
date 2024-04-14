@@ -3,7 +3,7 @@
 // This is used to prevent passwords being seen and stolen
 // whenever the profile page is opened in a public place.
 function revealPassword(){
-  pw = document.querySelector('.profile-info__password');
+  let pw = document.querySelector('.profile-info__password');
   password = pw.innerHTML;
   if(password){
     pw.innerHTML = 'Click te reveal password!';

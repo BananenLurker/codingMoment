@@ -1,3 +1,5 @@
+<!-- EJS for the form-redirect page -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +15,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -63,13 +65,11 @@
       </header>
       <div class="redirect__text-wrapper">
         <p class="redirect__text font-size--small">
-          As we didn't feel like implementing this yet, we have not received your form. Still,
-          thanks for trying to contact us. We think that's pretty cool. Try
-          again when grading HW3, maybe this will have been implemented! In
-          the meantime, enjoy a healthy snack.
+          Unfortunately, this didn't get implemented. If you did somehow see this, that's pretty
+          cool. Thanks for the grading!
         </p>
         <figure>
-          <a href="index.html">
+          <a href="/">
             <img src="/assets/banana-dance.gif" alt="Dancing banana" class="redirect__banana">
           </a>
           <figcaption class="text--subscript">

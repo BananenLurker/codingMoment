@@ -1,3 +1,5 @@
+<!-- EJS for the login page -->
+
 <!DOCTYPE html>
 <html>
 
@@ -11,11 +13,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -55,6 +57,7 @@
       <header class="login-form__header">
         <h1 class="login-form__title font-size--medium">Login</h1>
         <% if (problem==='notfound' ) { %>
+          <!-- Give the user feedback if the username + password combination is unknown -->
           <h2 class="user-notification">Username or password is incorrect!</h2>
           <% } else { %>
             <% } %>

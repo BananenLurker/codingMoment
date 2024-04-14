@@ -1,3 +1,5 @@
+<!-- EJS to display user's reservation history -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +15,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -58,31 +60,36 @@
     <article class="reservations">
       <% if (session.loggedin) { %>
         <% if(history.length> 0) {%>
+          <!-- If user is logged in and has borrowed books before, display them here-->
           <section class="reservations__entries">
             <ul>
               <li>
                 <p class="font-size--medium">Title: Lend date:</p>
               </li>
+              <!-- Iterate over each book and display title and lend date -->
               <% history.forEach(function(entry){ %>
                 <li>
                   <p class="font-size--small">
                     <%= entry.title %>:
                       <%= entry.LendDate%>
                         <% if (entry.Returned==='false' ) { %>
+                          <!-- If the book has not been returned yet, allow the user to return it here-->
                           <br><a data-book-id="<%= entry.BookID %>" class="link--simple-white return">return</a>
                           <% } %>
                   </p>
                 </li>
                 <% }) %>
                   <% } else { %>
+                    <!-- If there is no history, let the user know -->
                     <li>
-                      <p class="font-size--medium">Your history will be displayed here once you have returned a book!
+                      <p class="font-size--medium">Your history will be displayed here once you have borrowed a book!
                       </p>
                     </li>
                     <% } %>
             </ul>
           </section>
           <% } else { %>
+            <!-- If the user is not logged in, allow them to log in with an easily accessible link -->
             <p class="font-size--medium">Please log in <a href="login" class="link--simple">here</a> to see your
               reservation
               history!</p>

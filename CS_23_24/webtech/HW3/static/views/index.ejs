@@ -1,3 +1,5 @@
+<!-- EJS for the previous index, updated should the need arise for this page to still be used in the future. -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +15,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>

@@ -1,8 +1,10 @@
 const database = require('./modules/database');
 
+// Retrieves book details from the database for a specific book ID.
 function getBookDetails(bookId) {
-    const db = database.open();
+    const db = database.open(); // Open a connection to the database
 
+    // Using a promise to make sure the database returns before continuing
     return new Promise((resolve, reject) => {
         const query = 'SELECT * FROM book WHERE ID = ?';
         db.get(query, [bookId], (err, row) => {
@@ -27,7 +29,7 @@ function getBookDetails(bookId) {
             }
         });
 
-        database.close(db);
+        database.close(db); // Close the database connection
     });
 }
 

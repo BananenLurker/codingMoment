@@ -5,7 +5,7 @@ const sqlite = require('sqlite3');
 const dbFunctions = {};
 
 dbFunctions.open = function(){
-  return db = new sqlite.Database('./users.db', sqlite.OPEN_READWRITE, (err) => {
+  return db = new sqlite.Database('./library.db', sqlite.OPEN_READWRITE, (err) => {
     if (err){
       console.error(err.message);
     }

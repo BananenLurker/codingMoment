@@ -1,3 +1,5 @@
+<!-- EJS for the singup page -->
+
 <!DOCTYPE html>
 <html>
 
@@ -11,11 +13,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -52,24 +54,25 @@
   </header>
   <main class="main--signup">
     <article class="signup-form-wrapper">
-        <h1 class="signup-form__title font-size--medium">Sign up</h1>
-        <h2 class="user-notification">
-          <% if (problem) { %>
-            <%=problem%>
-              <% } else { %>
-                <% } %>
-        </h2>
-        <form action="/signup" method="post" class="signup-form">
-          <input type="text" name="username" placeholder="Username" id="username" required>
-          <input type="password" name="password" placeholder="Password" id="password" required>
-          <input type="email" name="email" placeholder="Email" id="email" required>
-          <input type="country" name="country" placeholder="Country" id="country" required>
-          <input type="city" name="city" placeholder="City" id="city" required>
-          <input type="zip" name="zip" placeholder="zip code" id="zip" required>
-          <button type="submit" value="Sign up" class="signup-form__submit-button">
-            Sign up
-          </button>
-        </form>
+      <h1 class="signup-form__title font-size--medium">Sign up</h1>
+      <h2 class="user-notification">
+        <!-- If the page is rendered with an error, give the user feedback as to what went wrong.
+        This includes but is not limited to: username not unique, password too weak, invalid characters -->
+        <% if (problem) { %>
+          <%=problem%>
+            <% } %>
+      </h2>
+      <form action="/signup" method="post" class="signup-form">
+        <input type="text" name="username" placeholder="Username" id="username" required>
+        <input type="password" name="password" placeholder="Password" id="password" required>
+        <input type="email" name="email" placeholder="Email" id="email" required>
+        <input type="country" name="country" placeholder="Country" id="country" required>
+        <input type="city" name="city" placeholder="City" id="city" required>
+        <input type="zip" name="zip" placeholder="zip code" id="zip" required>
+        <button type="submit" value="Sign up" class="signup-form__submit-button">
+          Sign up
+        </button>
+      </form>
     </article>
   </main>
 </body>
@@ -87,4 +90,5 @@
     </a>
   </div>
 </footer>
+
 </html>

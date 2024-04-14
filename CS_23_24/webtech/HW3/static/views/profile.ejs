@@ -1,3 +1,5 @@
+<!-- EJS for the profile page -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +15,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -57,6 +59,7 @@
     <article class="profile-info">
       <section class="profile-info__data font-size--small">
         <% if (session.loggedin) { %>
+          <!-- Display user info if there is an active session -->
           <p class="profile-info__title font-size--medium">
             Credentials
           </p>
@@ -85,10 +88,12 @@
         </p>
       </section>
       <section class="signout__wrapper">
+        <!-- Send a GET request to /logging-out to log out. See app.js for more details -->
         <button onclick='window.location.href="/logging-out"' class="profile__signout-button">Logout</button>
       </section>
       <a role="button" href="reservation-history" class="reservation-history-button">Reservation history</a>
       <% } else { %>
+        <!-- Let the user know if they are not logged in and provide an easily accessible login link -->
         <p>Please log in <a href="login" class="link--simple">here</a>!</p>
         <% } %>
     </article>

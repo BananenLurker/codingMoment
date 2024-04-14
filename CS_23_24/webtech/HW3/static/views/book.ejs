@@ -1,3 +1,4 @@
+<!-- EJS for the book-specific page -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,11 +14,11 @@
 
 <body>
   <header class="header--profile position--sticky">
-    <% if (session.loggedin) { %>
+    <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
       <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
-      <% } else { %>
+      <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
         <a onclick="window.location.href='/login'"
           class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
@@ -60,6 +61,11 @@
     </h1>
     <section class="book-information font-size--small">
       <img src="<%= book.coverImageUrl %>" alt="Book Cover">
+      <!-- For each attribute, check if it exists. If it does, display it.
+      This is done to be in line with the DDL statements, which do not require
+      non-database generated data to be present before insertion is possible.
+      This allows us to display books which have not yet been published (for whatever reason)
+      or where any information is unknown. This also allows us to later update it anyway. -->
       <% if (book.author) { %>
         <p><strong>Author:</strong>
           <%= book.author %>

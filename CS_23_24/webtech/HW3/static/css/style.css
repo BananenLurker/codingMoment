@@ -1,3 +1,6 @@
+/* All styling for all pages is done in this file. It is split up over different sections.
+Styling for a specific section can be found using ctrl+f and looking up the page name. */
+
 /* General styling */
 :root {
   --text: #051d0b;
