@@ -117,7 +117,7 @@ app.get('/:page', (req, res) => {
   fs.access(`./static/views/${page}.ejs`, fs.F_OK, (err) => {
     if (err) {
       console.error(err);
-      redirect.notFound(req, res);
+      res.render('404', { session: req. session });
     }
     else if(page.includes('login') || page.includes('signup')){
       res.render(page, { session: req.session, problem: null });
@@ -179,7 +179,8 @@ app.post('/auth', function(req, res) {
 });
 
 app.get('*', (req, res) => {
-  redirect.notFound(req, res);
+  console.error('User requested unknown page: ' + req.url);
+  res.render('404', { session: req. session });
 });
 
 app.use((err, req, res, next) => {

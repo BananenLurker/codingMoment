@@ -845,6 +845,9 @@ a:hover > nav {
 
 .reservations {
   padding: 3vh 0;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  text-align: center;
 }
 
 .main--reservation-history {

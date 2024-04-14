@@ -1,8 +1,39 @@
+<!-- GROUP INFORMATION -->
+Group ID: 1
+Group members:
+	Daan van der Putten - 8493375;
+	Simon de Jong - 8562024;
+	Yoeri Hoebe - 4769341;
+
+<!-- DIRECT LINK TO WEBPAGE -->
+A direct link to the online web app is not available, due to webtech servers being down.
+Please find attached the proof of this, in addition to the email we sent to bring this to the admin's attention.
+
+<!-- DESCRIPTION -->
+
 <!-- USERNAMES AND PASSWORDS -->
-user0{
+user0 (has a lot of reservations){
 	hansjeP
 	notpassword1
 }
+user1{
+	mysticwhisperer
+	jupjupjep
+}
+user2{
+	atlantalover
+	ILOVEATLANTASOMUCH
+}
+user3{
+	username
+	password2
+}
+user4{
+	isthisjokegettingstale
+	yesitis
+}
+
+<!-- DDL STATEMENTS -->
 
 CREATE TABLE IF NOT EXISTS 'user'(
 	'ID' INTEGER NOT NULL,
