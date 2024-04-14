@@ -191,7 +191,20 @@ a:hover > nav {
 }
 
 .header--profile__login {
-  height: 2vh;
+  height: max-content;
+  background: #15202cae;
+  padding: 0 5px;
+  border-radius: 5px;
+  color: rgb(215, 215, 215);
+  text-decoration: underline rgb(215, 215, 215) 1px;
+  transition: all ease-in-out 0.2s;
+}
+
+.header--profile__login:hover {
+  height: max-content;
+  background: #0b11177c;
+  color: white;
+  text-decoration: underline white 1px;
 }
 
 .header--profile > a {
