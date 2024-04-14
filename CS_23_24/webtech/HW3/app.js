@@ -72,6 +72,10 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/logging-out', (req, res) =>{
+  login.logout(req, res);
+});
+
 app.get('/', (req, res) => {
   res.render('catalogue.ejs', { session: req.session });
 });

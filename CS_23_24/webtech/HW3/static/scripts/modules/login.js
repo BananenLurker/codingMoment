@@ -49,4 +49,12 @@ loginFunctions.authorise = function(req, res){
   }
 }
 
+loginFunctions.logout = function(req, res){
+  req.session.loggedin = false;
+  req.session.password = null;
+  req.session.username = null;
+  console.log(req.session.loggedin, req.session.password);
+  res.redirect('/');
+}
+
 module.exports = loginFunctions;

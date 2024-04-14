@@ -832,6 +832,10 @@ a:hover > nav {
   text-decoration: underline;
 }
 
+.profile__signout-button {
+  margin-bottom: 1rem;
+}
+
 /* reservation history page */
 
 .main--reservation-history {
