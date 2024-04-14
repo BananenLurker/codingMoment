@@ -135,7 +135,7 @@ app.get('/:page', (req, res) => {
       res.render(page, { session: req.session, problem: null });
     }
     else if(page.includes('reservation-history')){
-          // reservation-history needs more complex functionality, so we send those requests to their own file
+      // reservation-history needs more complex functionality, so we send those requests to their own file
       reservations.load(req, res);
     }
     else{

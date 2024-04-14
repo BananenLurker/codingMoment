@@ -1,8 +1,4 @@
 // Creating classes
-
-// PLEASE NOTE: private variables are used in this context for information
-// that is non-volatile and should never be changed during
-// the lifespan of the object, such as (relative) links.
  
 class person{
   constructor(name, yearOfBirth){
