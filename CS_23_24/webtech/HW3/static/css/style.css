@@ -201,6 +201,10 @@ a:hover > nav {
   height: 100%;
 }
 
+.signout__wrapper {
+  margin: 0 auto;
+}
+
 /* Burger menu - creation and styling */
 .page-header__burger-menu {
   display: flex;

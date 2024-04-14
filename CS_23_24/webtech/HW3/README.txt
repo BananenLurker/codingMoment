@@ -10,6 +10,25 @@ A direct link to the online web app is not available, due to webtech servers bei
 Please find attached the proof of this, in addition to the email we sent to bring this to the admin's attention.
 
 <!-- DESCRIPTION -->
+We have created a web app for a library, where users can register, login, reserve and return books using node.js and express.
+The file structure is as follows:
+
+Top level (general-purpose and application wide files): 
+	app.js (entry)
+	node.js necessities (PACKAGE and modules)
+	users.db
+	README.txt
+	log/ (logs)
+	static/ (files that are gotten with GET requests)
+		css/ (css files)
+		views/ (EJS files, used instead of HTML)
+		scripts/ (JS files)
+			modules/ (JS files used in other JS files - f.e. in app.js)
+			[vanilla JS files for specific applications]
+		assets/ (everything that is not css, JS or EJS)
+			covers/ (book cover images)
+			team-images/ (images for about page)
+			[svgs, gifs, images used in other places than catalogue or about]
 
 <!-- USERNAMES AND PASSWORDS -->
 user0 (has a lot of reservations){
