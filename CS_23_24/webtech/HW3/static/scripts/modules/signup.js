@@ -57,7 +57,7 @@ signupFunctions.newUser = function(req, res){
           // If all checks are passed, insert the new user into the dababase
           db.run(sql, userinfo, function(err) {
             if (err) {
-              return console.log(err.message);
+              return console.error(err.message);
             }
             console.log(`A user has been created with ID ${this.lastID}.`); // Log the new user
             // Set all session variables

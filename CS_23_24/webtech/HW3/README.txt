@@ -8,6 +8,8 @@ Group members:
 <!-- DIRECT LINK TO WEBPAGE -->
 A direct link to the online web app is not available, due to webtech servers being down.
 Please find attached the proof of this, in addition to the email we sent to bring this to the admin's attention.
+Unfortunately, this has not been resolved as of yet.
+https://imgur.com/a/GP5FbZR
 
 <!-- DESCRIPTION -->
 We have created a web app for a library, where users can register, login, reserve and return books using node.js and express.

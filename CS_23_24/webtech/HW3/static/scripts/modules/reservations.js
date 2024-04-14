@@ -101,7 +101,6 @@ reservFunctions.return = function(req, res, bookID){
     if(userID){
       // If there is a user logged in, check if they have this book in their posession
       reservFunctions.inPosession(res, db, bookID, userID, (userHasBook) => {
-        console.log(userHasBook);
         if(userHasBook){
           // If they do, remove it from their account and add 1 to the available books
           let sqlReturnBook = "UPDATE reservation SET Returned = 'true' WHERE reservation.UserID = ? AND reservation.BookID = ? AND reservation.returned = 'false'";

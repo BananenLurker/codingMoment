@@ -9,6 +9,7 @@ const signup = require('./static/scripts/modules/signup.js');
 const reservations = require('./static/scripts/modules/reservations.js');
 const bookDetails = require('./static/scripts/book-details.js');
 const database = require('./static/scripts/modules/database');
+const edit = require('./static/scripts/modules/edit.js');
 
 const app = express();
 
@@ -180,12 +181,16 @@ app.get('/catalogue/books', async (req, res) => {
   }
 });
 
+app.post('/edit-profile', function(req, res) {
+  edit.edit(req, res); // Pass control to profile editing function
+});
+
 app.post('/signup', function(req, res) {
-  signup.newUser(req, res); // Redirect to the signup function
+  signup.newUser(req, res); // Pass control to the signup function
 });
 
 app.post('/auth', function(req, res) {
-  login.authorise(req, res); // Redirect to the login function
+  login.authorise(req, res); // Pass control to the login function
 });
 
 // If the user is getting a page that is not caught yet, for example
