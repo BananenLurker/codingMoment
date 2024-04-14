@@ -907,7 +907,7 @@ a:hover > nav {
 
 .book {
   flex: 1 0 22%;
-  border: 2px strong #ccc;
+  border: 2px #ccc;
   padding: 10px;
   margin-bottom: 20px;
   cursor: pointer;
@@ -916,7 +916,7 @@ a:hover > nav {
 }
 
 .book-information {
-  border: 2px strong #ccc;
+  border: 2px #ccc;
   padding: 10px;
   margin-bottom: 20px;
   box-sizing: border-box;
