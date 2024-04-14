@@ -439,7 +439,6 @@ a:hover > nav {
 /* Login page styling */
 
 .main--login {
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -489,6 +488,10 @@ a:hover > nav {
   width: 100%;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+}
+
+.login__signup {
+  margin-top: 3rem;
 }
 
 /* Signup page styling */
@@ -797,7 +800,7 @@ a:hover > nav {
 
 /* profile section */
 .main--profile {
-  height: 95vh;
+  height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -813,6 +816,7 @@ a:hover > nav {
   text-align: center;
   background: rgba(19, 28, 39, 0.6);
   width: 60%;
+  margin: 20vh auto;
   color: rgb(255, 255, 255);
   border-radius: 20px;
   flex-direction: column;
@@ -820,7 +824,8 @@ a:hover > nav {
 
 .profile-info__data {
   align-self: center;
-  width: 80%;
+  padding: 0 1rem;
+  width: max-content;
   height: auto;
   border-radius: 20px;
   background: #131c27;
@@ -838,9 +843,13 @@ a:hover > nav {
 
 /* reservation history page */
 
+.reservations {
+  padding: 3vh 0;
+}
+
 .main--reservation-history {
   align-items: center;
-  background: linear-gradient(rgba(0, 0, 0, 0.5) 80%, transparent),
+  background: linear-gradient(rgba(0, 0, 0, 0.571) 80%, transparent),
     url("/assets/hero-books.jpg") center no-repeat;
   background-size: cover;
 }
@@ -946,6 +955,24 @@ a:hover > nav {
 
 .red {
   color: red;
+}
+
+/* 404 styling */
+.main--404 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.title--404 {
+  font-size: 50vw;
+  color: var(--accent);
+  text-align: center;
+}
+
+.text--404 {
+  text-align: center;
 }
 
 /* Accessibility styling - tab-index*/
@@ -1078,15 +1105,15 @@ a:hover > nav {
   }
 
   .main--contact {
-    min-height: 100vh;
+    min-height: 85vh;
   }
 
   .main--login {
-    min-height: 100vh;
+    min-height: 85vh;
   }
 
   .main--signup {
-    min-height: 100vh;
+    min-height: 85vh;
   }
 
   .contact-form-wrapper {
@@ -1185,6 +1212,10 @@ a:hover > nav {
     margin: auto;
     width: 50%;
     text-align: center;
+  }
+
+  .title--404 {
+    font-size: 20rem;
   }
 }
 
