@@ -6,7 +6,6 @@ const morgan = require('morgan');
 const rfs = require('rotating-file-stream');
 const login = require('./static/scripts/modules/login.js');
 const signup = require('./static/scripts/modules/signup.js');
-const redirect = require('./static/scripts/modules/redirect.js');
 const reservations = require('./static/scripts/modules/reservations.js');
 const bookDetails = require('./static/scripts/book-details.js');
 const database = require('./static/scripts/modules/database');
@@ -58,13 +57,13 @@ const app = express();
 
 //// START MIDDLEWARE
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'static', 'views'));
+app.set('view engine', 'ejs'); // Use EJS as the view engine
+app.set('views', path.join(__dirname, 'static', 'views')); // Direct all render requests to /static/views
 
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/static', express.static(path.join(__dirname, 'static'))); // Direct all requets to static
 
 app.use(session({
-	secret: 'secret',
+	secret: 'this_is_a_very_important_secret_key_which_is_not_arbitrary_at_all',
 	resave: true,
 	saveUninitialized: true
 }));
@@ -108,7 +107,10 @@ app.get('/book/:bookId', async (req, res) => {
     res.render('book', { session: req.session, book: bookInfo });
   } 
   else {
-    redirect.notFound(req, res);
+    // If the bookInfo cannot be retrieved, an invalid bookID has been manually inserted by the user.
+    // We redirect to book 1 instead of 404 to stay in the book section.
+    url = path.join('1');
+    res.redirect(301, url);
   }
 });
 
@@ -126,7 +128,7 @@ app.get('/:page', (req, res) => {
       reservations.load(req, res);
     }
     else if(page === 'book'){
-      redirect.notFound(req, res);
+      res.render('404', { session: req.session });
     }
     else{
       res.render(page, { session: req.session });
