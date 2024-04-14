@@ -15,7 +15,7 @@ const app = express();
 // //// START LOGGING
 
 // // <DEV NOTE>
-// // Due to the nature of interactive file naming using RFS and Morgan, logging
+// // Due to the nature of interactive file naming using RFS, logging
 // // can not be moved to a different module file and has to stay top-level.
 
 // // Use padding to fill up day and month entries if they are single digits
