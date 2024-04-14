@@ -1,3 +1,5 @@
+// Progressive rendering of the catalogue is handled in this file
+
 document.addEventListener('DOMContentLoaded', function() {
   let currentPage = 1; // Track the current page of book results
   let hasMoreBooks = true; // Flag to check if there are more books to load
