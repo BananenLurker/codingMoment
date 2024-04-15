@@ -44,7 +44,7 @@ editFunctions.edit = function(req, res) {
                   i++;
                 }
                 // redirect to profile to see changes
-                res.redirect('/profile');
+                res.redirect('profile');
                 database.close(db);
               }
             })
@@ -55,7 +55,7 @@ editFunctions.edit = function(req, res) {
   }
   else{
     // if something fails, simply redirect to the edit-profile screen
-    res.redirect('/edit-profile');
+    res.redirect('edit-profile');
     database.close(db);
   }
 }

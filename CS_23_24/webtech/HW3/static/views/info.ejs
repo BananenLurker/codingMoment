@@ -7,8 +7,8 @@ is done in vanilla JS, see static/scripts/info.js-->
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/assets/homebrew-logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
     rel="stylesheet">
   <title>Homebrew - Book info</title>
@@ -17,12 +17,11 @@ is done in vanilla JS, see static/scripts/info.js-->
 <body>
   <header class="header--profile position--sticky">
     <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
-      <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
+      <a onclick="window.location.href='profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
       <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
-        <a onclick="window.location.href='/login'"
-          class="header--profile__login font-size--small link--simple">Login</a>
+        <a onclick="window.location.href='login'" class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
   </header>
   <header class="header--nav position--sticky">

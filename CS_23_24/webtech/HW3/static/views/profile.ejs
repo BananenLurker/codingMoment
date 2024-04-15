@@ -6,8 +6,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" href="/assets/homebrew-logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="assets/homebrew-logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Pattaya&family=Poppins:wght@400;500&display=swap"
     rel="stylesheet">
   <title>Homebrew - Profile</title>
@@ -16,20 +16,19 @@
 <body>
   <header class="header--profile position--sticky">
     <% if (session.loggedin) { %> <!-- If the user is logged in, display their username in the topright -->
-      <a onclick="window.location.href='/profile'" class="header--profile__login font-size--small link--simple">
+      <a onclick="window.location.href='profile'" class="header--profile__login font-size--small link--simple">
         <%= session.username %>
       </a>
       <% } else { %> <!-- If the user is not logged in, display 'login' in the topright -->
-        <a onclick="window.location.href='/login'"
-          class="header--profile__login font-size--small link--simple">Login</a>
+        <a onclick="window.location.href='login'" class="header--profile__login font-size--small link--simple">Login</a>
         <% } %>
   </header>
   <header class="header--nav position--sticky">
     <label class="page-header__burger-menu position--sticky">
       <input id="toggle" type="checkbox">
     </label>
-    <a href="/">
-      <img class="page-header__logo" src="/assets/homebrew-logo.png" alt="Homebrew Press logo">
+    <a href="catalogue">
+      <img class="page-header__logo" src="assets/homebrew-logo.png" alt="Homebrew Press logo">
     </a>
     <nav class="nav--desktop">
       <ul class="nav__list font-size--medium">
@@ -89,8 +88,8 @@
       </section>
       <section class="signout__wrapper">
         <!-- Send a GET request to /logging-out to log out. See app.js for more details -->
-        <button onclick='window.location.href="/logging-out"' class="profile__signout-button">Logout</button>
-        <button onclick='window.location.href="/edit-profile"' class="profile__signout-button">Edit profile</button>
+        <button onclick='window.location.href="logging-out"' class="profile__signout-button">Logout</button>
+        <button onclick='window.location.href="edit-profile"' class="profile__signout-button">Edit profile</button>
       </section>
       <a role="button" href="reservation-history" class="reservation-history-button">Reservation history</a>
       <% } else { %>
@@ -103,13 +102,13 @@
     <h3 class="footer__title font-size--medium">Homebrew Press &copy;</h3>
     <div class="footer__logo--wrapper">
       <a class="footer__logo footer__logo--youtube" href="https://www.youtube.com/watch?v=xvFZjo5PgG0" target="_blank">
-        <img src="/assets/youtube.svg" alt="YouTube logo">
+        <img src="assets/youtube.svg" alt="YouTube logo">
       </a>
       <a class="footer__logo footer__logo--twitterx" href="https://twitter.com/" target="_blank">
-        <img src="/assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
+        <img src="assets/twitterx.svg" alt="X (formerly known as Twitter) logo">
       </a>
       <a class="footer__logo footer__logo--instagram" href="https://www.instagram.com/stickyutrecht/" target="_blank">
-        <img src="/assets/instagram.svg" alt="Instagram logo">
+        <img src="assets/instagram.svg" alt="Instagram logo">
       </a>
     </div>
   </footer>

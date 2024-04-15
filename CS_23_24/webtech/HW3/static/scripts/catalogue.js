@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Loads books dynamically as the user scrolls
   function loadBooks() {
     if (!hasMoreBooks) return; // Stop if there are no more books to load
-    fetch(`/catalogue/books?page=${currentPage}`)
+    fetch(`catalogue/books?page=${currentPage}`)
     .then(response => response.json())
     .then(books => {
         if (books.length === 0 || books.length < 20) {
@@ -18,14 +18,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const bookDiv = document.createElement('div');
             bookDiv.className = 'book';
             bookDiv.innerHTML = `
-                <img src="${book.coverImageUrl}" alt="${book.title}">
+                <img src="${book.coverImageUrl}" alt="Cover of ${book.title}">
                 <h3>${book.title}</h3>
                 <p>Author: ${book.author}</p>
                 <p class="copies ${book.copiesLeft === 0 ? 'red' : (book.copiesLeft === 1 || book.copiesLeft === 2) ? 'orange' : 'green'}">
                     Copies left: ${book.copiesLeft}
                 </p>
             `;
-            bookDiv.onclick = () => window.location.href = '/book/' + book.bookId;
+            bookDiv.onclick = () => window.location.href = 'book/' + book.bookId;
             container.appendChild(bookDiv);
         });
         currentPage++; // Increment to load the next page of books

@@ -287,7 +287,7 @@ burgerLabel.appendChild(burgerInput);
 pageHeader.insertBefore(burgerLabel, navDesktop);
 
 const logoAnchor = dc("a");
-logoAnchor.href = "/";
+logoAnchor.href = "/catalogue";
 
 const logoImg = dc("img");
 logoImg.classList.add("page-header__logo");

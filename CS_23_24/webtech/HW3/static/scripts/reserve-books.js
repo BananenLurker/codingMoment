@@ -1,7 +1,7 @@
 // Reserving a book using AJAX
 function reserveBook(e) {
-  var bookID = window.location.href.split('/')[4]; // Get the book ID from the page URL
-  var url = `reservebook?bookID=+${bookID}&rnd=` + Math.random(); // Non-cached AJAX request URL
+  var bookID = document.querySelector('#bookIDInput').value; // Get the book ID from the page URL
+  var url = `reservebook?bookID=${bookID}&rnd=` + Math.random(); // Non-cached AJAX request URL
   var req = new XMLHttpRequest();
   req.open("GET", url, true); // Send the request to the server
   req.onreadystatechange = function () {

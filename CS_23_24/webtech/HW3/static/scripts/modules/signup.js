@@ -36,7 +36,7 @@ signupFunctions.newUser = function(req, res){
         req.session.city = req.body.city;
         req.session.zip = req.body.zip;
         database.close(db);
-        res.redirect('/profile'); // redirect the user to the profile page
+        res.redirect('profile'); // redirect the user to the profile page
       });
     }
   })

@@ -75,7 +75,7 @@ app.use(express.urlencoded({ extended: true })); // Parse POST requests which ar
 app.get('/', (req, res) => {
   // If the root is accessed, we render the catalogue. This is done to preserve the index page,
   // should it ever be necessary to restore.
-  res.render('catalogue.ejs', { session: req.session });
+  res.render('catalogue', { session: req.session });
 });
 
 app.use((req, res, next) => {
@@ -226,8 +226,4 @@ app.use((err, req, res, next) => {
 //// END ERROR STACK
 //// END MIDDLEWARE
 
-const server = app.listen(8001, () => {
-  const host = server.address().address;
-  const port = server.address().port;
-  console.log(`Server is running on http://${host}:${port}.`); // Log at what URL the server started
-})
+app.listen(8001);

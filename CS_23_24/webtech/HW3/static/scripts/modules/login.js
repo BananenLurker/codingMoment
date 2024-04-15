@@ -35,7 +35,7 @@ loginFunctions.authorise = function(req, res){
         req.session.zip = row.zip;
 
         database.close(db);
-        res.redirect('/profile'); // redirect to the users' profile page
+        res.redirect('profile'); // redirect to the users' profile page
       }
       else { // no user was found, authentication has failed
         database.close(db);
@@ -65,7 +65,7 @@ loginFunctions.logout = function(req, res){
   req.session.zip = null;
   // redirect to the root. This updates the 'login' at the topright
   // of the screen.
-  res.redirect('/');
+  res.redirect('catalogue');
 }
 
 module.exports = loginFunctions; // Export login functions
