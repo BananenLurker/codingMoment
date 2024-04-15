@@ -15,7 +15,6 @@ editFunctions.edit = function(req, res) {
     const variables = ['username', 'password', 'email', 'country', 'city', 'zip'];
     const newVariables = [];
     for (let str of variables) {
-      console.log(req.body[str]);
       // Push the value directly into newVariables array
       // Use the value from req.body if present, otherwise use the value from session
       newVariables.push(req.body[str] || req.session[str]);
@@ -27,7 +26,6 @@ editFunctions.edit = function(req, res) {
         return; // We only need to terminate the function, as the error handling is done by check.checkUserDetails
       } 
       else {
-        console.log('user is valid');
         reserv.getUserID(req, db, (userID) => {
           if (userID) {
             let sql = 'UPDATE user SET username = ?, password = ?, email = ?, country = ?, city = ?, zip = ? WHERE ID = ?';

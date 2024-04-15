@@ -8,7 +8,6 @@ checkFunctions.checkUserDetails = function(req, res, db, filePath, oldUsername, 
   // Check if the username already exists
   checkExistance("username", req.body.username, oldUsername, oldEmail, function(usernameExists) {
     if (usernameExists) { // Using a callback to force sync in database operations
-      console.log('username exists');
       database.close(db);
       // If there already exists a user with this username, let the user know
       res.render(filePath, {session: req.session, problem: "Username already exists!"});
@@ -18,7 +17,6 @@ checkFunctions.checkUserDetails = function(req, res, db, filePath, oldUsername, 
       // Check if the email already exists
       checkExistance("email", req.body.email, oldUsername, oldEmail, function(emailExists) {
         if (emailExists) { // Again, using a callback to force sync in database operations
-          console.log('email exists');
           database.close(db);
           // Give the user feedback
           res.render(filePath, {session: req.session, problem: "Email already exists!"});
@@ -27,7 +25,6 @@ checkFunctions.checkUserDetails = function(req, res, db, filePath, oldUsername, 
         // Check if the password passes the check, but only if there is
         // a new password. Otherwise, this will always callback false.
         else if(req.body.password && !checkPassword(req.body.password)){
-          console.log('password something');
           database.close(db);
           // Give the user feedback
           res.render(filePath, {session: req.session, problem: "Passwords should include one number, one special character, one uppercase and one lowercase letter and be at least 16 characters long!"});
@@ -35,7 +32,6 @@ checkFunctions.checkUserDetails = function(req, res, db, filePath, oldUsername, 
         }
         // Check if there are invalid characters in the username or email
         else if(!checkCharacters(req.body.username) && !checkCharacters(req.body.email)){
-          console.log('username or email something');
           database.close(db);
           // Give the user feedback
           res.render(filePath, {session: req.session, problem: "Username or email contains excluded characters (only a-z and 0-9 allowed, no capitals)!"});
@@ -44,7 +40,6 @@ checkFunctions.checkUserDetails = function(req, res, db, filePath, oldUsername, 
         // Check if there are invalid characters in any other user-provided information,
         // sanitizing the inputs to prevent XSS.
         else if(!checkOther([req.body.email, req.body.country, req.body.city, req.body.zip])){
-          console.log('some other error');
           database.close(db);
           // Give the user feedback
           res.render(filePath, {session: req.session, problem: "Please enter a valid email, country, city and ZIP code!"});

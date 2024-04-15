@@ -10,6 +10,7 @@ http://webtech.science.uu.nl/group01/
 
 <!-- DESCRIPTION -->
 We have created a web app for a library, where users can register, login, reserve and return books using node.js and express.
+The styling is tested to be suitable for desktops (1920x1080) and phones (428x926).
 The file structure is as follows:
 
 Top level (general-purpose and application wide files): 
@@ -29,7 +30,11 @@ Top level (general-purpose and application wide files):
 			team-images/ (images for about page)
 			[svgs, gifs, images used in other places than catalogue or about]
 
+
 <!-- USERNAMES AND PASSWORDS -->
+NOTE: some of these users were created before username and password restrictions were installed,
+thus they might not follow the restrictions that are imposed upon newly registred users.
+
 user0 (has a lot of reservations){
 	hansjeP
 	notpassword1

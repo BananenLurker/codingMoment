@@ -17,7 +17,6 @@ signupFunctions.newUser = function(req, res){
 
   check.checkUserDetails(req, res, db, filePath, null, null, (isUserValid) => {
     if (!isUserValid) {
-      console.log('user is invalid');
       return;
     }
     else{
