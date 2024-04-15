@@ -53,22 +53,25 @@
     </nav>
   </header>
 
-  <main class="main--signup">
-    <article class="signup-form-wrapper">
+  <main class="main--edit-profile">
+    <article class="edit-profile__form-wrapper">
       <% if(session.loggedin) {%>
-        <h1 class="signup-form__title font-size--medium">Edit profile</h1>
+        <h1 class="edit-profile-form__title font-size--medium">Edit profile</h1>
         <h2 class="user-notification">
           <!-- If the page is rendered with an error, give the user feedback as to what went wrong.
-          This includes but is not limited to: username not unique, password too weak, invalid characters -->
+        This includes but is not limited to: username not unique, password too weak, invalid characters -->
+          <% if (problem) { %>
+            <%=problem%>
+              <% } %>
         </h2>
-        <form action="/edit-profile" method="post" class="signup-form">
+        <form action="/edit-profile" method="post" class="edit-profile-form">
           <input type="text" name="username" placeholder="Username" id="username">
           <input type="password" name="password" placeholder="Password" id="password">
           <input type="email" name="email" placeholder="Email" id="email">
           <input type="country" name="country" placeholder="Country" id="country">
           <input type="city" name="city" placeholder="City" id="city">
           <input type="zip" name="zip" placeholder="zip code" id="zip">
-          <button type="submit" value="Sign up" class="signup-form__submit-button">
+          <button type="submit" value="Sign up" class="edit-profile-form__submit-button">
             Confirm
           </button>
         </form>

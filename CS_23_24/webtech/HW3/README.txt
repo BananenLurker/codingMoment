@@ -39,10 +39,10 @@ user0 (has a lot of reservations){
 }
 user1{
 	mysticwhisperer
-	jupjupjep
+	OHMYGODILOVEMYNEWPASSWORDSOMUCH123yes!
 }
 user2{
-	atlantalover
+	atlantalover15
 	ILOVEATLANTASOMUCH
 }
 user3{

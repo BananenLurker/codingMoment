@@ -131,7 +131,7 @@ app.get('/:page', (req, res) => {
       console.error(err);
       res.render('404', { session: req. session }); // If file does not exist, pass it to the 404 page
     }
-    else if(page.includes('login') || page.includes('signup')){
+    else if(page.includes('login') || page.includes('signup') || page.includes('edit-profile')){
       // If the login or signup page is requested, EJS needs to know there are currently no user errors to display
       res.render(page, { session: req.session, problem: null });
     }
