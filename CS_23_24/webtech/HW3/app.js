@@ -115,7 +115,7 @@ app.get('/book/:bookId', async (req, res) => {
   else {
     // If the bookInfo cannot be retrieved, an invalid bookID has been manually inserted by the user.
     // We redirect to book 1 instead of 404 to stay in the book section.
-    res.redirect(301, 'book/1');
+    res.redirect(301, '../book/1');
   }
 });
 
