@@ -81,31 +81,8 @@ class Calculator {
     }
 
     updateDisplay(){
-      let fatoe = ''
-      switch(this.currentOperand){
-        case '80085':
-          fatoe = 'haha!';
-          break;
-        case '1337':
-          fatoe = 'leet.';
-          break;
-        case '1414':
-          fatoe = 'hihi';
-          break;
-        case '69':
-          fatoe = 'nice.';
-          break;
-        case '1234567890':
-          fatoe = 'https://www.youtube.com/watch?v=xvFZjo5PgG0';
-          break;
-      }
-      if(fatoe === ''){
-        this.currentOperandTextElement.innerText = this.currentOperand
-        this.previousOperandTextElement.innerText = this.previousOperand
-      }
-      else{
-        this.currentOperandTextElement.innerText = fatoe
-      }
+      this.currentOperandTextElement.innerText = this.currentOperand
+      this.previousOperandTextElement.innerText = this.previousOperand
     }
 
   }
