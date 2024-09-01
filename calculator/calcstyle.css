@@ -27,7 +27,6 @@ main {
   flex-direction: column;
 }
 
-/* i hate this */
 .previous-operand {
   margin-right: 1rem;
   font-size: 3rem;
