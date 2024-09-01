@@ -14,7 +14,9 @@ namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
-        List<DatabaseEntry> items = new List<DatabaseEntry>();
+        List<DatabaseEntry> databaseItems = new List<DatabaseEntry>();
+        List<TodoItem> todoItems = new List<TodoItem>();
+        SqliteConnection connection = new SqliteConnection();
         public Form1()
         {
             InitializeComponent();
@@ -28,14 +30,17 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            this.Controls.Clear();
         }
 
         private void GetItemsFromDatabase()
         {
+            try { connection = new SqliteConnection("Data Source=E:\\LocalRepo\\ToDo_with_db\\WindowsFormsApp1\\todo.db"); }
+            catch { }
+            try { connection = new SqliteConnection("Data Source=C:\\LocalRepo\\ToDo_with_db\\WindowsFormsApp1\\todo.db"); }
+            catch { }
             try
             {
-                SqliteConnection connection = new SqliteConnection("Data Source=E:\\LocalRepo\\ToDo_with_db\\WindowsFormsApp1\\todo.db");
                 connection.Open();
 
                 string sql = "SELECT * FROM todo";
@@ -50,7 +55,7 @@ namespace WindowsFormsApp1
                         string name = reader.GetString(1);
                         string description = reader.GetString(2);
                         int priority = reader.GetInt32(3);
-                        items.Add(new DatabaseEntry(id, name, description, priority));
+                        databaseItems.Add(new DatabaseEntry(id, name, description, priority));
                     }
                 }
             }
@@ -60,14 +65,49 @@ namespace WindowsFormsApp1
             }
         }
 
+        private void DontInsertItemsIntoForm()
+        {
+            for(int i = 0; i < databaseItems.Count; i++)
+            {
+                TextBox nameBox = new TextBox();
+                nameBox.Location = new Point(20, 100 + 30 * i);
+                nameBox.Size = new Size(100, 10);
+                nameBox.Text = databaseItems[i].name;
+                this.Controls.Add(nameBox);
+
+                TextBox descriptionBox = new TextBox();
+                descriptionBox.Location = new Point(125, 100 + 30 * i);
+                descriptionBox.Size = new Size(300, 10);
+                descriptionBox.Text = databaseItems[i].description;
+                this.Controls.Add(descriptionBox);
+            }
+        }
+
         private void InsertItemsIntoForm()
         {
-            for(int i = 0; i < items.Count; i++)
+            for(int i = 0; i < databaseItems.Count; i++)
             {
-                TextBox textBox = new TextBox();
-                textBox.Location = new Point(20, 100 + 30 * i);
-                textBox.Size = new Size(100, 10);
-                this.Controls.Add(textBox);
+                DatabaseEntry curr = databaseItems[i];
+                TodoItem ti = new TodoItem(curr, 1, connection);
+                ti.Location = new Point(20, 50 + 120 * i);
+                ti.Size = new Size(200, 100);
+                todoItems.Add(ti);
+                this.Controls.Add(ti);
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            Graphics g = e.Graphics;
+            using(Pen selPen = new Pen(Color.Blue, 3))
+            {
+                for(int i = 0; i < todoItems.Count; i++)
+                {
+                    TodoItem currentItem = todoItems[i];
+                    g.DrawRectangle(selPen, currentItem.Location.X, currentItem.Location.Y, currentItem.Width, currentItem.Height);
+                }
             }
         }
     }
