@@ -22,7 +22,7 @@ main = interact (unlines . exercise . lines)
 exercise :: [String] -> [String]
 exercise =
   printTable
-    . project ["last", "first", "salary"]
+    -- . project ["last", "first", "salary"]
     . select "gender" "male"
     . parseTable
 
@@ -47,8 +47,8 @@ printLine (x : xs) = "+" ++ replicate x '-' ++ printLine xs
 printField :: Int -> String -> String
 printField n s
   | length s >= n = s
-  | all isDigit s = replicate (length s - n) ' ' ++ s
-  | otherwise = s ++ replicate (length s - n) ' '
+  | all isDigit s = replicate (n - length s) ' ' ++ s
+  | otherwise = s ++ replicate (n - length s) ' '
 
 -- * Exercise 4
 
@@ -65,7 +65,7 @@ columnWidths table = map (maximum . map length) (transpose table)
 
 printTable :: Table -> [String]
 printTable table@(header : rows) =
-  [printLine cWidth, printRow (zip cWidth header)]
+  [printLine cWidth, map toUpper (printRow (zip cWidth header))]
     ++ [printLine cWidth]
     ++ map (printRow . zip cWidth) rows
     ++ [printLine cWidth]
@@ -78,7 +78,9 @@ printTable table@(header : rows) =
 
 select :: Field -> Field -> Table -> Table
 select column value table@(header : rows) =
-  undefined
+  [header] ++ maybe [] (\i -> filter (\row -> row !! i == value) rows) colIndex
+  where
+    colIndex = elemIndex column header
 
 -- * Exercise 8
 
