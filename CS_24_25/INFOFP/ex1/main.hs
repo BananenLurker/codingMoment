@@ -22,7 +22,7 @@ main = interact (unlines . exercise . lines)
 exercise :: [String] -> [String]
 exercise =
   printTable
-    -- . project ["last", "first", "salary"]
+    . project ["last", "first", "salary"]
     . select "gender" "male"
     . parseTable
 
@@ -78,12 +78,21 @@ printTable table@(header : rows) =
 
 select :: Field -> Field -> Table -> Table
 select column value table@(header : rows) =
-  [header] ++ maybe [] (\i -> filter (\row -> row !! i == value) rows) colIndex
+  maybe table (\colIndex -> header : filter (checkRow colIndex value) rows) colIndex
   where
     colIndex = elemIndex column header
+
+checkRow :: Int -> String -> Row -> Bool
+checkRow index value row = row !! index == value
 
 -- * Exercise 8
 
 project :: [Field] -> Table -> Table
 project columns table@(header : _) =
-  undefined
+  transpose (mapMaybe (selectColumn (transpose table)) colIndexList)
+  where
+    colIndexList = map (`elemIndex` header) columns
+
+selectColumn :: Table -> Maybe Int -> Maybe [String]
+selectColumn table (Just i) = Just (table !! i)
+selectColumn _ Nothing  = Nothing
