@@ -31,8 +31,7 @@ exercise =
 -- * Exercise 1
 
 parseTable :: [String] -> Table
-parseTable [] = []
-parseTable (x : xs) = words x : parseTable xs
+parseTable = map words
 
 -- | Printing
 
@@ -87,12 +86,13 @@ checkRow index value row = row !! index == value
 
 -- * Exercise 8
 
+-- project :: [Field] -> Table -> Table
+-- project columns table@(header : _) =
+--   map filterRow table
+--   where
+--     filterRow :: Row -> Row
+--     filterRow row = mapMaybe (\(header, col) -> if header `elem` columns then Just col else Nothing) (zip header row)
+
 project :: [Field] -> Table -> Table
 project columns table@(header : _) =
-  transpose (mapMaybe (selectColumn (transpose table)) colIndexList)
-  where
-    colIndexList = map (`elemIndex` header) columns
-
-selectColumn :: Table -> Maybe Int -> Maybe [String]
-selectColumn table (Just i) = Just (table !! i)
-selectColumn _ Nothing  = Nothing
+  transpose (filter (\(header : _) -> header `elem` columns) (transpose table))
