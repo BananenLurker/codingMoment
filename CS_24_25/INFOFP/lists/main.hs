@@ -1,7 +1,7 @@
 module Main where
 
 main :: IO ()
-main = print(remSuccDup [1,1,2,3,4,3,3,32,2,1,1,1,2,2,1,3,4,4,4,4,4,4,1])
+main = print(nMaybeLast["huts"])
 
 newProduct :: Num a => [a] -> a
 newProduct [] = 1
@@ -105,4 +105,25 @@ remSuccDup (x:y:xs)
   | otherwise = x : remSuccDup (y:xs)
 
 nub :: Eq a => [a] -> [a]
-nub 
+nub [] = []
+nub (x:xs)
+  | elem x xs = x : nub (filter (/=x) xs)
+  | otherwise = x : nub xs
+
+nUnion :: Eq a => [a] -> [a] -> [a]
+nUnion [] y = y
+nUnion x [] = []
+nUnion (x:xs) ys = x : nUnion xs (filter (/=x) ys)
+
+nIntersect :: Eq a => [a] -> [a] -> [a]
+nIntersect [] _ = []
+nIntersect _ [] = []
+nIntersect (x:xs) ys
+  | elem x ys = x : nIntersect xs ys
+  | otherwise = nIntersect xs ys
+
+nMaybeLast :: [a] -> Maybe a
+nMaybeLast [] = Nothing
+nMaybeLast (x:xs)
+  | null xs = Just x
+  | otherwise = nMaybeLast xs
